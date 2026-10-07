@@ -1,6 +1,7 @@
 package domain.model.valueobject;
 
 import domain.exception.ValidacaoException;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -21,6 +22,15 @@ public class TelefoneTest {
     public void deveOcorrerErroQuandoTelefoneInvalido(String numero) {
         ValidacaoException validacaoException = assertThrows(ValidacaoException.class, () -> {
            new Telefone(numero);
+        });
+
+        assertEquals("O número de telefone deve ter 10 ou 11 caracteres", validacaoException.getMessage());
+    }
+
+    @Test
+    public void deveOcorrerErroQuandoTelefoneNulo() {
+        ValidacaoException validacaoException = assertThrows(ValidacaoException.class, () -> {
+            new Telefone(null);
         });
 
         assertEquals("O número de telefone é obrigatório", validacaoException.getMessage());
