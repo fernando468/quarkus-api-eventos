@@ -33,7 +33,7 @@ public class ClienteServiceTest {
         assertNotNull(clienteSalvo);
         assertEquals("José da Silva", clienteSalvo.getNome());
         assertEquals("José da Silva", clienteSalvo.getNome());
-        assertEquals("jose@email.com", clienteSalvo.getEmail());
+        assertEquals("jose@email.com", clienteSalvo.getEmail().getEmail());
         assertEquals("4412345678", clienteSalvo.getTelefone().getTelefone());
         assertEquals("12345678910", clienteSalvo.getCpf().getCpf());
         assertEquals("12345000", clienteSalvo.getEndereco().getCep());

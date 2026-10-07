@@ -2,6 +2,7 @@ package domain.model;
 
 import domain.exception.ValidacaoException;
 import domain.model.valueobject.Cpf;
+import domain.model.valueobject.Email;
 import domain.model.valueobject.Telefone;
 import jakarta.persistence.*;
 
@@ -16,7 +17,7 @@ public class Cliente {
     private String nome;
 
     @Column(nullable = false, length = 100)
-    private String email;
+    private Email email;
 
     @Embedded
     private Telefone telefone;
@@ -31,7 +32,7 @@ public class Cliente {
     protected Cliente() {
     }
 
-    public Cliente(String nome, String email, Telefone telefone, Cpf cpf, Endereco endereco) {
+    public Cliente(String nome, Email email, Telefone telefone, Cpf cpf, Endereco endereco) {
         setNome(nome);
         setEmail(email);
         setTelefone(telefone);
@@ -39,7 +40,7 @@ public class Cliente {
         setEndereco(endereco);
     }
 
-    public void atualizarCliente(String nome, String email, Telefone telefone, Cpf cpf, Endereco endereco) {
+    public void atualizarCliente(String nome, Email email, Telefone telefone, Cpf cpf, Endereco endereco) {
         setNome(nome);
         setEmail(email);
         setTelefone(telefone);
@@ -58,12 +59,12 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public String getEmail() {
+    public Email getEmail() {
         return email;
     }
 
-    private void setEmail(String email) {
-        if (email == null || email.trim().isEmpty()) {
+    private void setEmail(Email email) {
+        if (email == null) {
             throw new ValidacaoException("O email do cliente é obrigatório");
         }
         this.email = email;

@@ -10,7 +10,7 @@ public class ClienteMapper {
     public static Cliente toEntity(ClienteRequestDTO clienteRequestDTO) {
         return new Cliente(
             clienteRequestDTO.nome(),
-            clienteRequestDTO.email(),
+            EmailMapper.toEmbeddable(clienteRequestDTO.email()),
             TelefoneMapper.toEmbeddable(clienteRequestDTO.telefone()),
             CpfMapper.toEmbeddable(clienteRequestDTO.cpf()),
             EnderecoMapper.toEntity(clienteRequestDTO.endereco())
@@ -20,7 +20,7 @@ public class ClienteMapper {
     public static Cliente toUpdateEntity(ClienteRequestDTO clienteRequestDTO, Cliente cliente) {
         cliente.atualizarCliente(
             clienteRequestDTO.nome(),
-            clienteRequestDTO.email(),
+            EmailMapper.toEmbeddable(clienteRequestDTO.email()),
             TelefoneMapper.toEmbeddable(clienteRequestDTO.telefone()),
             CpfMapper.toEmbeddable(clienteRequestDTO.cpf()),
             EnderecoMapper.toUpdateEntity(clienteRequestDTO.endereco(), cliente.getEndereco())
@@ -32,7 +32,7 @@ public class ClienteMapper {
         return new ClienteResponseDTO(
             cliente.getId(),
             cliente.getNome(),
-            cliente.getEmail(),
+            cliente.getEmail().getEmail(),
             cliente.getTelefone().getTelefone(),
             cliente.getCpf().getCpf(),
             EnderecoMapper.toResponseDTO(cliente.getEndereco())

@@ -2,6 +2,7 @@ package domain.model;
 
 import domain.exception.ValidacaoException;
 import domain.model.valueobject.Cpf;
+import domain.model.valueobject.Email;
 import domain.model.valueobject.Telefone;
 import org.junit.jupiter.api.Test;
 import utils.ClienteUtilsTest;
@@ -17,7 +18,7 @@ public class ClienteTest {
         Cliente cliente = ClienteUtilsTest.criarClienteToEntity();
 
         assertEquals("José da Silva", cliente.getNome());
-        assertEquals("jose@email.com", cliente.getEmail());
+        assertEquals("jose@email.com", cliente.getEmail().getEmail());
         assertEquals("4412345678", cliente.getTelefone().getTelefone());
         assertEquals("12345678910", cliente.getCpf().getCpf());
         assertEquals("12345000", cliente.getEndereco().getCep());
@@ -34,7 +35,7 @@ public class ClienteTest {
         ValidacaoException validacaoException = assertThrows(ValidacaoException.class, () -> {
             new Cliente(
                 "José da Silva",
-                "jose@email.com",
+                new Email("jose@email.com"),
                 new Telefone("4412345678"),
                 null,
                 EnderecoUtilsTest.criarEnderecoValido()
@@ -49,7 +50,7 @@ public class ClienteTest {
         ValidacaoException validacaoException = assertThrows(ValidacaoException.class, () -> {
             new Cliente(
                 "José da Silva",
-                "jose@email.com",
+                new Email("jose@email.com"),
                 null,
                 new Cpf("12345678910"),
                 EnderecoUtilsTest.criarEnderecoValido()
@@ -79,7 +80,7 @@ public class ClienteTest {
         ValidacaoException validacaoException = assertThrows(ValidacaoException.class, () -> {
             new Cliente(
                 "José da Silva",
-                "jose@email.com",
+                new Email("jose@email.com"),
                 new Telefone("4412345678"),
                 new Cpf("12345678910"),
                 null
@@ -94,7 +95,7 @@ public class ClienteTest {
         ValidacaoException validacaoException = assertThrows(ValidacaoException.class, () -> {
             new Cliente(
                 null,
-                "jose@email.com",
+                new Email("jose@email.com"),
                 new Telefone("4412345678"),
                 new Cpf("12345678910"),
                 EnderecoUtilsTest.criarEnderecoValido()
