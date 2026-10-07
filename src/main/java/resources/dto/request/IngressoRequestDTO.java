@@ -1,6 +1,8 @@
 package resources.dto.request;
 
+import jakarta.validation.constraints.NotNull;
+
 public record IngressoRequestDTO(
-    Long clienteId,
-    Long eventoId) {
+    @NotNull Long clienteId,
+    @NotNull Long eventoId) {
 }

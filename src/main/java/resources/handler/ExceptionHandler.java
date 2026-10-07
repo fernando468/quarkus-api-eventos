@@ -6,7 +6,7 @@ import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import resources.dto.response.ErrorResponseDTO;
+import resources.dto.response.ErroResponseDTO;
 import resources.mapper.ErroResponseMapper;
 
 @Provider
@@ -16,7 +16,7 @@ public class ExceptionHandler implements ExceptionMapper<Exception> {
     @Override
     public Response toResponse(Exception exception) {
         Response.Status status = Response.Status.INTERNAL_SERVER_ERROR;
-        ErrorResponseDTO errorResponseDTO = ErroResponseMapper.toResponseDTO(
+        ErroResponseDTO erroResponseDTO = ErroResponseMapper.toResponseDTO(
             status,
             "Erro interno do servidor"
         );
@@ -25,7 +25,7 @@ public class ExceptionHandler implements ExceptionMapper<Exception> {
 
         return Response.status(status)
                 .type(MediaType.APPLICATION_JSON)
-                .entity(errorResponseDTO)
+                .entity(erroResponseDTO)
                 .build();
     }
 

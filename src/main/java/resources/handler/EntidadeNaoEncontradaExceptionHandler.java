@@ -7,7 +7,7 @@ import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import resources.dto.response.ErrorResponseDTO;
+import resources.dto.response.ErroResponseDTO;
 import resources.mapper.ErroResponseMapper;
 
 @Provider
@@ -18,7 +18,7 @@ public class EntidadeNaoEncontradaExceptionHandler implements ExceptionMapper<En
     public Response toResponse(EntidadeNaoEncontradaException exception) {
         String message = exception.getMessage() != null ? exception.getMessage() : "Erro interno do servidor";
         Response.Status status = Response.Status.NOT_FOUND;
-        ErrorResponseDTO errorResponseDTO = ErroResponseMapper.toResponseDTO(
+        ErroResponseDTO erroResponseDTO = ErroResponseMapper.toResponseDTO(
             status,
             message
         );
@@ -27,7 +27,7 @@ public class EntidadeNaoEncontradaExceptionHandler implements ExceptionMapper<En
 
         return Response.status(status)
                 .type(MediaType.APPLICATION_JSON)
-                .entity(errorResponseDTO)
+                .entity(erroResponseDTO)
                 .build();
     }
 
