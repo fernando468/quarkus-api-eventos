@@ -44,7 +44,7 @@ public class Endereco {
         setEstado(estado);
     }
 
-    public void atualizarEndereco(String cep, String logradouro, String numero, String complemento, String bairro, String cidade, String estado) {
+    public void atualizar(String cep, String logradouro, String numero, String complemento, String bairro, String cidade, String estado) {
         setCep(cep);
         setLogradouro(logradouro);
         setNumero(numero);

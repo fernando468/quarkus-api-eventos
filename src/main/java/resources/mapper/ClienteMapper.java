@@ -18,7 +18,7 @@ public class ClienteMapper {
     }
 
     public static Cliente toUpdateEntity(ClienteRequestDTO clienteRequestDTO, Cliente cliente) {
-        cliente.atualizarCliente(
+        cliente.atualizar(
             clienteRequestDTO.nome(),
             EmailMapper.toEmbeddable(clienteRequestDTO.email()),
             TelefoneMapper.toEmbeddable(clienteRequestDTO.telefone()),

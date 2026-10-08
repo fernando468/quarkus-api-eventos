@@ -35,7 +35,7 @@ public class Evento {
         setEndereco(endereco);
     }
 
-    public void atualizarEvento(String titulo, String descricao, LocalDateTime data, Endereco endereco) {
+    public void atualizar(String titulo, String descricao, LocalDateTime data, Endereco endereco) {
         setTitulo(titulo);
         setDescricao(descricao);
         setData(data);
@@ -79,7 +79,7 @@ public class Evento {
         return data;
     }
 
-    public void setData(LocalDateTime data) {
+    private void setData(LocalDateTime data) {
         if (data == null) {
             throw new ValidacaoException("A data do evento é obrigatória");
         }

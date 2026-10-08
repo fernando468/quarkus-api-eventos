@@ -19,7 +19,7 @@ public class EnderecoMapper {
     }
 
     public static Endereco toUpdateEntity(EnderecoRequestDTO enderecoRequestDTO, Endereco endereco) {
-        endereco.atualizarEndereco(
+        endereco.atualizar(
             enderecoRequestDTO.cep(),
             enderecoRequestDTO.logradouro(),
             enderecoRequestDTO.numero(),

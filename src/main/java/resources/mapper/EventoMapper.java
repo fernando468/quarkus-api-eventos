@@ -18,7 +18,7 @@ public class EventoMapper {
     }
 
     public static Evento toUpdateEntity(EventoRequestDTO eventoRequestDTO, Evento evento) {
-        evento.atualizarEvento(
+        evento.atualizar(
             eventoRequestDTO.titulo(),
             eventoRequestDTO.descricao(),
             eventoRequestDTO.data(),

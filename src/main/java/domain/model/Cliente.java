@@ -40,7 +40,7 @@ public class Cliente {
         setEndereco(endereco);
     }
 
-    public void atualizarCliente(String nome, Email email, Telefone telefone, Cpf cpf, Endereco endereco) {
+    public void atualizar(String nome, Email email, Telefone telefone, Cpf cpf, Endereco endereco) {
         setNome(nome);
         setEmail(email);
         setTelefone(telefone);

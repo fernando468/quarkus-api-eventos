@@ -15,6 +15,7 @@ public class IngressoMapper {
     public static IngressoResponseDTO toResponseDTO(Ingresso ingresso) {
         return new IngressoResponseDTO(
             ingresso.getId(),
+            ingresso.getStatus(),
             EventoMapper.toResponseDTO(ingresso.getEvento()),
             ClienteMapper.toResponseDTO(ingresso.getCliente())
         );
