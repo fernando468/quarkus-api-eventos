@@ -4,6 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
+import org.jboss.resteasy.reactive.RestResponse;
 import resources.dto.request.EventoRequestDTO;
 import resources.dto.response.EventoResponseDTO;
 import resources.mapper.EventoMapper;
@@ -18,31 +19,35 @@ public class EventoResource {
     EventoService eventoService;
 
     @POST
-    public Response criar(@Valid EventoRequestDTO eventoRequestDTO) {
+    public RestResponse<EventoResponseDTO> criar(@Valid EventoRequestDTO eventoRequestDTO) {
         EventoResponseDTO eventoResponseDTO = EventoMapper.toResponseDTO(eventoService.criar(eventoRequestDTO));
 
         URI uri = URI.create("/eventos/" + eventoResponseDTO.id());
 
-        return Response.created(uri).entity(eventoResponseDTO).build();
+        return RestResponse
+                .ResponseBuilder
+                .create(RestResponse.Status.CREATED, eventoResponseDTO)
+                .header("Location", uri)
+                .build();
     }
 
     @PUT
     @Path("/{id}")
-    public Response atualizar(@PathParam("id") Long id, @Valid EventoRequestDTO eventoRequestDTO) {
+    public RestResponse<EventoResponseDTO> atualizar(@PathParam("id") Long id, @Valid EventoRequestDTO eventoRequestDTO) {
         EventoResponseDTO eventoResponseDTO = EventoMapper.toResponseDTO(eventoService.atualizar(id, eventoRequestDTO));
-        return Response.ok().entity(eventoResponseDTO).build();
+        return RestResponse.ok(eventoResponseDTO);
     }
 
     @GET
     @Path("/{id}")
-    public Response obterPorId(@PathParam("id") Long id) {
+    public RestResponse<EventoResponseDTO> obterPorId(@PathParam("id") Long id) {
         EventoResponseDTO eventoResponseDTO = EventoMapper.toResponseDTO(eventoService.obterPorId(id));
-        return Response.ok().entity(eventoResponseDTO).build();
+        return RestResponse.ok(eventoResponseDTO);
     }
 
     @GET
-    public Response listarTodos() {
+    public RestResponse<List<EventoResponseDTO>> listarTodos() {
         List<EventoResponseDTO> listaEventoResponseDTO = EventoMapper.toResponseDTOList(eventoService.listarTodos());
-        return Response.ok().entity(listaEventoResponseDTO).build();
+        return RestResponse.ok(listaEventoResponseDTO);
     }
 }

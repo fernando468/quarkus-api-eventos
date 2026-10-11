@@ -4,6 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
+import org.jboss.resteasy.reactive.RestResponse;
 import resources.dto.request.ClienteRequestDTO;
 import resources.dto.response.ClienteResponseDTO;
 import resources.mapper.ClienteMapper;
@@ -18,31 +19,35 @@ public class ClienteResource {
     ClienteService clienteService;
 
     @POST
-    public Response criar(@Valid ClienteRequestDTO clienteRequestDTO) {
+    public RestResponse<ClienteResponseDTO> criar(@Valid ClienteRequestDTO clienteRequestDTO) {
         ClienteResponseDTO clienteResponseDTO = ClienteMapper.toResponseDTO(clienteService.criar(clienteRequestDTO));
 
         URI uri = URI.create("/clientes/" + clienteResponseDTO.id());
 
-        return Response.created(uri).entity(clienteResponseDTO).build();
+        return RestResponse
+                .ResponseBuilder
+                .create(RestResponse.Status.CREATED, clienteResponseDTO)
+                .header("Location", uri)
+                .build();
     }
 
     @PUT
     @Path("/{id}")
-    public Response atualizar(@PathParam("id") Long id, @Valid ClienteRequestDTO clienteRequestDTO) {
+    public RestResponse<ClienteResponseDTO> atualizar(@PathParam("id") Long id, @Valid ClienteRequestDTO clienteRequestDTO) {
         ClienteResponseDTO clienteResponseDTO = ClienteMapper.toResponseDTO(clienteService.atualizar(id, clienteRequestDTO));
-        return Response.ok().entity(clienteResponseDTO).build();
+        return RestResponse.ok(clienteResponseDTO);
     }
 
     @GET
     @Path("/{id}")
-    public Response obterPorId(@PathParam("id") Long id) {
+    public RestResponse<ClienteResponseDTO> obterPorId(@PathParam("id") Long id) {
         ClienteResponseDTO clienteResponseDTO = ClienteMapper.toResponseDTO(clienteService.obterPorId(id));
-        return Response.ok().entity(clienteResponseDTO).build();
+        return RestResponse.ok(clienteResponseDTO);
     }
 
     @GET
-    public Response listarTodos() {
+    public RestResponse<List<ClienteResponseDTO>> listarTodos() {
         List<ClienteResponseDTO> listaClienteResponseDTO = ClienteMapper.toResponseDTOList(clienteService.listarTodos());
-        return Response.ok().entity(listaClienteResponseDTO).build();
+        return RestResponse.ok(listaClienteResponseDTO);
     }
 }

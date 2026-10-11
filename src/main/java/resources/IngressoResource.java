@@ -7,9 +7,9 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Response;
+import org.jboss.resteasy.reactive.RestResponse;
 import resources.dto.request.IngressoRequestDTO;
 import resources.dto.response.IngressoResponseDTO;
-import resources.mapper.IngressoMapper;
 import service.IngressoService;
 
 import java.net.URI;
@@ -20,36 +20,40 @@ public class IngressoResource {
     IngressoService ingressoService;
 
     @POST
-    public Response criarIngresso(@Valid IngressoRequestDTO ingressoRequestDTO) {
+    public RestResponse<IngressoResponseDTO> criarIngresso(@Valid IngressoRequestDTO ingressoRequestDTO) {
         IngressoResponseDTO ingressoResponseDTO = ingressoService.criar(ingressoRequestDTO);
 
         URI uri = URI.create("/ingressos/" + ingressoResponseDTO.id());
 
-        return Response.created(uri).build();
+        return RestResponse
+                .ResponseBuilder
+                .create(RestResponse.Status.CREATED, ingressoResponseDTO)
+                .header("Location", uri)
+                .build();
     }
 
 
     @PUT()
-    @Path("/{id}")
-    public Response cancelar(@PathParam("id") Long id) {
+    @Path("/cancelardj/{id}")
+    public RestResponse<IngressoResponseDTO> cancelar(@PathParam("id") Long id) {
         IngressoResponseDTO ingressoResponseDTO = ingressoService.cancelar(id);
 
-        return Response.ok(ingressoResponseDTO).build();
+        return RestResponse.ok(ingressoResponseDTO);
     }
 
     @PUT()
-    @Path("/{id}")
-    public Response finalizar(@PathParam("id") Long id) {
+    @Path("/finalizar/{id}")
+    public RestResponse<IngressoResponseDTO> finalizar(@PathParam("id") Long id) {
         IngressoResponseDTO ingressoResponseDTO = ingressoService.finalizar(id);
 
-        return Response.ok(ingressoResponseDTO).build();
+        return RestResponse.ok(ingressoResponseDTO);
     }
 
     @PUT()
-    @Path("/{id}")
-    public Response confirmarPagamento(@PathParam("id") Long id) {
+    @Path("/confirmar-pagamento/{id}")
+    public RestResponse<IngressoResponseDTO> confirmarPagamento(@PathParam("id") Long id) {
         IngressoResponseDTO ingressoResponseDTO = ingressoService.confirmarPagamento(id);
 
-        return Response.ok(ingressoResponseDTO).build();
+        return RestResponse.ok(ingressoResponseDTO);
     }
 }
