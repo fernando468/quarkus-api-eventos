@@ -1,0 +1,27 @@
+mat-drawer-container {
+  width: 100vh;
+  height: 100vh;
+}
+
+mat-drawer {
+  background-color: #2a26ad;
+}
+
+h2 {
+  color: #fff;
+  padding: 8px;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  padding: 8px;
+}
