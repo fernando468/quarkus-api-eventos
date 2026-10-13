@@ -9,4 +9,5 @@ import { CustomButton } from '../../components/custom-button/custom-button';
 })
 export class HeaderPages {
   title = input.required<string>();
+  onClick = input.required<() => void>();
 }

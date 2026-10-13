@@ -7,4 +7,8 @@ import { HeaderPages } from '../../partials/header-pages/header-pages';
   styleUrl: './ingresso.css',
   templateUrl: './ingresso.html',
 })
-export class Ingresso {}
+export class Ingresso {
+  openDialog() {
+    console.log('Abrindo dialog');
+  }
+}

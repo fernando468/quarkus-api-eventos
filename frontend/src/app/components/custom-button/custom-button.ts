@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatButtonAppearance } from '@angular/material/button';
 
 @Component({
   imports: [MatButton],
@@ -9,4 +9,6 @@ import { MatButton } from '@angular/material/button';
 })
 export class CustomButton {
   title = input.required<string>();
+  onClick = input.required<() => void>();
+  variant = input<MatButtonAppearance>('filled');
 }
