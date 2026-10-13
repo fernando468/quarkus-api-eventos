@@ -4,7 +4,7 @@
     <div class="menu">
       @for (item of options; track item.name) {
         <div class="item">
-          <a [routerLink]="item.path">{{ item.name }}</a>
+          <a [routerLink]="item.path" routerLinkActive="ativo">{{ item.name }}</a>
         </div>
       }
     </div>

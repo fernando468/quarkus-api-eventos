@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 interface MenuOption {
   name: string;
@@ -8,7 +8,7 @@ interface MenuOption {
 }
 
 @Component({
-  imports: [MatSidenavModule, RouterLink],
+  imports: [MatSidenavModule, RouterLink, RouterLinkActive],
   selector: 'app-custom-sidebar',
   styleUrl: './custom-sidebar.css',
   templateUrl: './custom-sidebar.html',

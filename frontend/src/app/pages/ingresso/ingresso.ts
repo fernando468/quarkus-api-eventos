@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
+import { HeaderPages } from '../../partials/header-pages/header-pages';
 
 @Component({
-  imports: [],
+  imports: [HeaderPages],
   selector: 'app-ingresso',
   styleUrl: './ingresso.css',
   templateUrl: './ingresso.html',

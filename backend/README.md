@@ -5,13 +5,17 @@
 ## Tecnologias utilizadas
 
 - Java 25
-- Maven 3.9.12
+- Maven 3.10.0
 - Quarkus 3.40.1
 - JUnit 5.24.0
 - Mockito 5.24.0
 - Banco de Dados H2
 
 ## Executar a aplicação
+
+```bash
+mvn clean install
+```
 
 ```bash
 ./mvnw quarkus:dev
