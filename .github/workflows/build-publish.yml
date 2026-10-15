@@ -43,5 +43,5 @@ jobs:
         working-directory: ./frontend
 
       - name: Executar testes do Angular
-        run: npm test -- --watch=false --browsers=ChromeHeadless
+        run: npx vitest run
         working-directory: ./frontend
