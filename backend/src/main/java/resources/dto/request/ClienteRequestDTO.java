@@ -14,7 +14,7 @@ public record ClienteRequestDTO(
     String email,
 
     @NotNull
-    @Size(min = 3, max = 15)
+    @Size(min = 10, max = 11)
     String telefone,
 
     @NotNull

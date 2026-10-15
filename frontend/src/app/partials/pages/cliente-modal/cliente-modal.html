@@ -1,8 +1,24 @@
+<h2 mat-dialog-title>Cliente</h2>
 <mat-dialog-content>
-  <p>Cliente</p>
-  <!-- <app-custom-input title="Nome" placeholder="Nome" /> -->
+  <form>
+    <app-custom-input [form]="form" name="nome" label="Nome" />
+    <app-custom-input [form]="form" name="cpf" label="CPF" />
+    <app-custom-input [form]="form" name="email" label="E-mail" type="email" />
+    <app-custom-input [form]="form" name="telefone" label="Telefone" type="numeric" />
+    <app-endereco-form [form]="enderecoForm" />
+  </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <app-custom-button variant="outlined" title="Cancelar" [onClick]="onCancel"></app-custom-button>
-  <app-custom-button title="Confirmar" [onClick]="onConfirm"> </app-custom-button>
+  <div class="button-group">
+    <div class="button-item">
+      <app-custom-button
+        variant="outlined"
+        title="Cancelar"
+        [onClick]="onCancel"
+      ></app-custom-button>
+    </div>
+    <div class="button-item">
+      <app-custom-button title="Confirmar" [onClick]="onConfirm"> </app-custom-button>
+    </div>
+  </div>
 </mat-dialog-actions>

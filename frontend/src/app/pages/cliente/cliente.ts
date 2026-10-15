@@ -15,8 +15,6 @@ export class Cliente {
   openDialog = (): void => {
     const dialogRef = this.dialog.open(ClienteModal);
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   };
 }

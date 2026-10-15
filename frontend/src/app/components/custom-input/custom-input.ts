@@ -7,7 +7,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
-type TypeField = 'text' | 'password' | 'numeric';
+type TypeField = 'text' | 'password' | 'numeric' | 'email';
 
 @Component({
   imports: [
@@ -33,7 +33,6 @@ export class CustomInput {
   maxLength = input<Null<number>>(null);
 
   value = '';
-  isDisabled = false;
 
   onChange: (value: string) => void = (value) => value;
   onTouched: () => void = () => {
@@ -52,9 +51,7 @@ export class CustomInput {
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    this.isDisabled = isDisabled;
-  }
+  setDisabledState(isDisabled: boolean): void {}
 
   onInput(value: string): void {
     this.value = value;

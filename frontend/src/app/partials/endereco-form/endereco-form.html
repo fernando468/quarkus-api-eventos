@@ -1,0 +1,32 @@
+<div class="form">
+  <div class="cep-row">
+    <app-custom-input [form]="form()" name="cep" label="CEP" />
+    <button
+      class="cep-search-button"
+      type="button"
+      aria-label="Buscar endereço pelo CEP"
+      title="Buscar endereço pelo CEP"
+      [disabled]="isLookingUp()"
+      (click)="searchCep()"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+  @if (lookupError()) {
+    <p class="cep-error" role="alert">{{ lookupError() }}</p>
+  }
+  <div class="input-group">
+    <app-custom-input [form]="form()" name="logradouro" label="Logradouro" />
+    <app-custom-input [form]="form()" name="numero" label="Número" />
+  </div>
+  <div>
+    <app-custom-input [form]="form()" name="complemento" label="Complemento" />
+  </div>
+  <div class="input-group">
+    <app-custom-input [form]="form()" name="cidade" label="Cidade" />
+    <app-custom-input [form]="form()" name="estado" label="Estado" />
+  </div>
+  <div>
+    <app-custom-input [form]="form()" name="bairro" label="Bairro" />
+  </div>
+</div>

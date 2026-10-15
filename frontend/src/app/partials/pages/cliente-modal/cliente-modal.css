@@ -1,0 +1,9 @@
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+h2 {
+  text-align: center;
+  font-weight: 500;
+}
