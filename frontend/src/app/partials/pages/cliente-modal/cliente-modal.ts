@@ -47,6 +47,8 @@ export class ClienteModal {
   readonly dialogRef = inject(MatDialogRef<ClienteModal>);
   readonly data = inject(MAT_DIALOG_DATA);
   readonly form: FormGroup;
+  isSaving = false;
+  errorMessage = '';
 
   readonly clienteService = inject(ClienteService);
 
@@ -91,13 +93,20 @@ export class ClienteModal {
   };
 
   onConfirm = (): void => {
-    console.log(this.form.getRawValue());
-    if (this.form.invalid) {
+    if (this.form.invalid || this.isSaving) {
       this.form.markAllAsTouched();
       return;
     }
-    this.clienteService.criar(this.form.getRawValue()).subscribe();
-    this.dialogRef.close(this.form.getRawValue());
+
+    this.isSaving = true;
+    this.errorMessage = '';
+    this.clienteService.criar(this.form.getRawValue()).subscribe({
+      next: () => this.dialogRef.close(true),
+      error: () => {
+        this.isSaving = false;
+        this.errorMessage = 'Não foi possível salvar o cliente. Tente novamente.';
+      },
+    });
   };
 
   private requiredLength(minLength: number, maxLength: number): ValidatorFn[] {
