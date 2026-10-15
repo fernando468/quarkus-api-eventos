@@ -1,20 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ClienteService } from '../../../services/cliente-service';
-import { ClienteResponse } from '../../../types/cliente.type';
+import { CustomButton } from '../../components/custom-button/custom-button';
+import { ClienteService } from '../../services/cliente-service';
+import { ClienteResponse } from '../../types/cliente.type';
+import { formatCpf, formatEndereco, formatTelefone } from '../../utils/format.util';
 
 @Component({
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, CustomButton, MatIconModule],
   selector: 'app-cliente-listagem',
   styleUrl: './cliente-listagem.css',
   templateUrl: './cliente-listagem.html',
 })
 export class ClienteListagem {
-  displayedColumns: string[] = ['id', 'nome', 'cpf', 'email', 'telefone'];
+  openDialog = input.required<(cliente?: ClienteResponse) => void>();
+
+  displayedColumns: string[] = ['id', 'nome', 'cpf', 'email', 'telefone', 'endereco', 'acoes'];
   dataSource = new MatTableDataSource<ClienteResponse>([]);
   errorMessage = '';
+  formatCpf = formatCpf;
+  formatTelefone = formatTelefone;
+  formatEndereco = formatEndereco;
 
   constructor(private clienteService: ClienteService) {
     this.carregarClientes();

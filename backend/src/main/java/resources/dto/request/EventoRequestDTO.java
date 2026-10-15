@@ -7,11 +7,11 @@ import java.time.LocalDateTime;
 
 public record EventoRequestDTO(
     @NotNull
-    @Size(max = 20)
+    @Size(min = 5, max = 20)
     String titulo,
 
     @NotNull
-    @Size(max = 200)
+    @Size(min = 3, max = 200)
     String descricao,
 
     @NotNull

@@ -1,7 +1,7 @@
 package domain.model;
 
 import domain.exception.ValidacaoException;
-import domain.model.valueobject.StatusEnum;
+import domain.model.valueobject.StatusIngressoEnum;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -13,17 +13,17 @@ public class Ingresso {
     @Column(nullable = false)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "evento_id", nullable = false)
     private Evento evento;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private StatusEnum status;
+    private StatusIngressoEnum status;
 
     protected Ingresso() {
     }
@@ -31,7 +31,7 @@ public class Ingresso {
     public Ingresso(Cliente cliente, Evento evento) {
         setCliente(cliente);
         setEvento(evento);
-        this.status = StatusEnum.AGUARDANDO_PAGAMENTO;
+        this.status = StatusIngressoEnum.AGUARDANDO_PAGAMENTO;
     }
 
     public Cliente getCliente() {
@@ -61,32 +61,32 @@ public class Ingresso {
     }
 
     public void cancelar() {
-        List<StatusEnum> listaStatusParaBloquearAlteracao = List.of(StatusEnum.FINALIZADO, StatusEnum.CANCELADO);
+        List<StatusIngressoEnum> listaStatusParaBloquearAlteracao = List.of(StatusIngressoEnum.FINALIZADO, StatusIngressoEnum.CANCELADO);
         if (listaStatusParaBloquearAlteracao.contains(this.status)) {
             throw new ValidacaoException("Não é possível cancelar ingresso finalizado ou cancelado");
         }
-        this.status = StatusEnum.CANCELADO;
+        this.status = StatusIngressoEnum.CANCELADO;
     }
 
     public void finalizar() {
-        List<StatusEnum> listaStatusParaBloquearAlteracao = List.of(StatusEnum.AGUARDANDO_PAGAMENTO, StatusEnum.CANCELADO, StatusEnum.FINALIZADO);
+        List<StatusIngressoEnum> listaStatusParaBloquearAlteracao = List.of(StatusIngressoEnum.AGUARDANDO_PAGAMENTO, StatusIngressoEnum.CANCELADO, StatusIngressoEnum.FINALIZADO);
         if (listaStatusParaBloquearAlteracao.contains(this.status)) {
             throw new ValidacaoException("Não é possível finalizar ingresso aguardando pagamento, finalizado ou cancelado");
 
         }
-        this.status = StatusEnum.FINALIZADO;
+        this.status = StatusIngressoEnum.FINALIZADO;
     }
 
     public void confirmarPagamento() {
-        List<StatusEnum> listaStatusParaBloquearAlteracao = List.of(StatusEnum.PAGAMENTO_CONFIRMADO, StatusEnum.CANCELADO, StatusEnum.FINALIZADO);
+        List<StatusIngressoEnum> listaStatusParaBloquearAlteracao = List.of(StatusIngressoEnum.PAGAMENTO_CONFIRMADO, StatusIngressoEnum.CANCELADO, StatusIngressoEnum.FINALIZADO);
         if (listaStatusParaBloquearAlteracao.contains(this.status)) {
             throw new ValidacaoException("Não é possível confirmar pagamento do ingresso aguardando pagamento, finalizado ou cancelado");
 
         }
-        this.status = StatusEnum.PAGAMENTO_CONFIRMADO;
+        this.status = StatusIngressoEnum.PAGAMENTO_CONFIRMADO;
     }
 
-    public StatusEnum getStatus() {
+    public StatusIngressoEnum getStatus() {
         return status;
     }
 }

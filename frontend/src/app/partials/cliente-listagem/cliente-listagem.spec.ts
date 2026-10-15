@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { ClienteService } from '../../../services/cliente-service';
-import { ClienteResponse } from '../../../types/cliente.type';
+import { ClienteService } from '../../services/cliente-service';
+import { ClienteResponse } from '../../types/cliente.type';
 import { ClienteListagem } from './cliente-listagem';
 
 describe('ClienteListagem', () => {
@@ -36,6 +36,7 @@ describe('ClienteListagem', () => {
           email: 'ana@example.com',
           telefone: '44999998888',
           endereco: {
+            id: 1,
             logradouro: 'Rua Central',
             numero: '10',
             complemento: '',
@@ -55,9 +56,9 @@ describe('ClienteListagem', () => {
     const tableText = fixture.nativeElement.querySelector('table').textContent;
     expect(tableText).toContain('42');
     expect(tableText).toContain('Ana Silva');
-    expect(tableText).toContain('12345678901');
+    expect(tableText).toContain('123.456.789-01');
     expect(tableText).toContain('ana@example.com');
-    expect(tableText).toContain('44999998888');
+    expect(tableText).toContain('(44) 9 9999-8888');
   });
 
   it('should request the clients again when reloaded', () => {

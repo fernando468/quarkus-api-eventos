@@ -1,0 +1,52 @@
+<div class="container_listagem">
+  <mat-form-field appearance="outline">
+    <mat-label>Filtrar ingressos</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Digite para filtrar (id, status, cliente  e evento)"
+      #input
+    />
+  </mat-form-field>
+
+  @if (errorMessage) {
+    <p role="alert">{{ errorMessage }}</p>
+  }
+
+  <table mat-table [dataSource]="dataSource" class="mat-shadow-2">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef width="50">ID</th>
+      <td mat-cell *matCellDef="let ingresso">{{ ingresso.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let ingresso" [style.color]="getColorStatus(ingresso.status)">
+        {{ ingresso.status.descricao }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cliente">
+      <th mat-header-cell *matHeaderCellDef>Cliente</th>
+      <td mat-cell *matCellDef="let ingresso">{{ formatCliente(ingresso) }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="evento">
+      <th mat-header-cell *matHeaderCellDef>Evento</th>
+      <td mat-cell *matCellDef="let ingresso">
+        {{ formatEvento(ingresso) }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      @if (dataSource.data.length > 0) {
+        <td class="mat-cell" colspan="5">
+          Nenhum evento encontrado para o filtro: {{ input.value }}
+        </td>
+      }
+    </tr>
+  </table>
+</div>

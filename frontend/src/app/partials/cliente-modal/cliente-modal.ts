@@ -6,10 +6,11 @@ import {
   MatDialogContent,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { CustomButton } from '../../../components/custom-button/custom-button';
-import { CustomInput } from '../../../components/custom-input/custom-input';
-import { ClienteService } from '../../../services/cliente-service';
+import { CustomButton } from '../../components/custom-button/custom-button';
+import { CustomInput } from '../../components/custom-input/custom-input';
+import { ClienteService } from '../../services/cliente-service';
 import {
+  ClienteResponse,
   CPF_MAX_LENGTH,
   CPF_MIN_LENGTH,
   EMAIL_MAX_LENGTH,
@@ -18,7 +19,7 @@ import {
   NOME_MIN_LENGTH,
   TELEFONE_MAX_LENGTH,
   TELEFONE_MIN_LENGTH,
-} from '../../../types/cliente.type';
+} from '../../types/cliente.type';
 import {
   BAIRRO_MAX_LENGTH,
   BAIRRO_MIN_LENGTH,
@@ -34,8 +35,8 @@ import {
   LOGRADOURO_MIN_LENGTH,
   NUMERO_MAX_LENGTH,
   NUMERO_MIN_LENGTH,
-} from '../../../types/endereco.type';
-import { EnderecoForm } from '../../endereco-form/endereco-form';
+} from '../../types/endereco.type';
+import { EnderecoForm } from '../endereco-form/endereco-form';
 
 @Component({
   imports: [MatDialogActions, MatDialogContent, CustomButton, CustomInput, EnderecoForm],
@@ -45,7 +46,7 @@ import { EnderecoForm } from '../../endereco-form/endereco-form';
 })
 export class ClienteModal {
   readonly dialogRef = inject(MatDialogRef<ClienteModal>);
-  readonly data = inject(MAT_DIALOG_DATA);
+  readonly data: ClienteResponse | null = inject(MAT_DIALOG_DATA);
   readonly form: FormGroup;
   isSaving = false;
   errorMessage = '';
@@ -53,10 +54,19 @@ export class ClienteModal {
   readonly clienteService = inject(ClienteService);
 
   constructor(private formBuilder: FormBuilder) {
+    const {
+      nome,
+      cpf,
+      email,
+      telefone,
+    } = this.data || {};
+    const { logradouro, numero, complemento, bairro, cidade, estado, cep } =
+      this.data?.endereco || {};
+
     this.form = this.formBuilder.group({
-      nome: ['José', this.requiredLength(NOME_MIN_LENGTH, NOME_MAX_LENGTH)],
+      nome: [nome || 'José', this.requiredLength(NOME_MIN_LENGTH, NOME_MAX_LENGTH)],
       email: [
-        'email@email.com',
+        email || 'email@email.com',
         [
           Validators.required,
           Validators.email,
@@ -64,22 +74,25 @@ export class ClienteModal {
           Validators.maxLength(EMAIL_MAX_LENGTH),
         ],
       ],
-      telefone: ['44900001111', this.requiredLength(TELEFONE_MIN_LENGTH, TELEFONE_MAX_LENGTH)],
-      cpf: ['48925618001', this.requiredLength(CPF_MIN_LENGTH, CPF_MAX_LENGTH)],
+      telefone: [
+        telefone || '44900001111',
+        this.requiredLength(TELEFONE_MIN_LENGTH, TELEFONE_MAX_LENGTH),
+      ],
+      cpf: [cpf || '48925618001', this.requiredLength(CPF_MIN_LENGTH, CPF_MAX_LENGTH)],
       endereco: this.formBuilder.group({
         logradouro: [
-          'Avenida Brasil',
+          logradouro || 'Avenida Brasil',
           this.requiredLength(LOGRADOURO_MIN_LENGTH, LOGRADOURO_MAX_LENGTH),
         ],
-        numero: ['111 B', this.requiredLength(NUMERO_MIN_LENGTH, NUMERO_MAX_LENGTH)],
+        numero: [numero || '111 B', this.requiredLength(NUMERO_MIN_LENGTH, NUMERO_MAX_LENGTH)],
         complemento: [
-          'Casa Cinza',
+          complemento || 'Casa Cinza',
           this.requiredLength(COMPLEMENTO_MIN_LENGTH, COMPLEMENTO_MAX_LENGTH),
         ],
-        bairro: ['Centro', this.requiredLength(BAIRRO_MIN_LENGTH, BAIRRO_MAX_LENGTH)],
-        cidade: ['Maringá', this.requiredLength(CIDADE_MIN_LENGTH, CIDADE_MAX_LENGTH)],
-        estado: ['PR', this.requiredLength(ESTADO_MIN_LENGTH, ESTADO_MAX_LENGTH)],
-        cep: ['11111000', this.requiredLength(CEP_MIN_LENGTH, CEP_MAX_LENGTH)],
+        bairro: [bairro || 'Centro', this.requiredLength(BAIRRO_MIN_LENGTH, BAIRRO_MAX_LENGTH)],
+        cidade: [cidade || 'Maringá', this.requiredLength(CIDADE_MIN_LENGTH, CIDADE_MAX_LENGTH)],
+        estado: [estado || 'PR', this.requiredLength(ESTADO_MIN_LENGTH, ESTADO_MAX_LENGTH)],
+        cep: [cep || '11111000', this.requiredLength(CEP_MIN_LENGTH, CEP_MAX_LENGTH)],
       }),
     });
   }
@@ -100,7 +113,13 @@ export class ClienteModal {
 
     this.isSaving = true;
     this.errorMessage = '';
-    this.clienteService.criar(this.form.getRawValue()).subscribe({
+
+    const clienteId = this.data?.id;
+    const method = clienteId
+      ? this.clienteService.atualizar(clienteId, this.form.getRawValue())
+      : this.clienteService.criar(this.form.getRawValue());
+
+    method.subscribe({
       next: () => this.dialogRef.close(true),
       error: () => {
         this.isSaving = false;

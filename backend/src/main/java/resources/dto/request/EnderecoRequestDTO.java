@@ -9,7 +9,7 @@ public record EnderecoRequestDTO(
     String logradouro,
 
     @NotNull
-    @Size(min = 1, max = 5)
+    @Size(min = 1, max = 10)
     String numero,
 
     @Size(min = 2, max = 100)

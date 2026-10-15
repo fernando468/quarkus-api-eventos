@@ -11,6 +11,8 @@ describe('CustomButton', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(CustomButton);
+    fixture.componentRef.setInput('title', 'Salvar');
+    fixture.componentRef.setInput('onClick', () => {});
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

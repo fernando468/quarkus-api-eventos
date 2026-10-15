@@ -1,0 +1,27 @@
+<h2 class="title_modal" mat-dialog-title>Cliente</h2>
+<mat-dialog-content>
+  @if (errorMessage) {
+    <p role="alert">{{ errorMessage }}</p>
+  }
+  <form>
+    <app-custom-input [form]="form" name="nome" label="Nome" />
+    <app-custom-input [form]="form" name="cpf" label="CPF" />
+    <app-custom-input [form]="form" name="email" label="E-mail" type="email" />
+    <app-custom-input [form]="form" name="telefone" label="Telefone" type="numeric" />
+    <app-endereco-form [form]="enderecoForm" />
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="button-group_modal">
+    <div>
+      <app-custom-button
+        variant="outlined"
+        title="Cancelar"
+        [onClick]="onCancel"
+      ></app-custom-button>
+    </div>
+    <div>
+      <app-custom-button title="Confirmar" [onClick]="onConfirm"> </app-custom-button>
+    </div>
+  </div>
+</mat-dialog-actions>

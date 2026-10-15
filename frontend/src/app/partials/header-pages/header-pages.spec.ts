@@ -11,6 +11,8 @@ describe('HeaderPages', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(HeaderPages);
+    fixture.componentRef.setInput('title', 'Clientes');
+    fixture.componentRef.setInput('onClick', () => {});
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

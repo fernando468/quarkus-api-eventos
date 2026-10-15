@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { ClienteService } from '../../../services/cliente-service';
+import { ClienteService } from '../../services/cliente-service';
 import { ClienteModal } from './cliente-modal';
 
 describe('ClienteModal', () => {
@@ -32,6 +32,7 @@ describe('ClienteModal', () => {
   });
 
   it('should keep the modal open and mark fields touched when the form is invalid', () => {
+    component.form.get('nome')?.setValue('');
     component.onConfirm();
 
     expect(component.form.invalid).toBe(true);

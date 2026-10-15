@@ -16,7 +16,7 @@ public class Endereco {
     @Column(nullable = false, length = 100)
     private String logradouro;
 
-    @Column(nullable = false, length = 5)
+    @Column(nullable = false, length = 10)
     private String numero;
 
     @Column(nullable = false, length = 100)
@@ -65,6 +65,9 @@ public class Endereco {
     private void setCep(String cep) {
         if (cep == null || cep.trim().isEmpty()) {
             throw new ValidacaoException("O CEP é obrigatório");
+        }
+        if (cep.contains("-")) {
+            throw new ValidacaoException("O CEP possuí caractere inválido");
         }
         this.cep = cep;
     }

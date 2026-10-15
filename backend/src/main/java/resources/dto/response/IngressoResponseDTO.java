@@ -1,10 +1,10 @@
 package resources.dto.response;
 
-import domain.model.valueobject.StatusEnum;
+import domain.model.valueobject.StatusIngressoEnum;
 
 public record IngressoResponseDTO(
     Long id,
-    StatusEnum status,
+    EnumResponseDTO status,
     EventoResponseDTO evento,
     ClienteResponseDTO cliente) {
 }

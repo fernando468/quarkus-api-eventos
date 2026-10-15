@@ -12,8 +12,8 @@ export abstract class BaseService<REQUEST, RESPONSE> {
     return this.http.post<RESPONSE>(this.endpoint, request);
   }
 
-  atualizar(request: REQUEST): Observable<RESPONSE> {
-    return this.http.put<RESPONSE>(this.endpoint, request);
+  atualizar(id: number, request: REQUEST): Observable<RESPONSE> {
+    return this.http.put<RESPONSE>(`${this.endpoint}/${id}`, request);
   }
 
   excluir(id: number): Observable<any> {

@@ -1,0 +1,21 @@
+<h2 class="title_modal" mat-dialog-title>Evento</h2>
+<mat-dialog-content>
+  @if (errorMessage) {
+    <p role="alert">{{ errorMessage }}</p>
+  }
+  <form></form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="button-group_modal">
+    <div>
+      <app-custom-button
+        variant="outlined"
+        title="Cancelar"
+        [onClick]="onCancel"
+      ></app-custom-button>
+    </div>
+    <div>
+      <app-custom-button title="Confirmar" [onClick]="onConfirm"> </app-custom-button>
+    </div>
+  </div>
+</mat-dialog-actions>

@@ -1,0 +1,47 @@
+name: Build and Publish
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  backend:
+    name: Backend (Java 25/Maven)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 25
+          distribution: "temurin"
+          architecture: "x64"
+          cache: maven
+
+      - name: Executar testes com Maven
+        run: mvn test
+        working-directory: ./backend
+
+  frontend:
+    name: Frontend (Angular)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20" # Ajuste a versão do Node de acordo com o seu projeto Angular (ex: 18, 20, etc.)
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Instalar dependências
+        run: npm ci
+        working-directory: ./frontend
+
+      - name: Executar testes do Angular
+        run: npm test -- --watch=false --browsers=ChromeHeadless
+        working-directory: ./frontend

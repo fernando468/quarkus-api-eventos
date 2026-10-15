@@ -2,10 +2,7 @@ package resources;
 
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.jboss.resteasy.reactive.RestResponse;
 import resources.dto.request.IngressoRequestDTO;
@@ -13,6 +10,7 @@ import resources.dto.response.IngressoResponseDTO;
 import service.IngressoService;
 
 import java.net.URI;
+import java.util.List;
 
 @Path("/ingressos")
 public class IngressoResource {
@@ -32,9 +30,24 @@ public class IngressoResource {
                 .build();
     }
 
+    @GET
+    @Path("/{id}")
+    public RestResponse<IngressoResponseDTO> obterPorId(@PathParam("id") Long id) {
+        IngressoResponseDTO ingressoResponseDTO = ingressoService.obterPorId(id);
+
+        return RestResponse.ok(ingressoResponseDTO);
+    }
+
+    @GET
+    public RestResponse<List<IngressoResponseDTO>> listarTodos() {
+        List<IngressoResponseDTO> listaIngressoResponse = ingressoService.listarTodos();
+
+        return RestResponse.ok(listaIngressoResponse);
+    }
+
 
     @PUT()
-    @Path("/cancelardj/{id}")
+    @Path("/cancelar/{id}")
     public RestResponse<IngressoResponseDTO> cancelar(@PathParam("id") Long id) {
         IngressoResponseDTO ingressoResponseDTO = ingressoService.cancelar(id);
 

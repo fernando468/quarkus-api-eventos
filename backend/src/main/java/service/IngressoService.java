@@ -13,6 +13,8 @@ import resources.dto.request.IngressoRequestDTO;
 import resources.dto.response.IngressoResponseDTO;
 import resources.mapper.IngressoMapper;
 
+import java.util.List;
+
 @ApplicationScoped
 public class IngressoService {
     @Inject
@@ -76,4 +78,13 @@ public class IngressoService {
         return ingresso;
     }
 
+    public IngressoResponseDTO obterPorId(Long id) {
+        Ingresso ingresso = findById(id);
+        return IngressoMapper.toResponseDTO(ingresso);
+    }
+
+    public List<IngressoResponseDTO> listarTodos() {
+        List<Ingresso> listaIngresso = ingressoRepository.listAll();
+        return IngressoMapper.toResponseDTOList(listaIngresso);
+    }
 }

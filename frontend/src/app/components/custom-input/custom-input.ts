@@ -7,7 +7,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
-type TypeField = 'text' | 'password' | 'numeric' | 'email';
+type TypeField = 'text' | 'password' | 'numeric' | 'email' | 'datetime-local';
 
 @Component({
   imports: [

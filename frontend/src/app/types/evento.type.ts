@@ -14,3 +14,8 @@ export type EventoResponse = {
   data: string;
   endereco: EnderecoResponse;
 };
+
+export const TITULO_MIN_LENGTH = 5;
+export const TITULO_MAX_LENGTH = 20;
+export const DESCRICAO_MIN_LENGTH = 3;
+export const DESCRICAO_MAX_LENGTH = 200;

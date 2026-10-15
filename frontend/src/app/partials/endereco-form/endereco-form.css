@@ -6,7 +6,7 @@
 .cep-row {
   display: flex;
   align-items: flex-start;
-  gap: 5px;
+  gap: 8px;
 }
 
 .cep-row app-custom-input {
@@ -49,7 +49,7 @@
 .input-group {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 1fr);
-  gap: 5px;
+  gap: 8px;
 }
 
 .input-group > app-custom-input {

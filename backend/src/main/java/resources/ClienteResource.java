@@ -3,7 +3,6 @@ package resources;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Response;
 import org.jboss.resteasy.reactive.RestResponse;
 import resources.dto.request.ClienteRequestDTO;
 import resources.dto.response.ClienteResponseDTO;
