@@ -6,7 +6,9 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { ClienteService } from '../../services/cliente-service';
 import { ClienteResponse } from '../../types/cliente.type';
-import { formatCpf, formatEndereco, formatTelefone } from '../../utils/format.util';
+import { formatCpf } from '../../utils/cpf.util';
+import { formatEndereco } from '../../utils/endereco.util';
+import { formatTelefone } from '../../utils/telefone.util';
 
 @Component({
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, CustomButton, MatIconModule],
@@ -15,14 +17,23 @@ import { formatCpf, formatEndereco, formatTelefone } from '../../utils/format.ut
   templateUrl: './cliente-listagem.html',
 })
 export class ClienteListagem {
-  openDialog = input.required<(cliente?: ClienteResponse) => void>();
+  readonly openDialog = input.required<(cliente?: ClienteResponse) => void>();
 
-  displayedColumns: string[] = ['id', 'nome', 'cpf', 'email', 'telefone', 'endereco', 'acoes'];
-  dataSource = new MatTableDataSource<ClienteResponse>([]);
+  readonly displayedColumns: string[] = [
+    'id',
+    'nome',
+    'cpf',
+    'email',
+    'telefone',
+    'endereco',
+    'acoes',
+  ];
+  readonly dataSource = new MatTableDataSource<ClienteResponse>([]);
+  readonly formatCpf = formatCpf;
+  readonly formatTelefone = formatTelefone;
+  readonly formatEndereco = formatEndereco;
+
   errorMessage = '';
-  formatCpf = formatCpf;
-  formatTelefone = formatTelefone;
-  formatEndereco = formatEndereco;
 
   constructor(private clienteService: ClienteService) {
     this.carregarClientes();

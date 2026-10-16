@@ -11,7 +11,7 @@ import { CustomButton } from '../../components/custom-button/custom-button';
 import { IngressoService } from '../../services/ingresso-service';
 import { EnumResponse } from '../../types/enum.type';
 import { IngressoResponse } from '../../types/ingresso.type';
-import { formatCpf } from '../../utils/format.util';
+import { formatCpf } from '../../utils/cpf.util';
 import {
   IngressoConfirmacaoAcao,
   IngressoConfirmacaoAcaoProps,
@@ -32,15 +32,12 @@ type BotaoProps = {
   templateUrl: './ingresso-listagem.html',
 })
 export class IngressoListagem {
-  openDialog = input.required<(ingresso?: IngressoResponse) => void>();
-  // openDialogConfirmacao =
-  //   input.required<(ingresso?: IngressoResponse, item?: BotaoProps) => void>();
-
-  displayedColumns: string[] = ['id', 'status', 'cliente', 'evento', 'acoes'];
-  dataSource = new MatTableDataSource<IngressoResponse>([]);
-  errorMessage = '';
-
+  readonly openDialog = input.required<(ingresso?: IngressoResponse) => void>();
+  readonly displayedColumns: string[] = ['id', 'status', 'cliente', 'evento', 'acoes'];
+  readonly dataSource = new MatTableDataSource<IngressoResponse>([]);
   readonly dialog = inject(MatDialog);
+
+  errorMessage = '';
 
   constructor(
     private ingressoService: IngressoService,

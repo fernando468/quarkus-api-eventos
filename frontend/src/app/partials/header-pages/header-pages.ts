@@ -8,6 +8,6 @@ import { CustomButton } from '../../components/custom-button/custom-button';
   templateUrl: './header-pages.html',
 })
 export class HeaderPages {
-  title = input.required<string>();
-  onClick = input.required<() => void>();
+  readonly title = input.required<string>();
+  readonly onClick = input.required<() => void>();
 }

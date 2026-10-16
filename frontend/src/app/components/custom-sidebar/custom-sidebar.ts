@@ -14,7 +14,7 @@ interface MenuOption {
   templateUrl: './custom-sidebar.html',
 })
 export class CustomSidebar {
-  options: MenuOption[] = [
+  readonly options: MenuOption[] = [
     { path: 'cliente', name: 'Cliente' },
     { path: 'evento', name: 'Evento' },
     { path: 'ingresso', name: 'Ingresso' },

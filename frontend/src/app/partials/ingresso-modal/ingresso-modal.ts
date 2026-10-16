@@ -15,7 +15,7 @@ import { IngressoResponse } from '../../types/ingresso.type';
 })
 export class IngressoModal {
   readonly dialogRef = inject(MatDialogRef<IngressoModal>);
-  readonly data: IngressoResponse | null = inject(MAT_DIALOG_DATA);
+  readonly data: IngressoResponse = inject(MAT_DIALOG_DATA);
   readonly form: FormGroup;
 
   readonly ingressoService = inject(IngressoService);

@@ -46,20 +46,16 @@ import { EnderecoForm } from '../endereco-form/endereco-form';
 })
 export class ClienteModal {
   readonly dialogRef = inject(MatDialogRef<ClienteModal>);
-  readonly data: ClienteResponse | null = inject(MAT_DIALOG_DATA);
+  readonly data: ClienteResponse = inject(MAT_DIALOG_DATA);
   readonly form: FormGroup;
+
   isSaving = false;
   errorMessage = '';
 
   readonly clienteService = inject(ClienteService);
 
   constructor(private formBuilder: FormBuilder) {
-    const {
-      nome,
-      cpf,
-      email,
-      telefone,
-    } = this.data || {};
+    const { nome, cpf, email, telefone } = this.data || {};
     const { logradouro, numero, complemento, bairro, cidade, estado, cep } =
       this.data?.endereco || {};
 

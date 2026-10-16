@@ -19,7 +19,7 @@ interface ViaCepResponse {
   templateUrl: './endereco-form.html',
 })
 export class EnderecoForm {
-  form = input.required<FormGroup>();
+  readonly form = input.required<FormGroup>();
   readonly lookupError = signal('');
   readonly isLookingUp = signal(false);
 

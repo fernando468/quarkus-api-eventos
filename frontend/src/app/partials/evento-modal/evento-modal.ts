@@ -32,6 +32,7 @@ import {
   TITULO_MAX_LENGTH,
   TITULO_MIN_LENGTH,
 } from '../../types/evento.type';
+import { formatLocalDateTime } from '../../utils/date.util';
 import { EnderecoForm } from '../endereco-form/endereco-form';
 
 @Component({
@@ -42,17 +43,18 @@ import { EnderecoForm } from '../endereco-form/endereco-form';
 })
 export class EventoModal {
   readonly dialogRef = inject(MatDialogRef<EventoModal>);
-  readonly data: EventoResponse | null = inject(MAT_DIALOG_DATA);
+  readonly data: EventoResponse = inject(MAT_DIALOG_DATA);
   readonly form: FormGroup;
-  isSaving = false;
-  errorMessage = '';
 
   readonly eventoService = inject(EventoService);
+
+  isSaving = false;
+  errorMessage = '';
 
   constructor(private formBuilder: FormBuilder) {
     const { titulo, descricao, data, endereco } = this.data || {};
 
-    const dataFormatada = data?.substring(0, 16);
+    const dataFormatada = formatLocalDateTime(data);
 
     this.form = this.formBuilder.group({
       titulo: [titulo || 'Título', this.requiredLength(TITULO_MIN_LENGTH, TITULO_MAX_LENGTH)],

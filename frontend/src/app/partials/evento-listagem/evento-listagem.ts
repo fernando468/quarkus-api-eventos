@@ -7,7 +7,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { EventoService } from '../../services/evento-service';
 import { EventoResponse } from '../../types/evento.type';
-import { formatEndereco } from '../../utils/format.util';
+import { formatEndereco } from '../../utils/endereco.util';
 
 @Component({
   imports: [
@@ -23,13 +23,12 @@ import { formatEndereco } from '../../utils/format.util';
   templateUrl: './evento-listagem.html',
 })
 export class EventoListagem {
-  openDialog = input.required<(evento?: EventoResponse) => void>();
+  readonly openDialog = input.required<(evento?: EventoResponse) => void>();
+  readonly displayedColumns: string[] = ['id', 'titulo', 'descricao', 'data', 'endereco', 'acoes'];
+  readonly dataSource = new MatTableDataSource<EventoResponse>([]);
+  readonly formatEndereco = formatEndereco;
 
-  displayedColumns: string[] = ['id', 'titulo', 'descricao', 'data', 'endereco', 'acoes'];
-  dataSource = new MatTableDataSource<EventoResponse>([]);
   errorMessage = '';
-
-  formatEndereco = formatEndereco;
 
   constructor(private eventoService: EventoService) {
     this.carregarEventos();

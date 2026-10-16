@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { Observable } from 'rxjs';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { IngressoResponse } from '../../types/ingresso.type';
-import { formatCpf } from '../../utils/format.util';
+import { formatCpf } from '../../utils/cpf.util';
 
 export type IngressoConfirmacaoAcaoProps = {
   actionTitle: string;
@@ -21,9 +21,9 @@ export type IngressoConfirmacaoAcaoProps = {
 export class IngressoConfirmacaoAcao {
   readonly dialogRef = inject(MatDialogRef<IngressoConfirmacaoAcao>);
   readonly props: IngressoConfirmacaoAcaoProps = inject(MAT_DIALOG_DATA);
+  readonly formatCpf = formatCpf;
 
   actionTitle: string;
-  formatCpf = formatCpf;
 
   constructor() {
     this.actionTitle = this.props.actionTitle;

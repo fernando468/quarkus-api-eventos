@@ -24,13 +24,13 @@ type TypeField = 'text' | 'password' | 'numeric' | 'email' | 'datetime-local';
   templateUrl: './custom-input.html',
 })
 export class CustomInput {
-  form = input.required<FormGroup>();
-  name = input.required<string>();
-  label = input.required<string>();
-  type = input<TypeField>('text');
-  required = input<boolean>(false);
-  minLength = input<Null<number>>(null);
-  maxLength = input<Null<number>>(null);
+  readonly form = input.required<FormGroup>();
+  readonly name = input.required<string>();
+  readonly label = input.required<string>();
+  readonly type = input<TypeField>('text');
+  readonly required = input<boolean>(false);
+  readonly minLength = input<Null<number>>(null);
+  readonly maxLength = input<Null<number>>(null);
 
   value = '';
 

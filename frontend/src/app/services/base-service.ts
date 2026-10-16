@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 
 @Service()
 export abstract class BaseService<REQUEST, RESPONSE> {
-  protected http = inject(HttpClient);
+  protected readonly http = inject(HttpClient);
   private url: string = '';
 
   criar(request: REQUEST): Observable<RESPONSE> {

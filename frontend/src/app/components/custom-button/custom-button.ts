@@ -8,8 +8,8 @@ import { MatButton, MatButtonAppearance } from '@angular/material/button';
   templateUrl: './custom-button.html',
 })
 export class CustomButton {
-  title = input.required<string>();
-  onClick = input.required<() => void>();
-  variant = input<MatButtonAppearance>('filled');
-  style = input<string>('');
+  readonly title = input.required<string>();
+  readonly onClick = input.required<() => void>();
+  readonly variant = input<MatButtonAppearance>('filled');
+  readonly style = input<string>('');
 }
