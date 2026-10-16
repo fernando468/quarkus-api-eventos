@@ -7,5 +7,6 @@ public record EventoResponseDTO(
     String titulo,
     String descricao,
     LocalDateTime data,
+    Boolean ativo,
     EnderecoResponseDTO endereco) {
 }

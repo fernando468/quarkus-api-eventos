@@ -3,7 +3,7 @@ import { provideHttpClientTesting, HttpTestingController } from '@angular/common
 import { TestBed } from '@angular/core/testing';
 import { BaseService } from './base-service';
 
-describe('BaseService', () => {
+describe('Serviço base', () => {
   let service: BaseService<unknown, unknown>;
   let httpTestingController: HttpTestingController;
 
@@ -19,11 +19,11 @@ describe('BaseService', () => {
     httpTestingController.verify();
   });
 
-  it('should be created', () => {
+  it('deve ser criado', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should use the configured API URL', () => {
+  it('deve usar a URL configurada da API', () => {
     service.urlBase = '/clientes';
     service.buscarTodos().subscribe();
 

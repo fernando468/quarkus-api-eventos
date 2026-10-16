@@ -1,9 +1,32 @@
-<h2 class="title_modal" mat-dialog-title>Evento</h2>
+<h2 class="title_modal" mat-dialog-title>Ingresso</h2>
 <mat-dialog-content>
-  @if (errorMessage) {
-    <p role="alert">{{ errorMessage }}</p>
-  }
-  <form></form>
+  <form>
+    <app-custom-autocomplete
+      [form]="form"
+      name="cliente"
+      label="Cliente"
+      placeholder="Busque por nome ou CPF"
+      [options]="clientes"
+      [displayWith]="displayCliente"
+      [filterFn]="filtrarCliente"
+      [loading]="isLoadingClientes"
+      loadingText="Carregando clientes..."
+      emptyText="Nenhum cliente encontrado"
+    />
+
+    <app-custom-autocomplete
+      [form]="form"
+      name="evento"
+      label="Evento"
+      placeholder="Busque por título ou descrição"
+      [options]="eventos"
+      [displayWith]="displayEvento"
+      [filterFn]="filtrarEvento"
+      [loading]="isLoadingEventos"
+      loadingText="Carregando eventos..."
+      emptyText="Nenhum evento encontrado"
+    />
+  </form>
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="button-group_modal">

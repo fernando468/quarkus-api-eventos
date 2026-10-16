@@ -90,4 +90,9 @@ public class Evento {
         return id;
     }
 
+    public Boolean ativo() {
+        LocalDateTime dataAtual = LocalDateTime.now();
+        return dataAtual.isBefore(this.data);
+    }
+
 }

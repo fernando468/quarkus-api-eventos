@@ -2,10 +2,12 @@ import { Component, input } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { ClienteService } from '../../services/cliente-service';
 import { ClienteResponse } from '../../types/cliente.type';
+import { ErroResponse } from '../../types/erro.type';
 import { formatCpf } from '../../utils/cpf.util';
 import { formatEndereco } from '../../utils/endereco.util';
 import { formatTelefone } from '../../utils/telefone.util';
@@ -17,7 +19,7 @@ import { formatTelefone } from '../../utils/telefone.util';
   templateUrl: './cliente-listagem.html',
 })
 export class ClienteListagem {
-  readonly openDialog = input.required<(cliente?: ClienteResponse) => void>();
+  readonly openDialog = input.required<(cliente: ClienteResponse) => void>();
 
   readonly displayedColumns: string[] = [
     'id',
@@ -33,20 +35,23 @@ export class ClienteListagem {
   readonly formatTelefone = formatTelefone;
   readonly formatEndereco = formatEndereco;
 
-  errorMessage = '';
-
-  constructor(private clienteService: ClienteService) {
+  constructor(
+    private clienteService: ClienteService,
+    private snackBar: MatSnackBar,
+  ) {
     this.carregarClientes();
   }
 
   carregarClientes(): void {
-    this.errorMessage = '';
     this.clienteService.buscarTodos().subscribe({
       next: (clientes) => {
         this.dataSource.data = clientes;
       },
-      error: () => {
-        this.errorMessage = 'Não foi possível carregar os clientes. Tente novamente.';
+      error: (erro: ErroResponse) => {
+        this.snackBar.open(erro.error.mensagem, 'Fechar', {
+          duration: 4000,
+          panelClass: ['api-snackbar--error'],
+        });
       },
     });
   }

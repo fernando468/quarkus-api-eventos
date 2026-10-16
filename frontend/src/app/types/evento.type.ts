@@ -12,6 +12,7 @@ export type EventoResponse = {
   titulo: string;
   descricao: string;
   data: string;
+  ativo: boolean;
   endereco: EnderecoResponse;
 };
 

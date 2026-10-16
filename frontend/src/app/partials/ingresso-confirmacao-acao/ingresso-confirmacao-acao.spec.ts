@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { IngressoConfirmacaoAcao } from './ingresso-confirmacao-acao';
 
-describe('IngressoConfirmacaoAcao', () => {
+describe('Ação de confirmação do ingresso', () => {
   let component: IngressoConfirmacaoAcao;
   let fixture: ComponentFixture<IngressoConfirmacaoAcao>;
   const ingresso = {
@@ -33,7 +33,7 @@ describe('IngressoConfirmacaoAcao', () => {
     await fixture.whenStable();
   });
 
-  it('should create', () => {
+  it('deve ser criada', () => {
     expect(component).toBeTruthy();
   });
 });

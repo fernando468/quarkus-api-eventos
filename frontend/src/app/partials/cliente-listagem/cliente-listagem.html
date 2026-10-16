@@ -9,10 +9,6 @@
     />
   </mat-form-field>
 
-  @if (errorMessage) {
-    <p role="alert">{{ errorMessage }}</p>
-  }
-
   <table mat-table [dataSource]="dataSource" class="mat-shadow-2">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef width="50">ID</th>

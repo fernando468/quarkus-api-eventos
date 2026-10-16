@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CustomInput } from './custom-input';
 
-describe('CustomInput', () => {
+describe('Campo personalizado', () => {
   let component: CustomInput;
   let fixture: ComponentFixture<CustomInput>;
 
@@ -19,7 +19,7 @@ describe('CustomInput', () => {
     await fixture.whenStable();
   });
 
-  it('should create', () => {
+  it('deve ser criado', () => {
     expect(component).toBeTruthy();
   });
 });

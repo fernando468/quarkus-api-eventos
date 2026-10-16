@@ -18,6 +18,7 @@ export class Ingresso {
   openDialog = (ingresso?: IngressoResponse): void => {
     const dialogRef = this.dialog.open<IngressoModal, IngressoResponse, boolean>(IngressoModal, {
       data: ingresso,
+      autoFocus: 'dialog',
     });
 
     dialogRef.afterClosed().subscribe((ingressoCriado) => {

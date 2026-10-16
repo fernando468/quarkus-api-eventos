@@ -4,7 +4,7 @@ import { ClienteService } from '../../services/cliente-service';
 import { ClienteResponse } from '../../types/cliente.type';
 import { ClienteListagem } from './cliente-listagem';
 
-describe('ClienteListagem', () => {
+describe('Listagem de clientes', () => {
   let component: ClienteListagem;
   let fixture: ComponentFixture<ClienteListagem>;
   const buscarTodos = vi.fn(() => of([] as ClienteResponse[]));
@@ -22,11 +22,11 @@ describe('ClienteListagem', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('deve ser criada', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display the client fields returned by the service', async () => {
+  it('deve exibir os dados do cliente retornados pelo serviço', async () => {
     buscarTodos.mockReturnValue(
       of([
         {
@@ -61,7 +61,7 @@ describe('ClienteListagem', () => {
     expect(tableText).toContain('(44) 9 9999-8888');
   });
 
-  it('should request the clients again when reloaded', () => {
+  it('deve buscar os clientes novamente ao recarregar', () => {
     component.carregarClientes();
 
     expect(buscarTodos).toHaveBeenCalledTimes(2);

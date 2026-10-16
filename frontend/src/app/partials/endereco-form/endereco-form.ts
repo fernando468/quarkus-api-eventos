@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, input, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomInput } from '../../components/custom-input/custom-input';
 
 interface ViaCepResponse {
@@ -24,6 +25,7 @@ export class EnderecoForm {
   readonly isLookingUp = signal(false);
 
   private readonly http = inject(HttpClient);
+  private readonly snackBar = inject(MatSnackBar);
 
   searchCep(): void {
     const cep = String(this.form().get('cep')?.value ?? '').replace(/\D/g, '');
@@ -39,6 +41,10 @@ export class EnderecoForm {
         this.isLookingUp.set(false);
         if (address.erro) {
           this.lookupError.set('CEP não encontrado.');
+          this.snackBar.open('CEP não encontrado.', 'Fechar', {
+            duration: 4000,
+            panelClass: ['api-snackbar--error'],
+          });
           return;
         }
 
@@ -50,10 +56,18 @@ export class EnderecoForm {
           complemento: '',
           numero: '',
         });
+        this.snackBar.open('Endereço carregado com sucesso.', 'Fechar', {
+          duration: 4000,
+          panelClass: ['api-snackbar--success'],
+        });
       },
       error: () => {
         this.isLookingUp.set(false);
         this.lookupError.set('Não foi possível buscar o CEP. Tente novamente.');
+        this.snackBar.open('Não foi possível buscar o CEP. Tente novamente.', 'Fechar', {
+          duration: 4000,
+          panelClass: ['api-snackbar--error'],
+        });
       },
     });
   }

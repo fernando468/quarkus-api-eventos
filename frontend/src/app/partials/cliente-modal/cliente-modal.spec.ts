@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { ClienteService } from '../../services/cliente-service';
 import { ClienteModal } from './cliente-modal';
 
-describe('ClienteModal', () => {
+describe('Modal de cliente', () => {
   let component: ClienteModal;
   let fixture: ComponentFixture<ClienteModal>;
   let dialogRef: { close: ReturnType<typeof vi.fn> };
@@ -27,11 +27,11 @@ describe('ClienteModal', () => {
     await fixture.whenStable();
   });
 
-  it('should create', () => {
+  it('deve ser criado', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should keep the modal open and mark fields touched when the form is invalid', () => {
+  it('deve manter o modal aberto e marcar os campos como tocados quando o formulário for inválido', () => {
     component.form.get('nome')?.setValue('');
     component.onConfirm();
 
@@ -40,14 +40,14 @@ describe('ClienteModal', () => {
     expect(dialogRef.close).not.toHaveBeenCalled();
   });
 
-  it('should close with a success result after creating the client', () => {
+  it('deve fechar com sucesso após criar o cliente', () => {
     component.onConfirm();
 
     expect(criarCliente).toHaveBeenCalledOnce();
     expect(dialogRef.close).toHaveBeenCalledWith(true);
   });
 
-  it('should apply minimum and maximum length validators', () => {
+  it('deve validar os comprimentos mínimo e máximo', () => {
     const nome = component.form.get('nome');
     nome?.setValue('ab');
     expect(nome?.hasError('minlength')).toBe(true);

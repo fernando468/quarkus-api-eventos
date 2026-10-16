@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { IngressoResponse } from '../../types/ingresso.type';
@@ -21,6 +22,7 @@ export type IngressoConfirmacaoAcaoProps = {
 export class IngressoConfirmacaoAcao {
   readonly dialogRef = inject(MatDialogRef<IngressoConfirmacaoAcao>);
   readonly props: IngressoConfirmacaoAcaoProps = inject(MAT_DIALOG_DATA);
+  readonly snackBar = inject(MatSnackBar);
   readonly formatCpf = formatCpf;
 
   actionTitle: string;
@@ -43,8 +45,24 @@ export class IngressoConfirmacaoAcao {
   onConfirm = (): void => {
     if (this.props) {
       this.props.onClick().subscribe({
-        next: () => this.dialogRef.close(true),
-        error: () => `Não foi possível ${this.props.actionTitle}. Tente novamente.`,
+        next: () => {
+          const successMessage =
+            this.props.actionTitle === 'Pagar'
+              ? 'Pagamento confirmado com sucesso.'
+              : `Ingresso ${this.props.actionTitle.toLowerCase()} com sucesso.`;
+          this.snackBar.open(successMessage, 'Fechar', {
+            duration: 4000,
+            panelClass: ['api-snackbar--success'],
+          });
+          this.dialogRef.close(true);
+        },
+        error: () => {
+          this.snackBar.open(
+            `Não foi possível ${this.props.actionTitle.toLowerCase()} o ingresso. Tente novamente.`,
+            'Fechar',
+            { duration: 4000, panelClass: ['api-snackbar--error'] },
+          );
+        },
       });
     }
   };

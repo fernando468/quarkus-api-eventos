@@ -20,3 +20,11 @@
   text-align: center;
   font-weight: 500;
 }
+
+.api-snackbar--success .mdc-snackbar__surface {
+  background-color: #1b5e20;
+}
+
+.api-snackbar--error .mdc-snackbar__surface {
+  background-color: #b71c1c;
+}

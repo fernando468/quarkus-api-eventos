@@ -34,6 +34,7 @@ public class EventoMapper {
             evento.getTitulo(),
             evento.getDescricao(),
             evento.getData(),
+            evento.ativo(),
             EnderecoMapper.toResponseDTO(evento.getEndereco())
         );
     }

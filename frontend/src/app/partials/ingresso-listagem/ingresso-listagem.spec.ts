@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IngressoListagem } from './ingresso-listagem';
 
-describe('IngressoListagem', () => {
+describe('Listagem de ingressos', () => {
   let component: IngressoListagem;
   let fixture: ComponentFixture<IngressoListagem>;
 
@@ -15,7 +15,7 @@ describe('IngressoListagem', () => {
     await fixture.whenStable();
   });
 
-  it('should create', () => {
+  it('deve ser criada', () => {
     expect(component).toBeTruthy();
   });
 });

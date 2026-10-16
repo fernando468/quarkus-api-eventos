@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test-no-watch": "npm test -- --watch=false"
   },
   "engines": {
     "node": ">=24.21.0",

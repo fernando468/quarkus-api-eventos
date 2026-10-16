@@ -4,7 +4,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { FormControl, FormGroup } from '@angular/forms';
 import { EnderecoForm } from './endereco-form';
 
-describe('EnderecoForm', () => {
+describe('Formulário de endereço', () => {
   let component: EnderecoForm;
   let fixture: ComponentFixture<EnderecoForm>;
   let httpTestingController: HttpTestingController;
@@ -33,15 +33,15 @@ describe('EnderecoForm', () => {
     await fixture.whenStable();
   });
 
-  it('should create', () => {
+  it('deve ser criado', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render all address inputs', () => {
+  it('deve exibir todos os campos de endereço', () => {
     expect(fixture.nativeElement.querySelectorAll('app-custom-input').length).toBe(7);
   });
 
-  it('should look up the CEP and fill in the address fields', () => {
+  it('deve consultar o CEP e preencher os campos de endereço', () => {
     fixture.componentInstance.form().get('cep')?.setValue('87000-000');
 
     fixture.componentInstance.searchCep();
@@ -67,7 +67,7 @@ describe('EnderecoForm', () => {
     httpTestingController.verify();
   });
 
-  it('should display an error for an invalid CEP without sending a request', () => {
+  it('deve exibir um erro para CEP inválido sem enviar uma requisição', () => {
     fixture.componentInstance.form().get('cep')?.setValue('123');
 
     fixture.componentInstance.searchCep();
@@ -76,7 +76,7 @@ describe('EnderecoForm', () => {
     httpTestingController.expectNone('https://viacep.com.br/ws/123/json/');
   });
 
-  it('should display an error when the CEP is not found', () => {
+  it('deve exibir um erro quando o CEP não for encontrado', () => {
     fixture.componentInstance.form().get('cep')?.setValue('87000000');
 
     fixture.componentInstance.searchCep();

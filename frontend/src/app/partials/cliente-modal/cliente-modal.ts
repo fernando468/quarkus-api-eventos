@@ -6,6 +6,7 @@ import {
   MatDialogContent,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { CustomInput } from '../../components/custom-input/custom-input';
 import { ClienteService } from '../../services/cliente-service';
@@ -36,6 +37,7 @@ import {
   NUMERO_MAX_LENGTH,
   NUMERO_MIN_LENGTH,
 } from '../../types/endereco.type';
+import { ErroResponse } from '../../types/erro.type';
 import { EnderecoForm } from '../endereco-form/endereco-form';
 
 @Component({
@@ -49,8 +51,8 @@ export class ClienteModal {
   readonly data: ClienteResponse = inject(MAT_DIALOG_DATA);
   readonly form: FormGroup;
 
+  readonly snackBar = inject(MatSnackBar);
   isSaving = false;
-  errorMessage = '';
 
   readonly clienteService = inject(ClienteService);
 
@@ -108,7 +110,6 @@ export class ClienteModal {
     }
 
     this.isSaving = true;
-    this.errorMessage = '';
 
     const clienteId = this.data?.id;
     const method = clienteId
@@ -116,10 +117,20 @@ export class ClienteModal {
       : this.clienteService.criar(this.form.getRawValue());
 
     method.subscribe({
-      next: () => this.dialogRef.close(true),
-      error: () => {
+      next: () => {
+        this.snackBar.open(
+          clienteId ? 'Cliente atualizado com sucesso.' : 'Cliente cadastrado com sucesso.',
+          'Fechar',
+          { duration: 4000, panelClass: ['api-snackbar--success'] },
+        );
+        this.dialogRef.close(true);
+      },
+      error: (erro: ErroResponse) => {
         this.isSaving = false;
-        this.errorMessage = 'Não foi possível salvar o cliente. Tente novamente.';
+        this.snackBar.open(erro.error.mensagem, 'Fechar', {
+          duration: 4000,
+          panelClass: ['api-snackbar--error'],
+        });
       },
     });
   };

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderPages } from './header-pages';
 
-describe('HeaderPages', () => {
+describe('Cabeçalho das páginas', () => {
   let component: HeaderPages;
   let fixture: ComponentFixture<HeaderPages>;
 
@@ -17,7 +17,7 @@ describe('HeaderPages', () => {
     await fixture.whenStable();
   });
 
-  it('should create', () => {
+  it('deve ser criado', () => {
     expect(component).toBeTruthy();
   });
 });

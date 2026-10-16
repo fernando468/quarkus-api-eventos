@@ -1,0 +1,26 @@
+<mat-form-field appearance="outline" class="autocomplete-field">
+  <mat-label>{{ label() }}</mat-label>
+  <input
+    matInput
+    [formControl]="control()"
+    [matAutocomplete]="autocomplete"
+    [placeholder]="placeholder()"
+    (blur)="onBlur()"
+  />
+  <mat-autocomplete #autocomplete="matAutocomplete" [displayWith]="displayWith()">
+    @for (option of filteredOptions | async; track $index) {
+      <mat-option [disabled]="isDisabled(option)" [value]="option"
+        >{{ displayWith()(option) }}
+      </mat-option>
+    } @empty {
+      @if (openOnFocus() || hasSearchTerm()) {
+        <mat-option disabled>
+          {{ loading() ? loadingText() : emptyText() }}
+        </mat-option>
+      }
+    }
+  </mat-autocomplete>
+  @if (form().get(name())?.errors) {
+    <mat-error>{{ message() }}</mat-error>
+  }
+</mat-form-field>

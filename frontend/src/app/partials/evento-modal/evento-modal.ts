@@ -6,6 +6,7 @@ import {
   MatDialogContent,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { CustomInput } from '../../components/custom-input/custom-input';
 import { EventoService } from '../../services/evento-service';
@@ -25,6 +26,7 @@ import {
   NUMERO_MAX_LENGTH,
   NUMERO_MIN_LENGTH,
 } from '../../types/endereco.type';
+import { ErroResponse } from '../../types/erro.type';
 import {
   DESCRICAO_MAX_LENGTH,
   DESCRICAO_MIN_LENGTH,
@@ -47,9 +49,9 @@ export class EventoModal {
   readonly form: FormGroup;
 
   readonly eventoService = inject(EventoService);
+  readonly snackBar = inject(MatSnackBar);
 
   isSaving = false;
-  errorMessage = '';
 
   constructor(private formBuilder: FormBuilder) {
     const { titulo, descricao, data, endereco } = this.data || {};
@@ -108,7 +110,6 @@ export class EventoModal {
     }
 
     this.isSaving = true;
-    this.errorMessage = '';
 
     const eventoId = this.data?.id;
     const method = eventoId
@@ -116,9 +117,20 @@ export class EventoModal {
       : this.eventoService.criar(this.form.getRawValue());
 
     method.subscribe({
-      next: () => this.dialogRef.close(true),
-      error: () => {
+      next: () => {
+        this.snackBar.open(
+          eventoId ? 'Evento atualizado com sucesso.' : 'Evento cadastrado com sucesso.',
+          'Fechar',
+          { duration: 4000, panelClass: ['api-snackbar--success'] },
+        );
+        this.dialogRef.close(true);
+      },
+      error: (erro: ErroResponse) => {
         this.isSaving = false;
+        this.snackBar.open(erro.error.mensagem, 'Fechar', {
+          duration: 4000,
+          panelClass: ['api-snackbar--error'],
+        });
       },
     });
   };

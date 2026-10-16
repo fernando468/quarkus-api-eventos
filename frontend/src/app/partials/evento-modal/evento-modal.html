@@ -1,8 +1,5 @@
 <h2 class="title_modal" mat-dialog-title>Evento</h2>
 <mat-dialog-content>
-  @if (errorMessage) {
-    <p role="alert">{{ errorMessage }}</p>
-  }
   <form>
     <app-custom-input [form]="form" name="titulo" label="Título" />
     <app-custom-input [form]="form" name="descricao" label="Descrição" />

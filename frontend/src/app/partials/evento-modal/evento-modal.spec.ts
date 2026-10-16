@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { EventoService } from '../../services/evento-service';
 import { EventoModal } from './evento-modal';
 
-describe('EventoModal', () => {
+describe('Modal de evento', () => {
   let component: EventoModal;
   let fixture: ComponentFixture<EventoModal>;
   let dialogRef: { close: ReturnType<typeof vi.fn> };
@@ -25,7 +25,7 @@ describe('EventoModal', () => {
     await fixture.whenStable();
   });
 
-  it('should create', () => {
+  it('deve ser criado', () => {
     expect(component).toBeTruthy();
   });
 });

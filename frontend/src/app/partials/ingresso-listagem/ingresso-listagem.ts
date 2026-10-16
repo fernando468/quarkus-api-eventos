@@ -5,11 +5,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { IngressoService } from '../../services/ingresso-service';
 import { EnumResponse } from '../../types/enum.type';
+import { ErroResponse } from '../../types/erro.type';
 import { IngressoResponse } from '../../types/ingresso.type';
 import { formatCpf } from '../../utils/cpf.util';
 import {
@@ -32,12 +34,11 @@ type BotaoProps = {
   templateUrl: './ingresso-listagem.html',
 })
 export class IngressoListagem {
-  readonly openDialog = input.required<(ingresso?: IngressoResponse) => void>();
+  readonly openDialog = input.required<(ingresso: IngressoResponse) => void>();
   readonly displayedColumns: string[] = ['id', 'status', 'cliente', 'evento', 'acoes'];
   readonly dataSource = new MatTableDataSource<IngressoResponse>([]);
   readonly dialog = inject(MatDialog);
-
-  errorMessage = '';
+  readonly snackBar = inject(MatSnackBar);
 
   constructor(
     private ingressoService: IngressoService,
@@ -57,6 +58,7 @@ export class IngressoListagem {
         data: ingresso,
         onClick: () => item.onClick(),
       },
+      autoFocus: 'dialog',
     });
 
     dialogRef.afterClosed().subscribe((ingressoCriado) => {
@@ -68,13 +70,15 @@ export class IngressoListagem {
   };
 
   carregarIngressos(): void {
-    this.errorMessage = '';
     this.ingressoService.buscarTodos().subscribe({
       next: (ingressos) => {
         this.dataSource.data = ingressos;
       },
-      error: () => {
-        this.errorMessage = 'Não foi possível carregar os ingressos. Tente novamente.';
+      error: (erro: ErroResponse) => {
+        this.snackBar.open(erro.error.mensagem, 'Fechar', {
+          duration: 4000,
+          panelClass: ['api-snackbar--error'],
+        });
       },
     });
   }

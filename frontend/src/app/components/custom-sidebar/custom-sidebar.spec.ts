@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { CustomSidebar } from './custom-sidebar';
 
-describe('CustomSidebar', () => {
+describe('Menu lateral personalizado', () => {
   let component: CustomSidebar;
   let fixture: ComponentFixture<CustomSidebar>;
 
@@ -17,7 +17,7 @@ describe('CustomSidebar', () => {
     await fixture.whenStable();
   });
 
-  it('should create', () => {
+  it('deve ser criado', () => {
     expect(component).toBeTruthy();
   });
 });
