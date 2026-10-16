@@ -1,0 +1,24 @@
+<h2 class="title_modal" mat-dialog-title>Deseja realmente {{ actionTitle }} o ingresso?</h2>
+<mat-dialog-content>
+  <p><strong>Ingresso</strong>: {{ props.data.id }}</p>
+  <p>
+    <strong>Cliente</strong>: {{ props.data.cliente.nome }} -
+    {{ formatCpf(props.data.cliente.cpf) }}
+  </p>
+  <p><strong>Evento</strong>: {{ props.data.evento.titulo }}</p>
+  <p><strong>Data</strong>: {{ props.data.evento.data | date: 'dd/MM/yyyy HH:mm' }}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="button-group_modal">
+    <div>
+      <app-custom-button
+        variant="outlined"
+        title="Cancelar"
+        [onClick]="onCancel"
+      ></app-custom-button>
+    </div>
+    <div>
+      <app-custom-button title="Confirmar" [onClick]="onConfirm"> </app-custom-button>
+    </div>
+  </div>
+</mat-dialog-actions>

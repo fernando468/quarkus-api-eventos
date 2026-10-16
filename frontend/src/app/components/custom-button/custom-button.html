@@ -1,1 +1,3 @@
-<button [matButton]="variant()" (click)="onClick()()">{{ title() }}</button>
+<button [matButton]="variant()" (click)="onClick()()" [style]="style()" color="accent">
+  {{ title() }}
+</button>

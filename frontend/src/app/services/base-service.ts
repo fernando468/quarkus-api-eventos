@@ -16,8 +16,8 @@ export abstract class BaseService<REQUEST, RESPONSE> {
     return this.http.put<RESPONSE>(`${this.endpoint}/${id}`, request);
   }
 
-  excluir(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.endpoint}/${id}`);
+  excluir(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.endpoint}/${id}`);
   }
 
   buscarPorId(id: number): Observable<RESPONSE> {
@@ -28,15 +28,15 @@ export abstract class BaseService<REQUEST, RESPONSE> {
     return this.http.get<RESPONSE[]>(this.endpoint);
   }
 
-  private get endpoint(): string {
+  protected get endpoint(): string {
     return `${environment.apiUrl}${this.url}`;
-  }
-
-  get urlBase(): string {
-    return this.url;
   }
 
   set urlBase(url: string) {
     this.url = url;
+  }
+
+  get urlBase(): string {
+    return this.url;
   }
 }

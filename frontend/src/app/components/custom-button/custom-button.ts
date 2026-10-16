@@ -11,4 +11,5 @@ export class CustomButton {
   title = input.required<string>();
   onClick = input.required<() => void>();
   variant = input<MatButtonAppearance>('filled');
+  style = input<string>('');
 }
