@@ -1,7 +1,5 @@
 package resources.dto.response;
 
-import domain.model.valueobject.StatusIngressoEnum;
-
 public record IngressoResponseDTO(
     Long id,
     EnumResponseDTO status,

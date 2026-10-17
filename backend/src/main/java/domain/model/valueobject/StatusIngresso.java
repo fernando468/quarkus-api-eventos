@@ -1,6 +1,6 @@
 package domain.model.valueobject;
 
-public enum StatusIngressoEnum implements IEnum {
+public enum StatusIngresso implements IEnum {
     AGUARDANDO_PAGAMENTO("Aguardando Pagamento"),
     CANCELADO("Cancelado"),
     PAGAMENTO_CONFIRMADO("Pagamento Confirmado"),
@@ -8,7 +8,7 @@ public enum StatusIngressoEnum implements IEnum {
 
     private final String descricao;
 
-    StatusIngressoEnum(String descricao) {
+    StatusIngresso(String descricao) {
         this.descricao = descricao;
     }
 

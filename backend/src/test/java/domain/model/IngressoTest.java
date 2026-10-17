@@ -1,7 +1,7 @@
 package domain.model;
 
 import domain.exception.ValidacaoException;
-import domain.model.valueobject.StatusIngressoEnum;
+import domain.model.valueobject.StatusIngresso;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -24,7 +24,7 @@ public class IngressoTest {
 
         assertEquals(1L, ingresso.getCliente().getId());
         assertEquals(1L, ingresso.getEvento().getId());
-        assertEquals(StatusIngressoEnum.AGUARDANDO_PAGAMENTO, ingresso.getStatus());
+        assertEquals(StatusIngresso.AGUARDANDO_PAGAMENTO, ingresso.getStatus());
     }
 
     @Test
@@ -51,8 +51,8 @@ public class IngressoTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = StatusIngressoEnum.class, names = { "AGUARDANDO_PAGAMENTO" })
-    public void deveConfirmarPagamentoIngresso(StatusIngressoEnum status) throws NoSuchFieldException, IllegalAccessException {
+    @EnumSource(value = StatusIngresso.class, names = { "AGUARDANDO_PAGAMENTO" })
+    public void deveConfirmarPagamentoIngresso(StatusIngresso status) throws NoSuchFieldException, IllegalAccessException {
         Cliente cliente = new Cliente();
         Evento evento = new Evento();
 
@@ -62,12 +62,12 @@ public class IngressoTest {
 
         ingresso.confirmarPagamento();
 
-        assertEquals(StatusIngressoEnum.PAGAMENTO_CONFIRMADO, ingresso.getStatus());
+        assertEquals(StatusIngresso.PAGAMENTO_CONFIRMADO, ingresso.getStatus());
     }
 
     @ParameterizedTest
-    @EnumSource(value = StatusIngressoEnum.class, names = { "PAGAMENTO_CONFIRMADO" })
-    public void deveFinalizarIngresso(StatusIngressoEnum status) throws NoSuchFieldException, IllegalAccessException {
+    @EnumSource(value = StatusIngresso.class, names = { "PAGAMENTO_CONFIRMADO" })
+    public void deveFinalizarIngresso(StatusIngresso status) throws NoSuchFieldException, IllegalAccessException {
         Cliente cliente = new Cliente();
         Evento evento = new Evento();
 
@@ -77,12 +77,12 @@ public class IngressoTest {
 
         ingresso.finalizar();
 
-        assertEquals(StatusIngressoEnum.FINALIZADO, ingresso.getStatus());
+        assertEquals(StatusIngresso.FINALIZADO, ingresso.getStatus());
     }
 
     @ParameterizedTest
-    @EnumSource(value = StatusIngressoEnum.class, names = { "AGUARDANDO_PAGAMENTO", "PAGAMENTO_CONFIRMADO" })
-    public void deveCancelarIngresso(StatusIngressoEnum status) throws NoSuchFieldException, IllegalAccessException {
+    @EnumSource(value = StatusIngresso.class, names = { "AGUARDANDO_PAGAMENTO", "PAGAMENTO_CONFIRMADO" })
+    public void deveCancelarIngresso(StatusIngresso status) throws NoSuchFieldException, IllegalAccessException {
         Cliente cliente = new Cliente();
         Evento evento = new Evento();
 
@@ -92,13 +92,13 @@ public class IngressoTest {
 
         ingresso.cancelar();
 
-        assertEquals(StatusIngressoEnum.CANCELADO, ingresso.getStatus());
+        assertEquals(StatusIngresso.CANCELADO, ingresso.getStatus());
     }
 
 
     @ParameterizedTest
-    @EnumSource(value = StatusIngressoEnum.class, names = { "FINALIZADO", "CANCELADO" })
-    public void deveOcorrerErroAoCancelarIngresso(StatusIngressoEnum status) throws NoSuchFieldException, IllegalAccessException {
+    @EnumSource(value = StatusIngresso.class, names = { "FINALIZADO", "CANCELADO" })
+    public void deveOcorrerErroAoCancelarIngresso(StatusIngresso status) throws NoSuchFieldException, IllegalAccessException {
         Cliente cliente = new Cliente();
         Evento evento = new Evento();
 
@@ -113,8 +113,8 @@ public class IngressoTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = StatusIngressoEnum.class, names = { "AGUARDANDO_PAGAMENTO", "CANCELADO", "FINALIZADO" })
-    public void deveOcorrerErroAoFinalizarIngresso(StatusIngressoEnum status) throws NoSuchFieldException, IllegalAccessException {
+    @EnumSource(value = StatusIngresso.class, names = { "AGUARDANDO_PAGAMENTO", "CANCELADO", "FINALIZADO" })
+    public void deveOcorrerErroAoFinalizarIngresso(StatusIngresso status) throws NoSuchFieldException, IllegalAccessException {
         Cliente cliente = new Cliente();
         Evento evento = new Evento();
 
@@ -129,8 +129,8 @@ public class IngressoTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = StatusIngressoEnum.class, names = { "PAGAMENTO_CONFIRMADO", "CANCELADO", "FINALIZADO" })
-    public void deveOcorrerErroAoConfirmarPagamentoIngresso(StatusIngressoEnum status) throws NoSuchFieldException, IllegalAccessException {
+    @EnumSource(value = StatusIngresso.class, names = { "PAGAMENTO_CONFIRMADO", "CANCELADO", "FINALIZADO" })
+    public void deveOcorrerErroAoConfirmarPagamentoIngresso(StatusIngresso status) throws NoSuchFieldException, IllegalAccessException {
         Cliente cliente = new Cliente();
         Evento evento = new Evento();
 
