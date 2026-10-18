@@ -1,6 +1,5 @@
 package resources;
 
-import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import org.jboss.resteasy.reactive.RestResponse;
@@ -14,8 +13,11 @@ import java.util.List;
 
 @Path("/clientes")
 public class ClienteResource {
-    @Inject
-    ClienteService clienteService;
+    private final ClienteService clienteService;
+
+    public ClienteResource(ClienteService clienteService) {
+        this.clienteService = clienteService;
+    }
 
     @POST
     public RestResponse<ClienteResponseDTO> criar(@Valid ClienteRequestDTO clienteRequestDTO) {

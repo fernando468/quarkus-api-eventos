@@ -4,7 +4,6 @@ import domain.exception.EntidadeJaExisteException;
 import domain.exception.EntidadeNaoEncontradaException;
 import domain.model.Cliente;
 import domain.repository.ClienteRepository;
-import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import resources.dto.request.ClienteRequestDTO;
 import resources.mapper.ClienteMapper;
@@ -14,8 +13,11 @@ import java.util.List;
 
 @ApplicationScoped
 public class ClienteService {
-    @Inject
-    ClienteRepository clienteRepository;
+    private final ClienteRepository clienteRepository;
+
+    public ClienteService(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
+    }
 
     @Transactional
     public Cliente criar(ClienteRequestDTO clienteRequestDTO) {

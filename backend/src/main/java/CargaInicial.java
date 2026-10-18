@@ -20,14 +20,19 @@ import java.util.List;
 
 @ApplicationScoped
 public class CargaInicial {
-    @Inject
-    ClienteRepository clienteRepository;
+    private final ClienteRepository clienteRepository;
 
-    @Inject
-    EventoRepository eventoRepository;
+    private final EventoRepository eventoRepository;
 
-    @Inject
-    IngressoRepository ingressoRepository;
+    private final IngressoRepository ingressoRepository;
+
+    public CargaInicial(ClienteRepository clienteRepository,
+                        EventoRepository eventoRepository,
+                        IngressoRepository ingressoRepository) {
+        this.clienteRepository = clienteRepository;
+        this.eventoRepository = eventoRepository;
+        this.ingressoRepository = ingressoRepository;
+    }
 
     @Transactional
     void iniciar(@Observes StartupEvent event) {

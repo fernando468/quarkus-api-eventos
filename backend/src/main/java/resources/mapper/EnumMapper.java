@@ -1,6 +1,6 @@
 package resources.mapper;
 
-import domain.model.valueobject.IEnum;
+import domain.shared.IEnum;
 import resources.dto.response.EnumResponseDTO;
 
 public class EnumMapper {

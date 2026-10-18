@@ -13,8 +13,11 @@ import java.util.List;
 
 @ApplicationScoped
 public class EventoService {
-    @Inject
-    EventoRepository eventoRepository;
+    private final EventoRepository eventoRepository;
+
+    public EventoService(EventoRepository eventoRepository) {
+        this.eventoRepository = eventoRepository;
+    }
 
     @Transactional
     public Evento criar(EventoRequestDTO clienteRequestDTO) {

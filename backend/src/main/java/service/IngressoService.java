@@ -17,14 +17,19 @@ import java.util.List;
 
 @ApplicationScoped
 public class IngressoService {
-    @Inject
-    IngressoRepository ingressoRepository;
+    private final IngressoRepository ingressoRepository;
 
-    @Inject
-    ClienteService clienteService;
+    private final ClienteService clienteService;
 
-    @Inject
-    EventoService eventoService;
+    private final EventoService eventoService;
+
+    public IngressoService(IngressoRepository ingressoRepository,
+                           ClienteService clienteService,
+                           EventoService eventoService) {
+        this.ingressoRepository = ingressoRepository;
+        this.clienteService = clienteService;
+        this.eventoService = eventoService;
+    }
 
     @Transactional
     public IngressoResponseDTO criar(IngressoRequestDTO ingressoRequestDTO) {

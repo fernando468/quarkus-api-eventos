@@ -1,4 +1,4 @@
-package domain.model.valueobject;
+package domain.shared;
 
 public interface IEnum {
     Enum<?> getEnum();

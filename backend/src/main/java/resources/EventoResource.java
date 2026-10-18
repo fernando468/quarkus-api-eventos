@@ -1,9 +1,7 @@
 package resources;
 
-import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Response;
 import org.jboss.resteasy.reactive.RestResponse;
 import resources.dto.request.EventoRequestDTO;
 import resources.dto.response.EventoResponseDTO;
@@ -15,8 +13,11 @@ import java.util.List;
 
 @Path("/eventos")
 public class EventoResource {
-    @Inject
-    EventoService eventoService;
+    private final EventoService eventoService;
+
+    public EventoResource(EventoService eventoService) {
+        this.eventoService = eventoService;
+    }
 
     @POST
     public RestResponse<EventoResponseDTO> criar(@Valid EventoRequestDTO eventoRequestDTO) {

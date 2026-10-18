@@ -1,5 +1,7 @@
 package domain.model.valueobject;
 
+import domain.shared.IEnum;
+
 public enum StatusIngresso implements IEnum {
     AGUARDANDO_PAGAMENTO("Aguardando Pagamento"),
     CANCELADO("Cancelado"),

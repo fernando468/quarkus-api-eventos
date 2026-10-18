@@ -14,8 +14,11 @@ import java.util.List;
 
 @Path("/ingressos")
 public class IngressoResource {
-    @Inject
-    IngressoService ingressoService;
+    private final IngressoService ingressoService;
+
+    public IngressoResource(IngressoService ingressoService) {
+        this.ingressoService = ingressoService;
+    }
 
     @POST
     public RestResponse<IngressoResponseDTO> criarIngresso(@Valid IngressoRequestDTO ingressoRequestDTO) {
