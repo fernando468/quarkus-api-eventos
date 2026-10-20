@@ -81,12 +81,13 @@
 # https://rh-openjdk.github.io/redhat-openjdk-containers/
 ###
 
-FROM registry.access.redhat.com/ubi9/openjdk-25-runtime:1.24
+FROM maven:3.9-eclipse-temurin-25 AS build
 
 WORKDIR /project
 COPY . .
 RUN chmod +x mvnw && ./mvnw package -DskipTests
 
+FROM registry.access.redhat.com/ubi9/openjdk-25-runtime:1.24
 
 ENV LANGUAGE='en_US:en'
 
