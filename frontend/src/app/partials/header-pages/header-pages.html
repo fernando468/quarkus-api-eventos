@@ -1,6 +1,9 @@
 <div class="container">
   <div class="box-header">
     <h1>{{ title() }}</h1>
+    @if (isProduction) {
+      <h1>Aguarde o backend ser inicializado...</h1>
+    }
   </div>
   <app-custom-button title="+ Novo {{ title() }}" [onClick]="onClick()"> </app-custom-button>
 </div>

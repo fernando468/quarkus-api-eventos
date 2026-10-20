@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { CustomButton } from '../../components/custom-button/custom-button';
 
 @Component({
@@ -10,4 +11,5 @@ import { CustomButton } from '../../components/custom-button/custom-button';
 export class HeaderPages {
   readonly title = input.required<string>();
   readonly onClick = input.required<() => void>();
+  readonly isProduction = environment.production;
 }
