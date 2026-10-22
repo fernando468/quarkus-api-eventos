@@ -1,31 +1,21 @@
 package resources.mapper;
 
 import domain.model.Cliente;
-import resources.dto.request.ClienteRequestDTO;
+import resources.dto.request.RegistroRequestDTO;
 import resources.dto.response.ClienteResponseDTO;
 
 import java.util.List;
 
 public class ClienteMapper {
-    public static Cliente toEntity(ClienteRequestDTO clienteRequestDTO) {
+    public static Cliente toEntity(RegistroRequestDTO registroRequestDTO) {
         return new Cliente(
-            clienteRequestDTO.nome(),
-            EmailMapper.toEmbeddable(clienteRequestDTO.email()),
-            TelefoneMapper.toEmbeddable(clienteRequestDTO.telefone()),
-            CpfMapper.toEmbeddable(clienteRequestDTO.cpf()),
-            EnderecoMapper.toEntity(clienteRequestDTO.endereco())
+                registroRequestDTO.nome(),
+                EmailMapper.toEmbeddable(registroRequestDTO.email()),
+                TelefoneMapper.toEmbeddable(registroRequestDTO.telefone()),
+                CpfMapper.toEmbeddable(registroRequestDTO.cpf()),
+                EnderecoMapper.toEntity(registroRequestDTO.endereco()),
+                registroRequestDTO.senha()
         );
-    }
-
-    public static Cliente toUpdateEntity(ClienteRequestDTO clienteRequestDTO, Cliente cliente) {
-        cliente.atualizar(
-            clienteRequestDTO.nome(),
-            EmailMapper.toEmbeddable(clienteRequestDTO.email()),
-            TelefoneMapper.toEmbeddable(clienteRequestDTO.telefone()),
-            CpfMapper.toEmbeddable(clienteRequestDTO.cpf()),
-            EnderecoMapper.toUpdateEntity(clienteRequestDTO.endereco(), cliente.getEndereco())
-        );
-        return cliente;
     }
 
     public static ClienteResponseDTO toResponseDTO(Cliente cliente) {

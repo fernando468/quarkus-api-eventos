@@ -1,42 +1,21 @@
 package resources;
 
-import jakarta.validation.Valid;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
 import org.jboss.resteasy.reactive.RestResponse;
-import resources.dto.request.ClienteRequestDTO;
 import resources.dto.response.ClienteResponseDTO;
 import resources.mapper.ClienteMapper;
 import service.ClienteService;
 
-import java.net.URI;
 import java.util.List;
 
 @Path("/clientes")
+@RolesAllowed("user")
 public class ClienteResource {
     private final ClienteService clienteService;
 
     public ClienteResource(ClienteService clienteService) {
         this.clienteService = clienteService;
-    }
-
-    @POST
-    public RestResponse<ClienteResponseDTO> criar(@Valid ClienteRequestDTO clienteRequestDTO) {
-        ClienteResponseDTO clienteResponseDTO = ClienteMapper.toResponseDTO(clienteService.criar(clienteRequestDTO));
-
-        URI uri = URI.create("/clientes/" + clienteResponseDTO.id());
-
-        return RestResponse
-                .ResponseBuilder
-                .create(RestResponse.Status.CREATED, clienteResponseDTO)
-                .header("Location", uri)
-                .build();
-    }
-
-    @PUT
-    @Path("/{id}")
-    public RestResponse<ClienteResponseDTO> atualizar(@PathParam("id") Long id, @Valid ClienteRequestDTO clienteRequestDTO) {
-        ClienteResponseDTO clienteResponseDTO = ClienteMapper.toResponseDTO(clienteService.atualizar(id, clienteRequestDTO));
-        return RestResponse.ok(clienteResponseDTO);
     }
 
     @GET

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import resources.dto.request.ClienteRequestDTO;
+import resources.dto.request.RegistroRequestDTO;
 import utils.ClienteUtilsTest;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,10 +25,10 @@ public class ClienteServiceTest {
 
     @Test
     public void deveCriarUsuarioComSucesso() {
-        ClienteRequestDTO clienteRequestDTO = ClienteUtilsTest.criarClienteRequestDTO();
-        when(clienteRepository.findByCpf(clienteRequestDTO.cpf())).thenReturn(null);
+        RegistroRequestDTO registroRequestDTO = ClienteUtilsTest.criarClienteRequestDTO();
+        when(clienteRepository.findByCpf(registroRequestDTO.cpf())).thenReturn(null);
 
-        Cliente clienteSalvo = clienteService.criar(clienteRequestDTO);
+        Cliente clienteSalvo = clienteService.criar(registroRequestDTO);
 
         assertNotNull(clienteSalvo);
         assertEquals("José da Silva", clienteSalvo.getNome());
@@ -50,8 +50,8 @@ public class ClienteServiceTest {
 
     @Test
     public void deveOcorrerErroQuandoClienteJaExiste() {
-        ClienteRequestDTO clienteRequestDTO = ClienteUtilsTest.criarClienteRequestDTO();
-        when(clienteRepository.findByCpf(clienteRequestDTO.cpf())).thenReturn(ClienteUtilsTest.criarClienteToEntity());
+        RegistroRequestDTO registroRequestDTO = ClienteUtilsTest.criarClienteRequestDTO();
+        when(clienteRepository.findByCpf(registroRequestDTO.cpf())).thenReturn(ClienteUtilsTest.criarClienteToEntity());
 
         EntidadeJaExisteException entidadeJaExisteException = assertThrows(EntidadeJaExisteException.class, () -> {
             clienteService.criar(ClienteUtilsTest.criarClienteRequestDTO());

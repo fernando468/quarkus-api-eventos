@@ -47,7 +47,8 @@ public class CargaInicial {
                 new Email("jose@email.com"),
                 new Telefone("44900001111"),
                 new Cpf("99426954007"),
-                new Endereco("87050000", "Avenida Brasil", "100", "Apartamento", "Centro", "Maringá", "PR")
+                new Endereco("87050000", "Avenida Brasil", "100", "Apartamento", "Centro", "Maringá", "PR"),
+                "12345678"
         );
 
         Cliente cliente2 = new Cliente(
@@ -55,7 +56,8 @@ public class CargaInicial {
                 new Email("maria@email.com"),
                 new Telefone("44900002222"),
                 new Cpf("52998224725"),
-                new Endereco("87013000", "Rua Santos Dumont", "250", "Casa Frente", "Zona 01", "Maringá", "PR")
+                new Endereco("87013000", "Rua Santos Dumont", "250", "Casa Frente", "Zona 01", "Maringá", "PR"),
+                "12345678"
         );
 
         Cliente cliente3 = new Cliente(
@@ -63,7 +65,8 @@ public class CargaInicial {
                 new Email("pedro@email.com"),
                 new Telefone("4411112222"),
                 new Cpf("11144477735"),
-                new Endereco("87020025", "Avenida Colombo", "1444", "Apartamento 302", "Zona 07", "Maringá", "PR")
+                new Endereco("87020025", "Avenida Colombo", "1444", "Apartamento 302", "Zona 07", "Maringá", "PR"),
+                "12345678"
         );
 
         Cliente cliente4 = new Cliente(
@@ -71,7 +74,8 @@ public class CargaInicial {
                 new Email("ana@email.com"),
                 new Telefone("4400004444"),
                 new Cpf("12345678909"),
-                new Endereco("87030120", "Rua Neo Alves Martins", "1500 A", "Casa", "Zona 01", "Maringá", "PR")
+                new Endereco("87030120", "Rua Neo Alves Martins", "1500 A", "Casa", "Zona 01", "Maringá", "PR"),
+                "12345678"
         );
 
         Cliente cliente5 = new Cliente(
@@ -79,7 +83,8 @@ public class CargaInicial {
                 new Email("lucas@email.com"),
                 new Telefone("4466665555"),
                 new Cpf("98765432100"),
-                new Endereco("87040000", "Avenida Mandacaru", "800", "Fundos", "Jardim Paris", "Maringá", "PR")
+                new Endereco("87040000", "Avenida Mandacaru", "800", "Fundos", "Jardim Paris", "Maringá", "PR"),
+                "12345678"
         );
 
         List<Cliente> listaClientes = List.of(

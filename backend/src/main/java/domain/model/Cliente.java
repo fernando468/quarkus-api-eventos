@@ -4,6 +4,7 @@ import domain.exception.ValidacaoException;
 import domain.model.valueobject.Cpf;
 import domain.model.valueobject.Email;
 import domain.model.valueobject.Telefone;
+import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,7 +17,10 @@ public class Cliente {
     @Column(nullable = false, length = 100)
     private String nome;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
+    private String senhaEncriptada;
+
+    @Column(length = 100)
     private Email email;
 
     @Embedded
@@ -32,24 +36,33 @@ public class Cliente {
     protected Cliente() {
     }
 
-    public Cliente(String nome, Email email, Telefone telefone, Cpf cpf, Endereco endereco) {
+    public Cliente(String nome, Email email, Telefone telefone, Cpf cpf, Endereco endereco, String senha) {
         setNome(nome);
         setEmail(email);
         setTelefone(telefone);
         setCpf(cpf);
         setEndereco(endereco);
-    }
-
-    public void atualizar(String nome, Email email, Telefone telefone, Cpf cpf, Endereco endereco) {
-        setNome(nome);
-        setEmail(email);
-        setTelefone(telefone);
-        setCpf(cpf);
-        setEndereco(endereco);
+        setSenhaEncriptada(senha);
     }
 
     public String getNome() {
         return nome;
+    }
+
+    public String getSenhaEncriptada() {
+        return senhaEncriptada;
+    }
+
+    public void setSenhaEncriptada(String senha) {
+        if (senha == null || senha.isBlank()) {
+            throw new ValidacaoException("O senha é obrigatória");
+        }
+
+        if (senha.length() < 8 || senha.length() > 16) {
+            throw new ValidacaoException("A senha deve ter de 8 a 16 caracteres");
+        }
+
+        this.senhaEncriptada = BcryptUtil.bcryptHash(senha);
     }
 
     private void setNome(String nome) {

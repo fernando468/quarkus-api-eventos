@@ -38,7 +38,8 @@ public class ClienteTest {
                 new Email("jose@email.com"),
                 new Telefone("4412345678"),
                 null,
-                EnderecoUtilsTest.criarEnderecoValido()
+                EnderecoUtilsTest.criarEnderecoValido(),
+                    "$2a$12$YnGwssxREvdz5tiy7ZEZO.zc/luuU4C6njYt4bQWVy4bTUP.hkngC"
             );
         });
 
@@ -53,7 +54,8 @@ public class ClienteTest {
                 new Email("jose@email.com"),
                 null,
                 new Cpf("12345678910"),
-                EnderecoUtilsTest.criarEnderecoValido()
+                EnderecoUtilsTest.criarEnderecoValido(),
+                    "$2a$12$YnGwssxREvdz5tiy7ZEZO.zc/luuU4C6njYt4bQWVy4bTUP.hkngC"
             );
         });
 
@@ -68,7 +70,8 @@ public class ClienteTest {
                 null,
                 new Telefone("4412345678"),
                 new Cpf("12345678910"),
-                EnderecoUtilsTest.criarEnderecoValido()
+                EnderecoUtilsTest.criarEnderecoValido(),
+                    "$2a$12$YnGwssxREvdz5tiy7ZEZO.zc/luuU4C6njYt4bQWVy4bTUP.hkngC"
             );
         });
 
@@ -83,7 +86,8 @@ public class ClienteTest {
                 new Email("jose@email.com"),
                 new Telefone("4412345678"),
                 new Cpf("12345678910"),
-                null
+                null,
+                    "$2a$12$YnGwssxREvdz5tiy7ZEZO.zc/luuU4C6njYt4bQWVy4bTUP.hkngC"
             );
         });
 
@@ -98,11 +102,29 @@ public class ClienteTest {
                 new Email("jose@email.com"),
                 new Telefone("4412345678"),
                 new Cpf("12345678910"),
-                EnderecoUtilsTest.criarEnderecoValido()
+                EnderecoUtilsTest.criarEnderecoValido(),
+                    "$2a$12$YnGwssxREvdz5tiy7ZEZO.zc/luuU4C6njYt4bQWVy4bTUP.hkngC"
             );
         });
 
         assertEquals("O nome do cliente é obrigatório", validacaoException.getMessage());
     }
+
+    @Test
+    public void deveOcorrerErroAoCriarClienteSemSenha() {
+        ValidacaoException validacaoException = assertThrows(ValidacaoException.class, () -> {
+            new Cliente(
+                    "José da Silva",
+                    new Email("jose@email.com"),
+                    new Telefone("4412345678"),
+                    new Cpf("12345678910"),
+                    EnderecoUtilsTest.criarEnderecoValido(),
+                    null
+            );
+        });
+
+        assertEquals("O senha é obrigatória", validacaoException.getMessage());
+    }
+
 
 }

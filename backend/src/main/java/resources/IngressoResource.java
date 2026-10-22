@@ -1,6 +1,7 @@
 package resources;
 
 import jakarta.inject.Inject;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
@@ -13,6 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @Path("/ingressos")
+@RolesAllowed("user")
 public class IngressoResource {
     private final IngressoService ingressoService;
 

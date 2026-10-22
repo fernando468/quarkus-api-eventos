@@ -59,6 +59,21 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <version>3.40.1</version>
+            <artifactId>quarkus-smallrye-jwt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <version>3.40.1</version>
+            <artifactId>quarkus-smallrye-jwt-build</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <version>3.40.1</version>
+            <artifactId>quarkus-elytron-security-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <version>3.40.1</version>
             <artifactId>quarkus-jdbc-h2</artifactId>
         </dependency>
         <dependency>

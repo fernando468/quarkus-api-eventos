@@ -1,6 +1,7 @@
 package resources;
 
 import jakarta.validation.Valid;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
 import org.jboss.resteasy.reactive.RestResponse;
 import resources.dto.request.EventoRequestDTO;
@@ -12,6 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 @Path("/eventos")
+@RolesAllowed("user")
 public class EventoResource {
     private final EventoService eventoService;
 
