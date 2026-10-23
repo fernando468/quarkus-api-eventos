@@ -121,7 +121,7 @@ export class IngressoModal {
       },
       error: (erro: ErroResponse) => {
         this.isSaving = false;
-        this.snackBar.open(erro.error.mensagem, 'Fechar', {
+        this.snackBar.open(erro.error?.mensagem, 'Fechar', {
           duration: 4000,
           panelClass: ['api-snackbar--error'],
         });

@@ -8,6 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 type TypeField = 'text' | 'password' | 'numeric' | 'email' | 'datetime-local';
+type MaskType = 'cpf' | 'cep' | 'phone' | 'none';
+type MaskFunction = ((value: string) => string) | null;
 
 @Component({
   imports: [
@@ -29,12 +31,14 @@ export class CustomInput {
   readonly label = input.required<string>();
   readonly type = input<TypeField>('text');
   readonly required = input<boolean>(false);
-  readonly minLength = input<Null<number>>(null);
-  readonly maxLength = input<Null<number>>(null);
+  readonly minLength = input<number>(0);
+  readonly maxLength = input<number>(255);
+  readonly mask = input<MaskFunction>(null);
 
   value = '';
 
   onChange: (value: string) => void = (value) => value;
+
   onTouched: () => void = () => {
     return;
   };
@@ -53,9 +57,22 @@ export class CustomInput {
 
   setDisabledState(isDisabled: boolean): void {}
 
-  onInput(value: string): void {
-    this.value = value;
-    this.onChange(this.value);
+  applyMask(value: string): string {
+    const maskFn = this.mask();
+    console.log(maskFn);
+    return maskFn ? maskFn(value) : value;
+  }
+
+  onInput(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const rawValue = inputElement.value;
+
+    const formattedValue = this.applyMask(rawValue);
+
+    this.value = formattedValue;
+    inputElement.value = formattedValue;
+
+    this.onChange(formattedValue);
   }
 
   onBlur(): void {

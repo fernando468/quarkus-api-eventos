@@ -21,3 +21,21 @@ export function formatTelefone(telefone: string): string {
 
   return formatTelefoneSemDigitoExtra(telefone);
 }
+
+export function phoneMask(value: string): string {
+  const numeric = value.replace(/\D/g, '');
+
+  // Se tiver mais de 10 dígitos, assume telefone com 9º dígito: (XX) 9XXXX-XXXX
+  if (numeric.length > 10) {
+    return numeric
+      .replace(/(\d{2})(\d)/, '($1) $2')
+      .replace(/(\d{5})(\d)/, '$1-$2')
+      .replace(/(-\d{4})\d+$/, '$1');
+  }
+
+  // Telefone tradicional com 8 dígitos: (XX) XXXX-XXXX
+  return numeric
+    .replace(/(\d{2})(\d)/, '($1) $2')
+    .replace(/(\d{4})(\d)/, '$1-$2')
+    .replace(/(-\d{4})\d+$/, '$1');
+}

@@ -1,0 +1,34 @@
+<main class="auth-page">
+  <section class="auth-card">
+    <h1>Entrar</h1>
+    <p>Acesse sua conta para continuar.</p>
+
+    <form class="form" [formGroup]="form">
+      <app-custom-input
+        [form]="form"
+        name="email"
+        label="E-mail"
+        type="email"
+        [minLength]="5"
+        [maxLength]="100"
+      />
+      <app-custom-input
+        [form]="form"
+        name="senha"
+        label="Senha"
+        type="password"
+        [minLength]="8"
+        [maxLength]="16"
+      />
+    </form>
+    <div class="button-group_modal">
+      <app-custom-button
+        style="width: 100%"
+        [disabled]="isSubmitting"
+        [title]="isSubmitting ? 'Entrando...' : 'Entrar'"
+        [onClick]="entrar"
+      />
+    </div>
+    <p class="auth-link">Ainda não tem conta? <a routerLink="/registrar">Criar conta</a></p>
+  </section>
+</main>

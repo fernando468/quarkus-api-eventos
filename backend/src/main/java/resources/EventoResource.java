@@ -13,7 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 @Path("/eventos")
-@RolesAllowed("user")
+@RolesAllowed("CLIENTE")
 public class EventoResource {
     private final EventoService eventoService;
 

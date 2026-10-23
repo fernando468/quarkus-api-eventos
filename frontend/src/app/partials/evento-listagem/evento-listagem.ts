@@ -43,7 +43,7 @@ export class EventoListagem {
         this.dataSource.data = clientes;
       },
       error: (erro: ErroResponse) => {
-        this.snackBar.open(erro.error.mensagem, 'Fechar', {
+        this.snackBar.open(erro.error?.mensagem, 'Fechar', {
           duration: 4000,
           panelClass: ['api-snackbar--error'],
         });

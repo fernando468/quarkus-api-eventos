@@ -75,7 +75,7 @@ export class IngressoListagem {
         this.dataSource.data = ingressos;
       },
       error: (erro: ErroResponse) => {
-        this.snackBar.open(erro.error.mensagem, 'Fechar', {
+        this.snackBar.open(erro.error?.mensagem, 'Fechar', {
           duration: 4000,
           panelClass: ['api-snackbar--error'],
         });

@@ -13,6 +13,8 @@
 
 .button-group_modal {
   display: flex;
+  width: 100%;
+  justify-content: center;
   gap: 8px;
 }
 
@@ -27,4 +29,53 @@
 
 .api-snackbar--error .mdc-snackbar__surface {
   background-color: #b71c1c;
+}
+
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+  background: #f5f5fa;
+}
+
+.auth-card {
+  width: min(100%, 680px);
+  padding: 32px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 28px rgb(25 25 80 / 10%);
+  box-sizing: border-box;
+}
+
+.auth-card > p {
+  color: #626276;
+  margin: 0 0 24px;
+}
+
+.auth-card > h1 {
+  margin: 0 0 8px;
+}
+
+.auth-card .auth-link {
+  margin: 24px 0 0;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form button {
+  min-height: 44px;
+  margin-top: 8px;
+  background: #2a26ad;
+}
+
+.form a {
+  color: #2a26ad;
+  font-weight: 600;
 }

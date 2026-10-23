@@ -40,19 +40,6 @@
       <td mat-cell *matCellDef="let cliente">{{ formatEndereco(cliente.endereco) }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="acoes">
-      <th mat-header-cell *matHeaderCellDef>Ações</th>
-      <td mat-cell *matCellDef="let cliente">
-        <app-custom-button
-          [onClick]="() => openDialog()(cliente)"
-          variant="outlined"
-          title="Editar"
-        >
-          <mat-icon>edit</mat-icon>
-        </app-custom-button>
-      </td>
-    </ng-container>
-
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 

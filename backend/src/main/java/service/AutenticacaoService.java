@@ -6,12 +6,15 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import io.smallrye.jwt.build.Jwt;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import resources.dto.request.LoginRequestDTO;
 import resources.dto.request.RegistroRequestDTO;
 import resources.dto.response.ClienteResponseDTO;
 import resources.dto.response.TokenResponseDTO;
 import resources.mapper.ClienteMapper;
 import resources.mapper.TokenMapper;
+
+import java.util.Set;
 
 @ApplicationScoped
 public class AutenticacaoService {
@@ -41,13 +44,18 @@ public class AutenticacaoService {
     }
 
     private TokenResponseDTO criarToken(Cliente cliente) {
-        String token = Jwt.issuer("quarkus-api-eventos")
+        var claims = Jwt.issuer("quarkus-api-eventos")
             .subject(cliente.getId().toString())
             .upn(cliente.getEmail().getEmail())
-            .groups("user")
-            .claim("clienteId", cliente.getId())
-            .expiresIn(TOKEN_DURATION_SECONDS)
-            .sign();
+            .claim("clienteId", cliente.getId());
+
+        if (cliente.getEmail().getEmail().contains("@admin.com")) {
+            claims.groups(Set.of("CLIENTE", "ADMIN"));
+        } else {
+            claims.groups("CLIENTE");
+        }
+
+        String token = claims.expiresIn(TOKEN_DURATION_SECONDS).sign();
 
         return TokenMapper.toResponse(token);
     }

@@ -10,7 +10,7 @@ import service.ClienteService;
 import java.util.List;
 
 @Path("/clientes")
-@RolesAllowed("user")
+@RolesAllowed({"CLIENTE", "admin"})
 public class ClienteResource {
     private final ClienteService clienteService;
 

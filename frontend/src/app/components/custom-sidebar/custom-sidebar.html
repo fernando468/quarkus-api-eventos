@@ -1,17 +1,22 @@
 <mat-drawer-container>
-  <mat-drawer mode="side" opened>
-    <h2>Menu</h2>
-    <div class="menu">
-      @for (item of options; track item.name) {
+  <mat-drawer mode="side" [opened]="autenticacaoService.authenticated()">
+    @if (autenticacaoService.authenticated()) {
+      <h2>Menu</h2>
+      <div class="menu">
+        @for (item of menuOptions; track item.name) {
+          <div class="item">
+            <a [routerLink]="item.path" routerLinkActive="ativo">{{ item.name }}</a>
+          </div>
+        }
         <div class="item">
-          <a [routerLink]="item.path" routerLinkActive="ativo">{{ item.name }}</a>
+          <button type="button" (click)="autenticacaoService.logout()">Sair</button>
         </div>
-      }
-    </div>
+      </div>
+    }
   </mat-drawer>
 
   <mat-drawer-content>
-    <div style="padding: 10px">
+    <div [style.padding.px]="autenticacaoService.authenticated() ? 10 : 0">
       <ng-content></ng-content>
     </div>
   </mat-drawer-content>

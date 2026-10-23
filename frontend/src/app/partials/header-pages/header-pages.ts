@@ -10,6 +10,10 @@ import { CustomButton } from '../../components/custom-button/custom-button';
 })
 export class HeaderPages {
   readonly title = input.required<string>();
-  readonly onClick = input.required<() => void>();
+  readonly onClick = input<() => void>();
   readonly isProduction = environment.production;
+
+  constructor() {
+    console.log(this.onClick());
+  }
 }

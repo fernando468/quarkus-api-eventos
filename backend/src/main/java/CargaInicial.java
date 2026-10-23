@@ -43,8 +43,8 @@ public class CargaInicial {
 
     void criarListaCliente() {
         Cliente cliente1 = new Cliente(
-                "José da Silva",
-                new Email("jose@email.com"),
+                "Admin 01",
+                new Email("admin@admin.com"),
                 new Telefone("44900001111"),
                 new Cpf("99426954007"),
                 new Endereco("87050000", "Avenida Brasil", "100", "Apartamento", "Centro", "Maringá", "PR"),

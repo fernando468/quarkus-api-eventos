@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomInput } from '../../components/custom-input/custom-input';
+import { cepMask } from '../../utils/endereco.util';
 
 interface ViaCepResponse {
   bairro: string;
@@ -26,6 +27,8 @@ export class EnderecoForm {
 
   private readonly http = inject(HttpClient);
   private readonly snackBar = inject(MatSnackBar);
+
+  cepMask = cepMask;
 
   searchCep(): void {
     const cep = String(this.form().get('cep')?.value ?? '').replace(/\D/g, '');

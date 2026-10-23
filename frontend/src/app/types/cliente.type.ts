@@ -19,7 +19,7 @@ export type ClienteResponse = {
 
 const NOME_MAX_LENGTH = 100;
 const CPF_MAX_LENGTH = 11;
-const EMAIL_MAX_LENGTH = 50;
+const EMAIL_MAX_LENGTH = 100;
 const TELEFONE_MAX_LENGTH = 11;
 
 const NOME_MIN_LENGTH = 3;

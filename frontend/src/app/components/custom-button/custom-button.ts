@@ -12,4 +12,5 @@ export class CustomButton {
   readonly onClick = input.required<() => void>();
   readonly variant = input<MatButtonAppearance>('filled');
   readonly style = input<string>('');
+  readonly disabled = input<boolean>(false);
 }

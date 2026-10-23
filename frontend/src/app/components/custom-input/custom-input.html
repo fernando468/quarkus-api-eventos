@@ -7,7 +7,7 @@
     [minlength]="minLength()"
     [maxlength]="maxLength()"
     [formControl]="control()"
-    (input)="onInput($event.target.value)"
+    (input)="onInput($event)"
     (blur)="onBlur()"
   />
   @if (form().get(name())?.errors) {

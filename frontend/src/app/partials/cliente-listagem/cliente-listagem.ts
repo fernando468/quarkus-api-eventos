@@ -1,10 +1,9 @@
-import { Component, input } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { CustomButton } from '../../components/custom-button/custom-button';
 import { ClienteService } from '../../services/cliente-service';
 import { ClienteResponse } from '../../types/cliente.type';
 import { ErroResponse } from '../../types/erro.type';
@@ -13,23 +12,13 @@ import { formatEndereco } from '../../utils/endereco.util';
 import { formatTelefone } from '../../utils/telefone.util';
 
 @Component({
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, CustomButton, MatIconModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatIconModule],
   selector: 'app-cliente-listagem',
   styleUrl: './cliente-listagem.css',
   templateUrl: './cliente-listagem.html',
 })
 export class ClienteListagem {
-  readonly openDialog = input.required<(cliente: ClienteResponse) => void>();
-
-  readonly displayedColumns: string[] = [
-    'id',
-    'nome',
-    'cpf',
-    'email',
-    'telefone',
-    'endereco',
-    'acoes',
-  ];
+  readonly displayedColumns: string[] = ['id', 'nome', 'cpf', 'email', 'telefone', 'endereco'];
   readonly dataSource = new MatTableDataSource<ClienteResponse>([]);
   readonly formatCpf = formatCpf;
   readonly formatTelefone = formatTelefone;
@@ -48,7 +37,7 @@ export class ClienteListagem {
         this.dataSource.data = clientes;
       },
       error: (erro: ErroResponse) => {
-        this.snackBar.open(erro.error.mensagem, 'Fechar', {
+        this.snackBar.open(erro.error?.mensagem, 'Fechar', {
           duration: 4000,
           panelClass: ['api-snackbar--error'],
         });
