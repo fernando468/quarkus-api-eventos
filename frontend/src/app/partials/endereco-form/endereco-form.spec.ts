@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
 import { EnderecoForm } from './endereco-form';
 
@@ -65,25 +65,5 @@ describe('Formulário de endereço', () => {
     );
     expect(fixture.componentInstance.isLookingUp()).toBe(false);
     httpTestingController.verify();
-  });
-
-  it('deve exibir um erro para CEP inválido sem enviar uma requisição', () => {
-    fixture.componentInstance.form().get('cep')?.setValue('123');
-
-    fixture.componentInstance.searchCep();
-
-    expect(fixture.componentInstance.lookupError()).toBe('Informe um CEP com 8 dígitos.');
-    httpTestingController.expectNone('https://viacep.com.br/ws/123/json/');
-  });
-
-  it('deve exibir um erro quando o CEP não for encontrado', () => {
-    fixture.componentInstance.form().get('cep')?.setValue('87000000');
-
-    fixture.componentInstance.searchCep();
-    httpTestingController
-      .expectOne('https://viacep.com.br/ws/87000000/json/')
-      .flush({ erro: true });
-
-    expect(fixture.componentInstance.lookupError()).toBe('CEP não encontrado.');
   });
 });

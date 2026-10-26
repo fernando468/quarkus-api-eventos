@@ -70,8 +70,6 @@ export class IngressoModal {
   isSaving = false;
 
   constructor() {
-    this.carregarOpcoes();
-
     this.clienteControl = new FormControl<ClienteResponse>(this.data?.cliente, [
       Validators.required,
       selectionValidator,
@@ -84,6 +82,8 @@ export class IngressoModal {
       cliente: this.clienteControl,
       evento: this.eventoControl,
     });
+
+    this.carregarOpcoes();
   }
 
   onCancel = (): void => {

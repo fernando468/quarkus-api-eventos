@@ -13,7 +13,6 @@ import java.net.URI;
 import java.util.List;
 
 @Path("/eventos")
-@RolesAllowed("CLIENTE")
 public class EventoResource {
     private final EventoService eventoService;
 
@@ -22,6 +21,7 @@ public class EventoResource {
     }
 
     @POST
+    @RolesAllowed({ "ADMIN" })
     public RestResponse<EventoResponseDTO> criar(@Valid EventoRequestDTO eventoRequestDTO) {
         EventoResponseDTO eventoResponseDTO = EventoMapper.toResponseDTO(eventoService.criar(eventoRequestDTO));
 
@@ -36,6 +36,7 @@ public class EventoResource {
 
     @PUT
     @Path("/{id}")
+    @RolesAllowed({ "ADMIN" })
     public RestResponse<EventoResponseDTO> atualizar(@PathParam("id") Long id, @Valid EventoRequestDTO eventoRequestDTO) {
         EventoResponseDTO eventoResponseDTO = EventoMapper.toResponseDTO(eventoService.atualizar(id, eventoRequestDTO));
         return RestResponse.ok(eventoResponseDTO);
@@ -43,12 +44,14 @@ public class EventoResource {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({ "CLIENTE", "ADMIN" })
     public RestResponse<EventoResponseDTO> obterPorId(@PathParam("id") Long id) {
         EventoResponseDTO eventoResponseDTO = EventoMapper.toResponseDTO(eventoService.obterPorId(id));
         return RestResponse.ok(eventoResponseDTO);
     }
 
     @GET
+    @RolesAllowed({ "CLIENTE", "ADMIN" })
     public RestResponse<List<EventoResponseDTO>> listarTodos() {
         List<EventoResponseDTO> listaEventoResponseDTO = EventoMapper.toResponseDTOList(eventoService.listarTodos());
         return RestResponse.ok(listaEventoResponseDTO);

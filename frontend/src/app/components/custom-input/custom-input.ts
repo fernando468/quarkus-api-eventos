@@ -80,6 +80,9 @@ export class CustomInput {
     if (formField?.hasError('cpfInvalid')) {
       return 'CPF inválido';
     }
+    if (formField?.hasError('invalidLocalDateTime')) {
+      return 'Data inválida';
+    }
     return '';
   }
 }

@@ -1,3 +1,4 @@
+import domain.model.Admin;
 import domain.model.Cliente;
 import domain.model.Endereco;
 import domain.model.Evento;
@@ -5,6 +6,7 @@ import domain.model.Ingresso;
 import domain.model.valueobject.Cpf;
 import domain.model.valueobject.Email;
 import domain.model.valueobject.Telefone;
+import service.AdminService;
 import domain.repository.ClienteRepository;
 import domain.repository.EventoRepository;
 import domain.repository.IngressoRepository;
@@ -25,33 +27,36 @@ public class CargaInicial {
     private final EventoRepository eventoRepository;
 
     private final IngressoRepository ingressoRepository;
+    private final AdminService adminService;
 
     public CargaInicial(ClienteRepository clienteRepository,
                         EventoRepository eventoRepository,
-                        IngressoRepository ingressoRepository) {
+                        IngressoRepository ingressoRepository,
+                        AdminService adminService) {
         this.clienteRepository = clienteRepository;
         this.eventoRepository = eventoRepository;
         this.ingressoRepository = ingressoRepository;
+        this.adminService = adminService;
     }
 
     @Transactional
     void iniciar(@Observes StartupEvent event) {
+        criarAdmin();
         criarListaCliente();
         criarListaEvento();
         criarListaIngresso();
     }
 
+    void criarAdmin() {
+        adminService.criar(new Admin(
+            "Admin 01",
+            new Email("admin@admin.com"),
+            "12345678"
+        ));
+    }
+
     void criarListaCliente() {
         Cliente cliente1 = new Cliente(
-                "Admin 01",
-                new Email("admin@admin.com"),
-                new Telefone("44900001111"),
-                new Cpf("99426954007"),
-                new Endereco("87050000", "Avenida Brasil", "100", "Apartamento", "Centro", "Maringá", "PR"),
-                "12345678"
-        );
-
-        Cliente cliente2 = new Cliente(
                 "Maria Gonçalves",
                 new Email("maria@email.com"),
                 new Telefone("44900002222"),
@@ -60,7 +65,7 @@ public class CargaInicial {
                 "12345678"
         );
 
-        Cliente cliente3 = new Cliente(
+        Cliente cliente2 = new Cliente(
                 "Pedro Costa Santos da Silva",
                 new Email("pedro@email.com"),
                 new Telefone("4411112222"),
@@ -69,7 +74,7 @@ public class CargaInicial {
                 "12345678"
         );
 
-        Cliente cliente4 = new Cliente(
+        Cliente cliente3 = new Cliente(
                 "Ana Pereira Silva",
                 new Email("ana@email.com"),
                 new Telefone("4400004444"),
@@ -78,7 +83,7 @@ public class CargaInicial {
                 "12345678"
         );
 
-        Cliente cliente5 = new Cliente(
+        Cliente cliente4 = new Cliente(
                 "Lucas de Castro",
                 new Email("lucas@email.com"),
                 new Telefone("4466665555"),
@@ -91,8 +96,7 @@ public class CargaInicial {
                 cliente1,
                 cliente2,
                 cliente3,
-                cliente4,
-                cliente5
+                cliente4
         );
 
         clienteRepository.persist(listaClientes);
@@ -147,10 +151,10 @@ public class CargaInicial {
     }
 
     void criarListaIngresso() {
-        Cliente cliente1 = clienteRepository.findById(1L);
-        Cliente cliente2 = clienteRepository.findById(2L);
-        Cliente cliente3 = clienteRepository.findById(3L);
-        Cliente cliente4 = clienteRepository.findById(4L);
+        Cliente cliente1 = clienteRepository.findByEmail("maria@email.com");
+        Cliente cliente2 = clienteRepository.findByEmail("pedro@email.com");
+        Cliente cliente3 = clienteRepository.findByEmail("ana@email.com");
+        Cliente cliente4 = clienteRepository.findByEmail("lucas@email.com");
         Evento evento1 = eventoRepository.findById(1L);
         Evento evento2 = eventoRepository.findById(2L);
         Evento evento3 = eventoRepository.findById(3L);

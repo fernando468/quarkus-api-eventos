@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @Path("/ingressos")
-@RolesAllowed("CLIENTE")
+@RolesAllowed({ "CLIENTE", "ADMIN" })
 public class IngressoResource {
     private final IngressoService ingressoService;
 

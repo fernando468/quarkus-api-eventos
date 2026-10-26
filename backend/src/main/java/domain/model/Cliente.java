@@ -4,7 +4,6 @@ import domain.exception.ValidacaoException;
 import domain.model.valueobject.Cpf;
 import domain.model.valueobject.Email;
 import domain.model.valueobject.Telefone;
-import domain.model.valueobject.TipoPerfil;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.persistence.*;
 
