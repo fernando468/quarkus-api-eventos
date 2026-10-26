@@ -1,32 +1,74 @@
 <div class="form">
   <div class="cep-row">
-    <app-custom-input [form]="form()" name="cep" label="CEP" [mask]="cepMask" />
-    <button
-      class="cep-search-button"
-      type="button"
-      aria-label="Buscar endereço pelo CEP"
-      title="Buscar endereço pelo CEP"
-      [disabled]="isLookingUp()"
-      (click)="searchCep()"
-    >
-      <mat-icon>search</mat-icon>
-    </button>
+    <app-custom-input
+      [form]="form()"
+      name="cep"
+      label="CEP"
+      [mask]="cepMask"
+      [minLength]="ENDERECO_VALIDATION_CONSTANTS.CEP_MIN_LENGTH"
+      [maxLength]="ENDERECO_VALIDATION_CONSTANTS.CEP_MAX_LENGTH"
+    />
+    <div style="width: 48px">
+      <button
+        class="cep-search-button"
+        type="button"
+        aria-label="Buscar endereço pelo CEP"
+        title="Buscar endereço pelo CEP"
+        [disabled]="isLookingUp()"
+        (click)="searchCep()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
   </div>
-  @if (lookupError()) {
-    <p class="cep-error" role="alert">{{ lookupError() }}</p>
-  }
   <div class="input-group">
-    <app-custom-input [form]="form()" name="logradouro" label="Logradouro" />
-    <app-custom-input [form]="form()" name="numero" label="Número" />
+    <app-custom-input
+      [form]="form()"
+      name="logradouro"
+      label="Logradouro"
+      [minLength]="ENDERECO_VALIDATION_CONSTANTS.LOGRADOURO_MIN_LENGTH"
+      [maxLength]="ENDERECO_VALIDATION_CONSTANTS.LOGRADOURO_MAX_LENGTH"
+    />
+    <app-custom-input
+      [form]="form()"
+      name="numero"
+      label="Número"
+      [minLength]="ENDERECO_VALIDATION_CONSTANTS.NUMERO_MIN_LENGTH"
+      [maxLength]="ENDERECO_VALIDATION_CONSTANTS.NUMERO_MAX_LENGTH"
+    />
   </div>
   <div>
-    <app-custom-input [form]="form()" name="complemento" label="Complemento" />
+    <app-custom-input
+      [form]="form()"
+      name="complemento"
+      label="Complemento"
+      [minLength]="ENDERECO_VALIDATION_CONSTANTS.COMPLEMENTO_MIN_LENGTH"
+      [maxLength]="ENDERECO_VALIDATION_CONSTANTS.COMPLEMENTO_MAX_LENGTH"
+    />
   </div>
   <div class="input-group">
-    <app-custom-input [form]="form()" name="cidade" label="Cidade" />
-    <app-custom-input [form]="form()" name="estado" label="Estado" />
+    <app-custom-input
+      [form]="form()"
+      name="cidade"
+      label="Cidade"
+      [minLength]="ENDERECO_VALIDATION_CONSTANTS.CIDADE_MIN_LENGTH"
+      [maxLength]="ENDERECO_VALIDATION_CONSTANTS.CIDADE_MAX_LENGTH"
+    />
+    <app-custom-input
+      [form]="form()"
+      name="estado"
+      label="Estado"
+      [minLength]="ENDERECO_VALIDATION_CONSTANTS.ESTADO_MIN_LENGTH"
+      [maxLength]="ENDERECO_VALIDATION_CONSTANTS.ESTADO_MAX_LENGTH"
+    />
   </div>
   <div>
-    <app-custom-input [form]="form()" name="bairro" label="Bairro" />
+    <app-custom-input
+      [form]="form()"
+      name="bairro"
+      label="Bairro"
+      [minLength]="ENDERECO_VALIDATION_CONSTANTS.BAIRRO_MIN_LENGTH"
+      [maxLength]="ENDERECO_VALIDATION_CONSTANTS.BAIRRO_MAX_LENGTH"
+    />
   </div>
 </div>

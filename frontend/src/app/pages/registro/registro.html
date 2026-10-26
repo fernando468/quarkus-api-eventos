@@ -4,17 +4,39 @@
     <p>Preencha seus dados para se cadastrar.</p>
 
     <form class="form">
-      <app-custom-input [form]="form" name="nome" label="Nome" />
-      <app-custom-input [form]="form" name="cpf" label="CPF (11 dígitos)" [mask]="cpfMask" />
+      <app-custom-input
+        [form]="form"
+        name="nome"
+        label="Nome"
+        [minLength]="CLIENTE_VALIDATION_CONSTANTS.NOME_MIN_LENGTH"
+        [maxLength]="CLIENTE_VALIDATION_CONSTANTS.NOME_MAX_LENGTH"
+      />
+      <app-custom-input
+        [form]="form"
+        name="cpf"
+        label="CPF (11 dígitos)"
+        [mask]="cpfMask"
+        [minLength]="CLIENTE_VALIDATION_CONSTANTS.CPF_MIN_LENGTH"
+        [maxLength]="CLIENTE_VALIDATION_CONSTANTS.CPF_MAX_LENGTH"
+      />
       <app-custom-input [form]="form" name="email" label="E-mail" type="email" />
       <app-custom-input
         [form]="form"
         name="telefone"
         label="Telefone (DDD + número)"
         [mask]="phoneMask"
+        [minLength]="CLIENTE_VALIDATION_CONSTANTS.TELEFONE_MIN_LENGTH"
+        [maxLength]="CLIENTE_VALIDATION_CONSTANTS.TELEFONE_MAX_LENGTH"
       />
       <app-endereco-form [form]="enderecoForm" />
-      <app-custom-input [form]="form" name="senha" label="Senha" type="password" />
+      <app-custom-input
+        [form]="form"
+        name="senha"
+        label="Senha"
+        type="password"
+        [minLength]="CLIENTE_VALIDATION_CONSTANTS.SENHA_MIN_LENGTH"
+        [maxLength]="CLIENTE_VALIDATION_CONSTANTS.SENHA_MAX_LENGTH"
+      />
     </form>
     <div class="button-group_modal">
       <app-custom-button

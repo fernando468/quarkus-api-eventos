@@ -56,29 +56,34 @@ export class IngressoModal {
   readonly datePipe = inject(DatePipe);
   readonly snackBar = inject(MatSnackBar);
 
-  readonly clienteControl = new FormControl<ClienteResponse>(this.data?.cliente, [
-    Validators.required,
-    selectionValidator,
-  ]);
-  readonly eventoControl = new FormControl<EventoResponse>(this.data?.evento, [
-    Validators.required,
-    selectionValidator,
-  ]);
-  readonly form = new FormGroup({
-    cliente: this.clienteControl,
-    evento: this.eventoControl,
-  });
+  readonly clienteControl: FormControl<ClienteResponse | null>;
+  readonly eventoControl: FormControl<EventoResponse | null>;
+  readonly form: FormGroup<{
+    cliente: FormControl<ClienteResponse | null>;
+    evento: FormControl<EventoResponse | null>;
+  }>;
 
   clientes: ClienteResponse[] = [];
   eventos: EventoResponse[] = [];
   isLoadingClientes = true;
   isLoadingEventos = true;
   isSaving = false;
-  private clientesFalharam = false;
-  private eventosFalharam = false;
 
   constructor() {
     this.carregarOpcoes();
+
+    this.clienteControl = new FormControl<ClienteResponse>(this.data?.cliente, [
+      Validators.required,
+      selectionValidator,
+    ]);
+    this.eventoControl = new FormControl<EventoResponse>(this.data?.evento, [
+      Validators.required,
+      selectionValidator,
+    ]);
+    this.form = new FormGroup({
+      cliente: this.clienteControl,
+      evento: this.eventoControl,
+    });
   }
 
   onCancel = (): void => {
@@ -163,7 +168,6 @@ export class IngressoModal {
       },
       error: () => {
         this.isLoadingClientes = false;
-        this.clientesFalharam = true;
         this.snackBar.open('Não foi possível carregar os clientes. Tente novamente.', 'Fechar', {
           duration: 4000,
           panelClass: ['api-snackbar--error'],
@@ -179,7 +183,6 @@ export class IngressoModal {
       },
       error: (erro: ErroResponse) => {
         this.isLoadingEventos = false;
-        this.eventosFalharam = true;
         this.snackBar.open('Não foi possível carregar os eventos. Tente novamente.', 'Fechar', {
           duration: 4000,
           panelClass: ['api-snackbar--error'],

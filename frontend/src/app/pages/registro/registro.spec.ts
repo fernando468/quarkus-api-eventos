@@ -50,6 +50,14 @@ describe('Página de cadastro', () => {
     expect(autenticacaoService.registrar).not.toHaveBeenCalled();
   });
 
+  it('deve validar o CPF no campo correto sem invalidar o e-mail', () => {
+    component.form.get('email')?.setValue('maria@email.com');
+    component.form.get('cpf')?.setValue('12345678901');
+
+    expect(component.form.get('email')?.valid).toBe(true);
+    expect(component.form.get('cpf')?.hasError('cpfInvalid')).toBe(true);
+  });
+
   it('deve enviar os dados de cadastro e encaminhar para o login', () => {
     autenticacaoService.registrar.mockReturnValue(of({ id: 1 }));
     component.form.setValue({

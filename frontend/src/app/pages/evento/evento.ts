@@ -13,7 +13,9 @@ import { EventoResponse } from '../../types/evento.type';
 })
 export class Evento {
   readonly dialog = inject(MatDialog);
-  @ViewChild(EventoListagem) private eventoListagem?: EventoListagem;
+
+  @ViewChild(EventoListagem)
+  private eventoListagem?: EventoListagem;
 
   openDialog = (evento?: EventoResponse): void => {
     const dialogRef = this.dialog.open<EventoModal, EventoResponse, boolean>(EventoModal, {

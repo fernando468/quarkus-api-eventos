@@ -8,7 +8,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 type TypeField = 'text' | 'password' | 'numeric' | 'email' | 'datetime-local';
-type MaskType = 'cpf' | 'cep' | 'phone' | 'none';
 type MaskFunction = ((value: string) => string) | null;
 
 @Component({
@@ -35,48 +34,28 @@ export class CustomInput {
   readonly maxLength = input<number>(255);
   readonly mask = input<MaskFunction>(null);
 
-  value = '';
-
-  onChange: (value: string) => void = (value) => value;
-
-  onTouched: () => void = () => {
-    return;
-  };
-
-  writeValue(value: string): void {
-    this.value = value;
-  }
-
-  registerOnChange(fn: () => void): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {}
-
-  applyMask(value: string): string {
+  displayValue(): string {
+    const value = String(this.control().value ?? '');
     const maskFn = this.mask();
-    console.log(maskFn);
     return maskFn ? maskFn(value) : value;
+  }
+
+  maxInputLength(): number {
+    const maskFn = this.mask();
+    return maskFn ? maskFn('9'.repeat(this.maxLength())).length : this.maxLength();
   }
 
   onInput(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
-    const rawValue = inputElement.value;
-
-    const formattedValue = this.applyMask(rawValue);
-
-    this.value = formattedValue;
-    inputElement.value = formattedValue;
-
-    this.onChange(formattedValue);
+    const maskFn = this.mask();
+    const rawValue = maskFn ? inputElement.value.replace(/\D/g, '') : inputElement.value;
+    this.control().setValue(rawValue);
+    this.control().markAsDirty();
+    inputElement.value = maskFn ? maskFn(rawValue) : rawValue;
   }
 
   onBlur(): void {
-    this.onTouched();
+    this.control().markAsTouched();
   }
 
   control(name?: NullOrUndefined<string>): FormControl {
@@ -98,7 +77,9 @@ export class CustomInput {
     if (formField?.hasError('maxlength')) {
       return `${this.label()} passou do máximo de caracteres`;
     }
-
+    if (formField?.hasError('cpfInvalid')) {
+      return 'CPF inválido';
+    }
     return '';
   }
 }

@@ -1,41 +1,19 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { CustomInput } from '../../components/custom-input/custom-input';
 import { EnderecoForm } from '../../partials/endereco-form/endereco-form';
 import { AutenticacaoService } from '../../services/autenticacao-service';
-import {
-  CPF_MAX_LENGTH,
-  CPF_MIN_LENGTH,
-  EMAIL_MAX_LENGTH,
-  EMAIL_MIN_LENGTH,
-  NOME_MAX_LENGTH,
-  NOME_MIN_LENGTH,
-  TELEFONE_MAX_LENGTH,
-  TELEFONE_MIN_LENGTH,
-} from '../../types/cliente.type';
-import {
-  BAIRRO_MAX_LENGTH,
-  BAIRRO_MIN_LENGTH,
-  CEP_MAX_LENGTH,
-  CEP_MIN_LENGTH,
-  CIDADE_MAX_LENGTH,
-  CIDADE_MIN_LENGTH,
-  COMPLEMENTO_MAX_LENGTH,
-  COMPLEMENTO_MIN_LENGTH,
-  ESTADO_MAX_LENGTH,
-  ESTADO_MIN_LENGTH,
-  LOGRADOURO_MAX_LENGTH,
-  LOGRADOURO_MIN_LENGTH,
-  NUMERO_MAX_LENGTH,
-  NUMERO_MIN_LENGTH,
-} from '../../types/endereco.type';
+import { CLIENTE_VALIDATION_CONSTANTS } from '../../types/cliente.type';
+import { ENDERECO_VALIDATION_CONSTANTS } from '../../types/endereco.type';
 import { ErroResponse } from '../../types/erro.type';
 import { cpfMask } from '../../utils/cpf.util';
 import { cepMask } from '../../utils/endereco.util';
+import { requiredLength } from '../../utils/required-length.utils';
 import { phoneMask } from '../../utils/telefone.util';
+import { cpfValidator } from '../../validators/cpf.validator';
 
 @Component({
   imports: [RouterLink, CustomButton, CustomInput, EnderecoForm],
@@ -49,38 +27,67 @@ export class Registro {
   private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
 
-  cpfMask = cpfMask;
-  phoneMask = phoneMask;
-  cepMask = cepMask;
+  readonly cpfMask = cpfMask;
+  readonly phoneMask = phoneMask;
+  readonly cepMask = cepMask;
+  readonly CLIENTE_VALIDATION_CONSTANTS = CLIENTE_VALIDATION_CONSTANTS;
+  readonly ENDERECO_VALIDATION_CONSTANTS = ENDERECO_VALIDATION_CONSTANTS;
+  readonly form: FormGroup;
 
-  readonly form = this.formBuilder.nonNullable.group({
-    nome: ['', this.limite(NOME_MIN_LENGTH, NOME_MAX_LENGTH)],
-    email: [
-      '',
-      [
-        Validators.required,
-        Validators.email,
-        Validators.minLength(EMAIL_MIN_LENGTH),
-        Validators.maxLength(EMAIL_MAX_LENGTH),
-      ],
-    ],
-    telefone: ['', this.limite(TELEFONE_MIN_LENGTH, TELEFONE_MAX_LENGTH)],
-    cpf: ['', this.limite(CPF_MIN_LENGTH, CPF_MAX_LENGTH)],
-    endereco: this.formBuilder.nonNullable.group({
-      logradouro: ['', this.limite(LOGRADOURO_MIN_LENGTH, LOGRADOURO_MAX_LENGTH)],
-      numero: ['', this.limite(NUMERO_MIN_LENGTH, NUMERO_MAX_LENGTH)],
-      complemento: ['', this.limite(COMPLEMENTO_MIN_LENGTH, COMPLEMENTO_MAX_LENGTH)],
-      bairro: ['', this.limite(BAIRRO_MIN_LENGTH, BAIRRO_MAX_LENGTH)],
-      cidade: ['', this.limite(CIDADE_MIN_LENGTH, CIDADE_MAX_LENGTH)],
-      estado: ['', this.limite(ESTADO_MIN_LENGTH, ESTADO_MAX_LENGTH)],
-      cep: ['', this.limite(CEP_MIN_LENGTH, CEP_MAX_LENGTH)],
-    }),
-    senha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
-  });
   isSubmitting = false;
 
+  constructor() {
+    const {
+      NOME_MAX_LENGTH,
+      NOME_MIN_LENGTH,
+      CPF_MAX_LENGTH,
+      CPF_MIN_LENGTH,
+      EMAIL_MAX_LENGTH,
+      EMAIL_MIN_LENGTH,
+      TELEFONE_MAX_LENGTH,
+      TELEFONE_MIN_LENGTH,
+      SENHA_MAX_LENGTH,
+      SENHA_MIN_LENGTH,
+    } = this.CLIENTE_VALIDATION_CONSTANTS;
+
+    const {
+      LOGRADOURO_MAX_LENGTH,
+      LOGRADOURO_MIN_LENGTH,
+      NUMERO_MAX_LENGTH,
+      NUMERO_MIN_LENGTH,
+      COMPLEMENTO_MAX_LENGTH,
+      COMPLEMENTO_MIN_LENGTH,
+      BAIRRO_MAX_LENGTH,
+      BAIRRO_MIN_LENGTH,
+      CIDADE_MAX_LENGTH,
+      CIDADE_MIN_LENGTH,
+      ESTADO_MAX_LENGTH,
+      ESTADO_MIN_LENGTH,
+      CEP_MAX_LENGTH,
+      CEP_MIN_LENGTH,
+    } = this.ENDERECO_VALIDATION_CONSTANTS;
+
+    this.form = this.formBuilder.nonNullable.group({
+      nome: ['', requiredLength(NOME_MIN_LENGTH, NOME_MAX_LENGTH)],
+      email: ['', [...requiredLength(EMAIL_MIN_LENGTH, EMAIL_MAX_LENGTH), Validators.email]],
+      telefone: ['', requiredLength(TELEFONE_MIN_LENGTH, TELEFONE_MAX_LENGTH)],
+      cpf: ['', [...requiredLength(CPF_MIN_LENGTH, CPF_MAX_LENGTH), cpfValidator()]],
+      endereco: this.formBuilder.nonNullable.group({
+        logradouro: ['', requiredLength(LOGRADOURO_MIN_LENGTH, LOGRADOURO_MAX_LENGTH)],
+        numero: ['', requiredLength(NUMERO_MIN_LENGTH, NUMERO_MAX_LENGTH)],
+        complemento: ['', requiredLength(COMPLEMENTO_MIN_LENGTH, COMPLEMENTO_MAX_LENGTH)],
+        bairro: ['', requiredLength(BAIRRO_MIN_LENGTH, BAIRRO_MAX_LENGTH)],
+        cidade: ['', requiredLength(CIDADE_MIN_LENGTH, CIDADE_MAX_LENGTH)],
+        estado: ['', requiredLength(ESTADO_MIN_LENGTH, ESTADO_MAX_LENGTH)],
+        cep: ['', requiredLength(CEP_MIN_LENGTH, CEP_MAX_LENGTH)],
+      }),
+      senha: ['', requiredLength(SENHA_MIN_LENGTH, SENHA_MAX_LENGTH)],
+    });
+    this.isSubmitting = false;
+  }
+
   get enderecoForm() {
-    return this.form.controls.endereco;
+    return this.form.controls['endereco'] as FormGroup;
   }
 
   cadastrar = (): void => {

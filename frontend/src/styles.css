@@ -24,11 +24,11 @@
 }
 
 .api-snackbar--success .mdc-snackbar__surface {
-  background-color: #1b5e20;
+  background-color: #1b5e20 !important;
 }
 
 .api-snackbar--error .mdc-snackbar__surface {
-  background-color: #b71c1c;
+  background-color: #b71c1c !important;
 }
 
 .auth-page {

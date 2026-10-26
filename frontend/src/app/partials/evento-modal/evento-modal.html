@@ -1,8 +1,20 @@
 <h2 class="title_modal" mat-dialog-title>Evento</h2>
 <mat-dialog-content>
   <form>
-    <app-custom-input [form]="form" name="titulo" label="Título" />
-    <app-custom-input [form]="form" name="descricao" label="Descrição" />
+    <app-custom-input
+      [form]="form"
+      name="titulo"
+      label="Título"
+      [minLength]="EVENTO_VALIDATION_CONSTANTS.TITULO_MIN_LENGTH"
+      [maxLength]="EVENTO_VALIDATION_CONSTANTS.TITULO_MAX_LENGTH"
+    />
+    <app-custom-input
+      [form]="form"
+      name="descricao"
+      label="Descrição"
+      [minLength]="EVENTO_VALIDATION_CONSTANTS.DESCRICAO_MIN_LENGTH"
+      [maxLength]="EVENTO_VALIDATION_CONSTANTS.DESCRICAO_MAX_LENGTH"
+    />
     <app-custom-input [form]="form" name="data" label="Data" type="datetime-local" />
     <app-endereco-form [form]="enderecoForm" />
   </form>

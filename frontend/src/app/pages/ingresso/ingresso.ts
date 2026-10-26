@@ -13,7 +13,9 @@ import { IngressoResponse } from '../../types/ingresso.type';
 })
 export class Ingresso {
   readonly dialog = inject(MatDialog);
-  @ViewChild(IngressoListagem) private ingressoListagem?: IngressoListagem;
+
+  @ViewChild(IngressoListagem)
+  private ingressoListagem?: IngressoListagem;
 
   openDialog = (ingresso?: IngressoResponse): void => {
     const dialogRef = this.dialog.open<IngressoModal, IngressoResponse, boolean>(IngressoModal, {

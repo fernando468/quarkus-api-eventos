@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomInput } from '../../components/custom-input/custom-input';
+import { ENDERECO_VALIDATION_CONSTANTS } from '../../types/endereco.type';
 import { cepMask } from '../../utils/endereco.util';
 
 interface ViaCepResponse {
@@ -21,29 +22,29 @@ interface ViaCepResponse {
   templateUrl: './endereco-form.html',
 })
 export class EnderecoForm {
-  readonly form = input.required<FormGroup>();
-  readonly lookupError = signal('');
-  readonly isLookingUp = signal(false);
-
   private readonly http = inject(HttpClient);
   private readonly snackBar = inject(MatSnackBar);
 
-  cepMask = cepMask;
+  readonly form = input.required<FormGroup>();
+  readonly isLookingUp = signal(false);
+
+  readonly cepMask = cepMask;
+  readonly ENDERECO_VALIDATION_CONSTANTS = ENDERECO_VALIDATION_CONSTANTS;
 
   searchCep(): void {
     const cep = String(this.form().get('cep')?.value ?? '').replace(/\D/g, '');
-    if (cep.length !== 8) {
-      this.lookupError.set('Informe um CEP com 8 dígitos.');
+    if (
+      cep.length !== this.ENDERECO_VALIDATION_CONSTANTS.CEP_MIN_LENGTH ||
+      cep.length !== this.ENDERECO_VALIDATION_CONSTANTS.CEP_MAX_LENGTH
+    ) {
       return;
     }
 
-    this.lookupError.set('');
     this.isLookingUp.set(true);
     this.http.get<ViaCepResponse>(`https://viacep.com.br/ws/${cep}/json/`).subscribe({
-      next: (address) => {
+      next: (endereco) => {
         this.isLookingUp.set(false);
-        if (address.erro) {
-          this.lookupError.set('CEP não encontrado.');
+        if (endereco.erro) {
           this.snackBar.open('CEP não encontrado.', 'Fechar', {
             duration: 4000,
             panelClass: ['api-snackbar--error'],
@@ -52,10 +53,10 @@ export class EnderecoForm {
         }
 
         this.form().patchValue({
-          logradouro: address.logradouro,
-          bairro: address.bairro,
-          cidade: address.localidade,
-          estado: address.uf,
+          logradouro: endereco.logradouro,
+          bairro: endereco.bairro,
+          cidade: endereco.localidade,
+          estado: endereco.uf,
           complemento: '',
           numero: '',
         });
@@ -66,7 +67,6 @@ export class EnderecoForm {
       },
       error: () => {
         this.isLookingUp.set(false);
-        this.lookupError.set('Não foi possível buscar o CEP. Tente novamente.');
         this.snackBar.open('Não foi possível buscar o CEP. Tente novamente.', 'Fechar', {
           duration: 4000,
           panelClass: ['api-snackbar--error'],

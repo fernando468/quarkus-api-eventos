@@ -2,10 +2,10 @@
   <mat-label>{{ label() }}</mat-label>
   <input
     matInput
-    [value]="value"
+    [value]="displayValue()"
     [type]="type()"
-    [minlength]="minLength()"
-    [maxlength]="maxLength()"
+    [attr.minlength]="mask() ? null : minLength()"
+    [attr.maxlength]="maxInputLength()"
     [formControl]="control()"
     (input)="onInput($event)"
     (blur)="onBlur()"

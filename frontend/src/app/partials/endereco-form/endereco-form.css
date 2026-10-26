@@ -15,20 +15,23 @@
 }
 
 .cep-search-button {
-  display: grid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 48px;
-  height: 56px;
-  place-items: center;
   border: 1px solid currentColor;
   border-radius: 4px;
-  background: transparent;
-  color: inherit;
+  background-color: #fff;
   cursor: pointer;
 }
 
 .cep-search-button:disabled {
   cursor: wait;
   opacity: 0.6;
+}
+
+.cep-search-button:hover {
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .cep-search-button svg {
