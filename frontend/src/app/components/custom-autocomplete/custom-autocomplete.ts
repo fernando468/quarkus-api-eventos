@@ -34,9 +34,9 @@ export class CustomAutocomplete<T> {
   readonly emptyText = input('Nenhuma opção encontrada');
   readonly openOnFocus = input(true);
 
-  filteredOptions: Observable<(T[] & { ativo?: boolean }[]) | T[]>;
+  filteredOptions!: Observable<(T[] & { ativo?: boolean }[]) | T[]>;
 
-  constructor() {
+  ngOnInit(): void {
     const control = this.control();
     this.filteredOptions = combineLatest([
       control.valueChanges.pipe(startWith(control.value)),

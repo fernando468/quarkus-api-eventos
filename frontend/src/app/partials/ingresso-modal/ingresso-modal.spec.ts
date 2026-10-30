@@ -105,7 +105,7 @@ describe('Modal de ingresso', () => {
     expect(component.form.invalid).toBe(true);
   });
 
-  it('deve exibir e filtrar clientes pelo nome e CPF formatado', () => {
+  it('deve exibir e filtrar clientes pelo nome e CPF -atado', () => {
     const cliente = { nome: 'Ána Silva', cpf: '12345678901' } as ClienteResponse;
 
     expect(component.displayCliente(cliente)).toBe('Ána Silva - 123.456.789-01');
