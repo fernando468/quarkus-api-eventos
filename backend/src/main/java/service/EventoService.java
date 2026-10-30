@@ -20,8 +20,8 @@ public class EventoService {
     }
 
     @Transactional
-    public Evento criar(EventoRequestDTO clienteRequestDTO) {
-        Evento cliente = EventoMapper.toEntity(clienteRequestDTO);
+    public Evento criar(EventoRequestDTO eventoRequestDTO) {
+        Evento cliente = EventoMapper.toEntity(eventoRequestDTO);
 
         eventoRepository.persist(cliente);
 

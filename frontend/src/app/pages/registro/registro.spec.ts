@@ -1,9 +1,9 @@
 import { provideHttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { provideRouter, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { AutenticacaoService } from '../../services/autenticacao-service';
+import { NotificationService } from '../../services/notification-service';
 import { Registro } from './registro';
 
 describe('Página de cadastro', () => {
@@ -14,8 +14,9 @@ describe('Página de cadastro', () => {
   const autenticacaoService = {
     registrar: vi.fn(),
   };
-  const snackBar = {
-    open: vi.fn(),
+  const notification = {
+    success: vi.fn(),
+    error: vi.fn(),
   };
 
   beforeEach(async () => {
@@ -26,7 +27,7 @@ describe('Página de cadastro', () => {
         provideHttpClient(),
         provideRouter([]),
         { provide: AutenticacaoService, useValue: autenticacaoService },
-        { provide: MatSnackBar, useValue: snackBar },
+        { provide: NotificationService, useValue: notification },
       ],
     }).compileComponents();
 
@@ -81,10 +82,8 @@ describe('Página de cadastro', () => {
     fixture.nativeElement.querySelector('app-custom-button button').click();
 
     expect(autenticacaoService.registrar).toHaveBeenCalledWith(request);
-    expect(snackBar.open).toHaveBeenCalledWith(
+    expect(notification.success).toHaveBeenCalledWith(
       'Conta criada com sucesso. Faça login para continuar.',
-      'Fechar',
-      expect.objectContaining({ panelClass: ['api-snackbar--success'] }),
     );
     expect(router.navigateByUrl).toHaveBeenCalledWith('/login');
     expect(component.isSubmitting).toBe(false);
@@ -113,11 +112,7 @@ describe('Página de cadastro', () => {
 
     component.cadastrar();
 
-    expect(snackBar.open).toHaveBeenCalledWith(
-      'E-mail já cadastrado',
-      'Fechar',
-      expect.objectContaining({ panelClass: ['api-snackbar--error'] }),
-    );
+    expect(notification.error).toHaveBeenCalledWith('E-mail já cadastrado');
     expect(component.isSubmitting).toBe(false);
   });
 });

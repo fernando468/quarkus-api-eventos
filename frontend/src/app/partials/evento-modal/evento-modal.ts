@@ -6,10 +6,10 @@ import {
   MatDialogContent,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { CustomInput } from '../../components/custom-input/custom-input';
 import { EventoService } from '../../services/evento-service';
+import { NotificationService } from '../../services/notification-service';
 
 import { ENDERECO_VALIDATION_CONSTANTS } from '../../types/endereco.type';
 import { ErroResponse } from '../../types/erro.type';
@@ -30,7 +30,7 @@ export class EventoModal {
   readonly form: FormGroup;
 
   readonly eventoService = inject(EventoService);
-  readonly snackBar = inject(MatSnackBar);
+  readonly notification = inject(NotificationService);
   readonly ENDERECO_VALIDATION_CONSTANTS = ENDERECO_VALIDATION_CONSTANTS;
   readonly EVENTO_VALIDATION_CONSTANTS = EVENTO_VALIDATION_CONSTANTS;
 
@@ -67,7 +67,7 @@ export class EventoModal {
         descricao || 'Descrição',
         requiredLength(DESCRICAO_MIN_LENGTH, DESCRICAO_MAX_LENGTH),
       ],
-      data: [dataFormatada || '2022-01-01', Validators.required],
+      data: [dataFormatada || new Date(), Validators.required],
       endereco: this.formBuilder.group({
         logradouro: [
           endereco?.logradouro || 'Avenida Brasil',
@@ -115,19 +115,14 @@ export class EventoModal {
 
     method.subscribe({
       next: () => {
-        this.snackBar.open(
+        this.notification.success(
           eventoId ? 'Evento atualizado com sucesso.' : 'Evento cadastrado com sucesso.',
-          'Fechar',
-          { duration: 4000, panelClass: ['api-snackbar--success'] },
         );
         this.dialogRef.close(true);
       },
       error: (erro: ErroResponse) => {
         this.isSaving = false;
-        this.snackBar.open(erro.error?.mensagem, 'Fechar', {
-          duration: 4000,
-          panelClass: ['api-snackbar--error'],
-        });
+        this.notification.error(erro.error?.mensagem);
       },
     });
   };

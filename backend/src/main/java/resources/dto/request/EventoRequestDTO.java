@@ -1,5 +1,6 @@
 package resources.dto.request;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -18,5 +19,6 @@ public record EventoRequestDTO(
     LocalDateTime data,
 
     @NotNull
+    @Valid
     EnderecoRequestDTO endereco) {
 }

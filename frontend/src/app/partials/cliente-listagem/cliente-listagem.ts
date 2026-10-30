@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ClienteService } from '../../services/cliente-service';
+import { NotificationService } from '../../services/notification-service';
 import { ClienteResponse } from '../../types/cliente.type';
 import { ErroResponse } from '../../types/erro.type';
 import { formatCpf } from '../../utils/cpf.util';
@@ -26,7 +26,7 @@ export class ClienteListagem {
 
   constructor(
     private clienteService: ClienteService,
-    private snackBar: MatSnackBar,
+    private notification: NotificationService,
   ) {
     this.carregarClientes();
   }
@@ -37,10 +37,7 @@ export class ClienteListagem {
         this.dataSource.data = clientes;
       },
       error: (erro: ErroResponse) => {
-        this.snackBar.open(erro.error?.mensagem, 'Fechar', {
-          duration: 4000,
-          panelClass: ['api-snackbar--error'],
-        });
+        this.notification.error(erro.error?.mensagem);
       },
     });
   }

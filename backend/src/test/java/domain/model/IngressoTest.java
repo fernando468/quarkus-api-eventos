@@ -15,10 +15,10 @@ public class IngressoTest {
     @Test
     public void deveCriarIngressoComSucesso() throws NoSuchFieldException, IllegalAccessException {
         Cliente cliente = new Cliente();
-        ReflectionUtilsTest.setField(1L, cliente, "id");
+        ReflectionUtilsTest.setFieldSuperClass(1L, cliente, "id");
 
         Evento evento = new Evento();
-        ReflectionUtilsTest.setField(1L, evento, "id");
+        ReflectionUtilsTest.setFieldSuperClass(1L, evento, "id");
 
         Ingresso ingresso = new Ingresso(cliente, evento);
 

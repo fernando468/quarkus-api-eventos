@@ -13,4 +13,30 @@ public class ReflectionUtilsTest {
             throw new RuntimeException(ex);
         }
     }
+
+    public static void setFieldSuperClass(Object value, Object object, String fieldName) {
+        try {
+            Class<?> clazz = object.getClass();
+            Field field = null;
+
+            while (clazz != null) {
+                try {
+                    field = clazz.getDeclaredField(fieldName);
+                    break;
+                } catch (NoSuchFieldException ex) {
+                    clazz = clazz.getSuperclass();
+                }
+            }
+
+            if (field == null) {
+                throw new NoSuchFieldException(fieldName);
+            }
+
+            field.setAccessible(true);
+            field.set(object, value);
+
+        } catch (NoSuchFieldException | IllegalAccessException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }

@@ -33,14 +33,16 @@ public class EnderecoMapper {
 
     public static EnderecoResponseDTO toResponseDTO(Endereco endereco) {
         return new EnderecoResponseDTO(
-            endereco.getId(),
-            endereco.getLogradouro(),
-            endereco.getNumero(),
-            endereco.getComplemento(),
-            endereco.getBairro(),
-            endereco.getCidade(),
-            endereco.getEstado(),
-            endereco.getCep()
+                endereco.getId(),
+                endereco.getLogradouro(),
+                endereco.getNumero(),
+                endereco.getComplemento(),
+                endereco.getBairro(),
+                endereco.getCidade(),
+                endereco.getEstado(),
+                endereco.getCep(),
+                endereco.getCriadoEm(),
+                endereco.getAtualizadoEm()
         );
     }
 }

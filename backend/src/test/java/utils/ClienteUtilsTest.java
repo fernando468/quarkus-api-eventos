@@ -16,7 +16,7 @@ public class ClienteUtilsTest {
                 EnderecoUtilsTest.criarEnderecoValido(),
                 "12345678"
         );
-        ReflectionUtilsTest.setField(1L, cliente, "id");
+        ReflectionUtilsTest.setFieldSuperClass(1L, cliente, "id");
         return cliente;
     }
 

@@ -3,10 +3,10 @@ import { Component, input } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { EventoService } from '../../services/evento-service';
+import { NotificationService } from '../../services/notification-service';
 import { ErroResponse } from '../../types/erro.type';
 import { EventoResponse } from '../../types/evento.type';
 import { formatEndereco } from '../../utils/endereco.util';
@@ -32,7 +32,7 @@ export class EventoListagem {
 
   constructor(
     private eventoService: EventoService,
-    private snackBar: MatSnackBar,
+    private notification: NotificationService,
   ) {
     this.carregarEventos();
   }
@@ -43,10 +43,7 @@ export class EventoListagem {
         this.dataSource.data = clientes;
       },
       error: (erro: ErroResponse) => {
-        this.snackBar.open(erro.error?.mensagem, 'Fechar', {
-          duration: 4000,
-          panelClass: ['api-snackbar--error'],
-        });
+        this.notification.error(erro.error?.mensagem);
       },
     });
   }

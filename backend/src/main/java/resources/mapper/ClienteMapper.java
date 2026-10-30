@@ -20,12 +20,14 @@ public class ClienteMapper {
 
     public static ClienteResponseDTO toResponseDTO(Cliente cliente) {
         return new ClienteResponseDTO(
-            cliente.getId(),
-            cliente.getNome(),
-            cliente.getEmail().getEmail(),
-            cliente.getTelefone().getTelefone(),
-            cliente.getCpf().getCpf(),
-            EnderecoMapper.toResponseDTO(cliente.getEndereco())
+                cliente.getId(),
+                cliente.getNome(),
+                cliente.getEmail().getEmail(),
+                cliente.getTelefone().getTelefone(),
+                cliente.getCpf().getCpf(),
+                EnderecoMapper.toResponseDTO(cliente.getEndereco()),
+                cliente.getCriadoEm(),
+                cliente.getAtualizadoEm()
         );
     }
 

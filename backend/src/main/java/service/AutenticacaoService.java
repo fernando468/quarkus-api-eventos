@@ -67,7 +67,7 @@ public class AutenticacaoService {
 
         String token = claims.expiresIn(TOKEN_DURATION_SECONDS).sign();
 
-        return TokenMapper.toResponse(token);
+        return TokenMapper.toResponse(token, TOKEN_DURATION_SECONDS);
     }
 
     private TokenResponseDTO criarToken(Admin admin) {
@@ -79,6 +79,6 @@ public class AutenticacaoService {
 
         String token = claims.expiresIn(TOKEN_DURATION_SECONDS).sign();
 
-        return TokenMapper.toResponse(token);
+        return TokenMapper.toResponse(token, TOKEN_DURATION_SECONDS);
     }
 }

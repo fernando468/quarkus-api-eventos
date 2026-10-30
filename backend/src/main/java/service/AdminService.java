@@ -17,9 +17,7 @@ public class AdminService {
     @Transactional
     public void criar(Admin admin) {
         if (findByEmail(admin.getEmail().getEmail()) != null) {
-            throw new EntidadeJaExisteException(
-                "Admin já existe com o email: " + admin.getEmail().getEmail()
-            );
+            throw new EntidadeJaExisteException("Admin já existe com o email: " + admin.getEmail().getEmail());
         }
 
         adminRepository.persist(admin);

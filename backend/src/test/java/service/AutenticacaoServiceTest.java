@@ -51,7 +51,7 @@ class AutenticacaoServiceTest {
     @Test
     void deveRealizarLoginAdminSemCriarTokenDeCliente() {
         Admin admin = new Admin("Admin", new Email("admin@admin.com"), "12345678");
-        ReflectionUtilsTest.setField(1L, admin, "id");
+        ReflectionUtilsTest.setFieldSuperClass(1L, admin, "id");
         when(adminService.findByEmail("admin@admin.com")).thenReturn(admin);
 
         TokenResponseDTO tokenResponseDTO = autenticacaoService.login(
@@ -78,7 +78,7 @@ class AutenticacaoServiceTest {
             EnderecoUtilsTest.criarEnderecoValido(),
             "12345678"
         );
-        ReflectionUtilsTest.setField(2L, cliente, "id");
+        ReflectionUtilsTest.setFieldSuperClass(2L, cliente, "id");
         when(clienteService.findByEmail("cliente@admin.com")).thenReturn(cliente);
 
         TokenResponseDTO tokenResponseDTO = autenticacaoService.login(

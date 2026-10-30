@@ -1,6 +1,7 @@
 package domain.model;
 
 import domain.exception.ValidacaoException;
+import domain.model.valueobject.BaseEntity;
 import domain.model.valueobject.Cpf;
 import domain.model.valueobject.Email;
 import domain.model.valueobject.Telefone;
@@ -8,12 +9,7 @@ import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.persistence.*;
 
 @Entity
-public class Cliente {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(nullable = false)
-    private Long id;
-
+public class Cliente extends BaseEntity {
     @Column(nullable = false, length = 100)
     private String nome;
 
@@ -116,7 +112,4 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    public Long getId() {
-        return id;
-    }
 }

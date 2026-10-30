@@ -8,5 +8,7 @@ public record EventoResponseDTO(
     String descricao,
     LocalDateTime data,
     Boolean ativo,
-    EnderecoResponseDTO endereco) {
+    EnderecoResponseDTO endereco,
+    LocalDateTime criadoEm,
+    LocalDateTime atualizadoEm) {
 }

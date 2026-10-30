@@ -1,15 +1,11 @@
 package domain.model;
 
 import domain.exception.ValidacaoException;
+import domain.model.valueobject.BaseEntity;
 import jakarta.persistence.*;
 
 @Entity
-public class Endereco {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(nullable = false)
-    private Long id;
-
+public class Endereco extends BaseEntity {
     @Column(nullable = false, length = 8)
     private String cep;
 
@@ -52,10 +48,6 @@ public class Endereco {
         setBairro(bairro);
         setCidade(cidade);
         setEstado(estado);
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getCep() {

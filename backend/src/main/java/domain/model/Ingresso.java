@@ -1,18 +1,14 @@
 package domain.model;
 
 import domain.exception.ValidacaoException;
+import domain.model.valueobject.BaseEntity;
 import domain.model.valueobject.StatusIngresso;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-public class Ingresso {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(nullable = false)
-    private Long id;
-
+public class Ingresso extends BaseEntity {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
@@ -54,10 +50,6 @@ public class Ingresso {
             throw new ValidacaoException("O Evento é obrigatório");
         }
         this.evento = evento;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public void cancelar() {

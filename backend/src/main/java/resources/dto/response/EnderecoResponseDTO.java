@@ -1,5 +1,7 @@
 package resources.dto.response;
 
+import java.time.LocalDateTime;
+
 public record EnderecoResponseDTO(
     Long id,
     String logradouro,
@@ -8,5 +10,7 @@ public record EnderecoResponseDTO(
     String bairro,
     String cidade,
     String estado,
-    String cep) {
+    String cep,
+    LocalDateTime criadoEm,
+    LocalDateTime atualizadoEm) {
 }

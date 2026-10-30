@@ -10,19 +10,19 @@ import java.util.List;
 public class EventoMapper {
     public static Evento toEntity(EventoRequestDTO eventoRequestDTO) {
         return new Evento(
-            eventoRequestDTO.titulo(),
-            eventoRequestDTO.descricao(),
-            eventoRequestDTO.data(),
-            EnderecoMapper.toEntity(eventoRequestDTO.endereco())
+                eventoRequestDTO.titulo(),
+                eventoRequestDTO.descricao(),
+                eventoRequestDTO.data(),
+                EnderecoMapper.toEntity(eventoRequestDTO.endereco())
         );
     }
 
     public static Evento toUpdateEntity(EventoRequestDTO eventoRequestDTO, Evento evento) {
         evento.atualizar(
-            eventoRequestDTO.titulo(),
-            eventoRequestDTO.descricao(),
-            eventoRequestDTO.data(),
-            EnderecoMapper.toUpdateEntity(eventoRequestDTO.endereco(), evento.getEndereco())
+                eventoRequestDTO.titulo(),
+                eventoRequestDTO.descricao(),
+                eventoRequestDTO.data(),
+                EnderecoMapper.toUpdateEntity(eventoRequestDTO.endereco(), evento.getEndereco())
         );
 
         return evento;
@@ -30,12 +30,14 @@ public class EventoMapper {
 
     public static EventoResponseDTO toResponseDTO(Evento evento) {
         return new EventoResponseDTO(
-            evento.getId(),
-            evento.getTitulo(),
-            evento.getDescricao(),
-            evento.getData(),
-            evento.ativo(),
-            EnderecoMapper.toResponseDTO(evento.getEndereco())
+                evento.getId(),
+                evento.getTitulo(),
+                evento.getDescricao(),
+                evento.getData(),
+                evento.ativo(),
+                EnderecoMapper.toResponseDTO(evento.getEndereco()),
+                evento.getCriadoEm(),
+                evento.getAtualizadoEm()
         );
     }
 

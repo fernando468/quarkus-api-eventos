@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { CustomInput } from '../../components/custom-input/custom-input';
 import { EnderecoForm } from '../../partials/endereco-form/endereco-form';
 import { AutenticacaoService } from '../../services/autenticacao-service';
+import { NotificationService } from '../../services/notification-service';
 import { CLIENTE_VALIDATION_CONSTANTS } from '../../types/cliente.type';
 import { ENDERECO_VALIDATION_CONSTANTS } from '../../types/endereco.type';
 import { ErroResponse } from '../../types/erro.type';
@@ -25,7 +25,7 @@ export class Registro {
   private readonly formBuilder = inject(FormBuilder);
   private readonly autenticacaoService = inject(AutenticacaoService);
   private readonly router = inject(Router);
-  private readonly snackBar = inject(MatSnackBar);
+  private readonly notification = inject(NotificationService);
 
   readonly cpfMask = cpfMask;
   readonly phoneMask = phoneMask;
@@ -100,18 +100,12 @@ export class Registro {
     this.autenticacaoService.registrar(this.form.getRawValue()).subscribe({
       next: () => {
         this.isSubmitting = false;
-        this.snackBar.open('Conta criada com sucesso. Faça login para continuar.', 'Fechar', {
-          duration: 4000,
-          panelClass: ['api-snackbar--success'],
-        });
+        this.notification.success('Conta criada com sucesso. Faça login para continuar.');
         void this.router.navigateByUrl('/login');
       },
       error: (erro: ErroResponse) => {
         this.isSubmitting = false;
-        this.snackBar.open(erro.error?.mensagem, 'Fechar', {
-          duration: 4000,
-          panelClass: ['api-snackbar--error'],
-        });
+        this.notification.error(erro.error?.mensagem);
       },
     });
   };

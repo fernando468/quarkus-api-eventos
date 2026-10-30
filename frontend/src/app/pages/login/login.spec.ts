@@ -1,9 +1,9 @@
 import { provideHttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { provideRouter, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { AutenticacaoService } from '../../services/autenticacao-service';
+import { NotificationService } from '../../services/notification-service';
 import { Login } from './login';
 
 describe('Página de login', () => {
@@ -15,8 +15,8 @@ describe('Página de login', () => {
     login: vi.fn(),
     admin: vi.fn(),
   };
-  const snackBar = {
-    open: vi.fn(),
+  const notification = {
+    error: vi.fn(),
   };
 
   beforeEach(async () => {
@@ -27,7 +27,7 @@ describe('Página de login', () => {
         provideHttpClient(),
         provideRouter([]),
         { provide: AutenticacaoService, useValue: autenticacaoService },
-        { provide: MatSnackBar, useValue: snackBar },
+        { provide: NotificationService, useValue: notification },
       ],
     }).compileComponents();
 
@@ -85,11 +85,7 @@ describe('Página de login', () => {
 
     fixture.nativeElement.querySelector('app-custom-button button').click();
 
-    expect(snackBar.open).toHaveBeenCalledWith(
-      'Credenciais inválidas',
-      'Fechar',
-      expect.objectContaining({ panelClass: ['api-snackbar--error'] }),
-    );
+    expect(notification.error).toHaveBeenCalledWith('Credenciais inválidas');
     expect(component.isSubmitting).toBe(false);
   });
 });

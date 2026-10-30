@@ -1,17 +1,13 @@
 package domain.model;
 
 import domain.exception.ValidacaoException;
+import domain.model.valueobject.BaseEntity;
 import domain.model.valueobject.Email;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.persistence.*;
 
 @Entity
-public class Admin {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(nullable = false)
-    private Long id;
-
+public class Admin extends BaseEntity {
     @Column(nullable = false, length = 100)
     private String nome;
 
@@ -28,10 +24,6 @@ public class Admin {
         setNome(nome);
         setEmail(email);
         setSenhaEncriptada(senha);
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getNome() {

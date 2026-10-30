@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, input, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomInput } from '../../components/custom-input/custom-input';
+import { NotificationService } from '../../services/notification-service';
 import { ENDERECO_VALIDATION_CONSTANTS } from '../../types/endereco.type';
 import { cepMask } from '../../utils/endereco.util';
 
@@ -23,7 +23,7 @@ interface ViaCepResponse {
 })
 export class EnderecoForm {
   private readonly http = inject(HttpClient);
-  private readonly snackBar = inject(MatSnackBar);
+  private readonly notification = inject(NotificationService);
 
   readonly form = input.required<FormGroup>();
   readonly isLookingUp = signal(false);
@@ -45,10 +45,7 @@ export class EnderecoForm {
       next: (endereco) => {
         this.isLookingUp.set(false);
         if (endereco.erro) {
-          this.snackBar.open('CEP não encontrado.', 'Fechar', {
-            duration: 4000,
-            panelClass: ['api-snackbar--error'],
-          });
+          this.notification.error('CEP não encontrado.');
           return;
         }
 
@@ -60,17 +57,11 @@ export class EnderecoForm {
           complemento: '',
           numero: '',
         });
-        this.snackBar.open('Endereço carregado com sucesso.', 'Fechar', {
-          duration: 4000,
-          panelClass: ['api-snackbar--success'],
-        });
+        this.notification.success('Endereço carregado com sucesso.');
       },
       error: () => {
         this.isLookingUp.set(false);
-        this.snackBar.open('Não foi possível buscar o CEP. Tente novamente.', 'Fechar', {
-          duration: 4000,
-          panelClass: ['api-snackbar--error'],
-        });
+        this.notification.error('Não foi possível buscar o CEP. Tente novamente.');
       },
     });
   }

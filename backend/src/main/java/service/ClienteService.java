@@ -28,9 +28,7 @@ public class ClienteService {
         }
 
         if (clienteRepository.findByEmail(registroRequestDTO.email()) != null) {
-            throw new EntidadeJaExisteException(
-                "Cliente já existe com o email: " + registroRequestDTO.email()
-            );
+            throw new EntidadeJaExisteException("Cliente já existe com o email: " + registroRequestDTO.email());
         }
 
         Cliente cliente = ClienteMapper.toEntity(registroRequestDTO);

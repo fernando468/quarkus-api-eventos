@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { CustomInput } from '../../components/custom-input/custom-input';
 import { AutenticacaoService } from '../../services/autenticacao-service';
+import { NotificationService } from '../../services/notification-service';
 import { ErroResponse } from '../../types/erro.type';
 
 @Component({
@@ -17,7 +17,7 @@ export class Login {
   private readonly formBuilder = inject(FormBuilder);
   private readonly autenticacaoService = inject(AutenticacaoService);
   private readonly router = inject(Router);
-  private readonly snackBar = inject(MatSnackBar);
+  private readonly notification = inject(NotificationService);
   readonly form = this.formBuilder.nonNullable.group({
     email: ['admin@admin.com', [Validators.required, Validators.email, Validators.maxLength(100)]],
     senha: ['12345678', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
@@ -38,10 +38,7 @@ export class Login {
       },
       error: (erro: ErroResponse) => {
         this.isSubmitting = false;
-        this.snackBar.open(erro.error?.mensagem, 'Fechar', {
-          duration: 4000,
-          panelClass: ['api-snackbar--error'],
-        });
+        this.notification.error(erro.error?.mensagem);
       },
     });
   };

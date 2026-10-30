@@ -20,7 +20,6 @@ public class IngressoService {
     private final IngressoRepository ingressoRepository;
 
     private final ClienteService clienteService;
-
     private final EventoService eventoService;
 
     public IngressoService(IngressoRepository ingressoRepository,

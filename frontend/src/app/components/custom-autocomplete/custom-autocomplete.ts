@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, inject, Injector, input, OnInit } from '@angular/core';
+import { Component, inject, Injector, input } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -19,7 +19,7 @@ import { combineLatest, map, Observable, startWith } from 'rxjs';
   styleUrl: './custom-autocomplete.css',
   templateUrl: './custom-autocomplete.html',
 })
-export class CustomAutocomplete<T> implements OnInit {
+export class CustomAutocomplete<T> {
   private readonly injector = inject(Injector);
 
   readonly form = input.required<FormGroup>();
@@ -34,9 +34,9 @@ export class CustomAutocomplete<T> implements OnInit {
   readonly emptyText = input('Nenhuma opção encontrada');
   readonly openOnFocus = input(true);
 
-  filteredOptions!: Observable<(T[] & { ativo?: boolean }[]) | T[]>;
+  filteredOptions: Observable<(T[] & { ativo?: boolean }[]) | T[]>;
 
-  ngOnInit(): void {
+  constructor() {
     const control = this.control();
     this.filteredOptions = combineLatest([
       control.valueChanges.pipe(startWith(control.value)),

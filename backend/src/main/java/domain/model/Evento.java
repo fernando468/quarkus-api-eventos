@@ -1,17 +1,13 @@
 package domain.model;
 
 import domain.exception.ValidacaoException;
+import domain.model.valueobject.BaseEntity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-public class Evento {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(nullable = false)
-    private Long id;
-
+public class Evento extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String titulo;
 
@@ -84,10 +80,6 @@ public class Evento {
             throw new ValidacaoException("A data do evento é obrigatória");
         }
         this.data = data;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Boolean ativo() {

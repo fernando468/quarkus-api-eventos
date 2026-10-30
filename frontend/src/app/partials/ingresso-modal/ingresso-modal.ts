@@ -16,12 +16,12 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomAutocomplete } from '../../components/custom-autocomplete/custom-autocomplete';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { ClienteService } from '../../services/cliente-service';
 import { EventoService } from '../../services/evento-service';
 import { IngressoService } from '../../services/ingresso-service';
+import { NotificationService } from '../../services/notification-service';
 import { ClienteResponse } from '../../types/cliente.type';
 import { ErroResponse } from '../../types/erro.type';
 import { EventoResponse } from '../../types/evento.type';
@@ -54,7 +54,7 @@ export class IngressoModal {
   readonly eventoService = inject(EventoService);
   readonly clienteService = inject(ClienteService);
   readonly datePipe = inject(DatePipe);
-  readonly snackBar = inject(MatSnackBar);
+  readonly notification = inject(NotificationService);
 
   readonly clienteControl: FormControl<ClienteResponse | null>;
   readonly eventoControl: FormControl<EventoResponse | null>;
@@ -117,19 +117,14 @@ export class IngressoModal {
 
     method.subscribe({
       next: () => {
-        this.snackBar.open(
+        this.notification.success(
           ingressoId ? 'Ingresso atualizado com sucesso.' : 'Ingresso cadastrado com sucesso.',
-          'Fechar',
-          { duration: 4000, panelClass: ['api-snackbar--success'] },
         );
         this.dialogRef.close(true);
       },
       error: (erro: ErroResponse) => {
         this.isSaving = false;
-        this.snackBar.open(erro.error?.mensagem, 'Fechar', {
-          duration: 4000,
-          panelClass: ['api-snackbar--error'],
-        });
+        this.notification.error(erro.error?.mensagem);
       },
     });
   };
@@ -168,10 +163,7 @@ export class IngressoModal {
       },
       error: () => {
         this.isLoadingClientes = false;
-        this.snackBar.open('Não foi possível carregar os clientes. Tente novamente.', 'Fechar', {
-          duration: 4000,
-          panelClass: ['api-snackbar--error'],
-        });
+        this.notification.error('Não foi possível carregar os clientes. Tente novamente.');
       },
     });
 
@@ -183,10 +175,7 @@ export class IngressoModal {
       },
       error: (erro: ErroResponse) => {
         this.isLoadingEventos = false;
-        this.snackBar.open('Não foi possível carregar os eventos. Tente novamente.', 'Fechar', {
-          duration: 4000,
-          panelClass: ['api-snackbar--error'],
-        });
+        this.notification.error('Não foi possível carregar os eventos. Tente novamente.');
       },
     });
   }

@@ -5,11 +5,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { IngressoService } from '../../services/ingresso-service';
+import { NotificationService } from '../../services/notification-service';
 import { EnumResponse } from '../../types/enum.type';
 import { ErroResponse } from '../../types/erro.type';
 import { IngressoResponse } from '../../types/ingresso.type';
@@ -38,7 +38,7 @@ export class IngressoListagem {
   readonly displayedColumns: string[] = ['id', 'status', 'cliente', 'evento', 'acoes'];
   readonly dataSource = new MatTableDataSource<IngressoResponse>([]);
   readonly dialog = inject(MatDialog);
-  readonly snackBar = inject(MatSnackBar);
+  readonly notification = inject(NotificationService);
 
   constructor(
     private ingressoService: IngressoService,
@@ -75,10 +75,7 @@ export class IngressoListagem {
         this.dataSource.data = ingressos;
       },
       error: (erro: ErroResponse) => {
-        this.snackBar.open(erro.error?.mensagem, 'Fechar', {
-          duration: 4000,
-          panelClass: ['api-snackbar--error'],
-        });
+        this.notification.error(erro.error?.mensagem);
       },
     });
   }
