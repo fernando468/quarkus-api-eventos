@@ -14,6 +14,7 @@ import { cepMask } from '../../utils/endereco.util';
 import { requiredLength } from '../../utils/required-length.utils';
 import { phoneMask } from '../../utils/telefone.util';
 import { cpfValidator } from '../../validators/cpf.validator';
+import { finalize } from 'rxjs';
 
 @Component({
   imports: [RouterLink, CustomButton, CustomInput, EnderecoForm],
@@ -97,16 +98,18 @@ export class Registro {
     }
 
     this.isSubmitting = true;
-    this.autenticacaoService.registrar(this.form.getRawValue()).subscribe({
-      next: () => {
-        this.isSubmitting = false;
-        this.notification.success('Conta criada com sucesso. Faça login para continuar.');
-        void this.router.navigateByUrl('/login');
-      },
-      error: (erro: ErroResponse) => {
-        this.isSubmitting = false;
-        this.notification.error(erro.error?.mensagem);
-      },
+    this.autenticacaoService.registrar(this.form.getRawValue())
+      .pipe(finalize(() => this.isSubmitting = false))
+      .subscribe({
+        next: () => {
+          this.isSubmitting = false;
+          this.notification.success('Conta criada com sucesso. Faça login para continuar.');
+          void this.router.navigateByUrl('/login');
+        },
+        error: (erro: ErroResponse) => {
+          this.isSubmitting = false;
+          this.notification.error(erro.error?.mensagem);
+        },
     });
   };
 

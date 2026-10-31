@@ -27,6 +27,8 @@ import { ErroResponse } from '../../types/erro.type';
 import { EventoResponse } from '../../types/evento.type';
 import { IngressoResponse } from '../../types/ingresso.type';
 import { formatCpf } from '../../utils/cpf.util';
+import { finalize } from 'rxjs';
+import { AutenticacaoService } from '../../services/autenticacao-service';
 
 const selectionValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   const value = control.value as ClienteResponse | EventoResponse;
@@ -55,6 +57,7 @@ export class IngressoModal {
   readonly clienteService = inject(ClienteService);
   readonly datePipe = inject(DatePipe);
   readonly notification = inject(NotificationService);
+  readonly autenticacaoService = inject(AutenticacaoService);
 
   readonly clienteControl: FormControl<ClienteResponse | null>;
   readonly eventoControl: FormControl<EventoResponse | null>;
@@ -68,6 +71,7 @@ export class IngressoModal {
   isLoadingClientes = true;
   isLoadingEventos = true;
   isSaving = false;
+  isAdmin = false;
 
   constructor() {
     this.clienteControl = new FormControl<ClienteResponse>(this.data?.cliente, [
@@ -84,6 +88,7 @@ export class IngressoModal {
     });
 
     this.carregarOpcoes();
+    this.isAdmin = this.autenticacaoService.admin();
   }
 
   onCancel = (): void => {
@@ -115,17 +120,16 @@ export class IngressoModal {
       ? this.ingressoService.atualizar(ingressoId, request)
       : this.ingressoService.criar(request);
 
-    method.subscribe({
-      next: () => {
-        this.notification.success(
-          ingressoId ? 'Ingresso atualizado com sucesso.' : 'Ingresso cadastrado com sucesso.',
-        );
-        this.dialogRef.close(true);
+    method.pipe(finalize(() => (this.isSaving = false)))
+      .subscribe({
+        next: () => {
+          this.notification.success(ingressoId ? 'Ingresso atualizado com sucesso.' : 'Ingresso cadastrado com sucesso.');
+          this.dialogRef.close(true);
       },
-      error: (erro: ErroResponse) => {
-        this.isSaving = false;
-        this.notification.error(erro.error?.mensagem);
-      },
+        error: (erro: ErroResponse) => {
+          this.isSaving = false;
+          this.notification.error(erro.error?.mensagem);
+        },
     });
   };
 
@@ -155,7 +159,12 @@ export class IngressoModal {
   };
 
   private carregarOpcoes(): void {
-    this.clienteService.buscarTodos().subscribe({
+
+    const method = this.isAdmin
+      ? this.clienteService.buscarTodos()
+      : this.clienteService.buscarClienteAutenticado();
+
+    method.subscribe({
       next: (clientes) => {
         this.clientes = clientes;
         this.isLoadingClientes = false;

@@ -43,6 +43,7 @@
               [onClick]="() => openDialogConfirmacao(ingresso, item)"
               variant="filled"
               title="{{ item.title }}"
+              [disabled]="isSubmitting"
               [style]="`min-width: 100px; max-width: 100px; background-color: ${item.backgroundColor}`"
             >
               <mat-icon>edit</mat-icon>

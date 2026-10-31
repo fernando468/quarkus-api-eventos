@@ -14,9 +14,11 @@ import java.util.List;
 @ApplicationScoped
 public class ClienteService {
     private final ClienteRepository clienteRepository;
+    private final AutenticacaoService autenticacaoService;
 
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(ClienteRepository clienteRepository, AutenticacaoService autenticacaoService) {
         this.clienteRepository = clienteRepository;
+        this.autenticacaoService = autenticacaoService;
     }
 
     @Transactional
@@ -54,5 +56,14 @@ public class ClienteService {
 
     public Cliente findByEmail(String email) {
         return clienteRepository.findByEmail(email);
+    }
+
+    public List<Cliente> listarClienteAutenticado() {
+        boolean isAdmin = autenticacaoService.admin();
+        if (isAdmin) {
+            return listarTodos();
+        }
+        Cliente cliente = clienteRepository.findById(autenticacaoService.getUsuarioAutenticadoId());
+        return List.of(cliente);
     }
 }

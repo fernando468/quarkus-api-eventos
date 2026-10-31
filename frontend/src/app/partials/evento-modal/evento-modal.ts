@@ -17,6 +17,7 @@ import { EVENTO_VALIDATION_CONSTANTS, EventoResponse } from '../../types/evento.
 import { formatLocalDateTime } from '../../utils/date.util';
 import { requiredLength } from '../../utils/required-length.utils';
 import { EnderecoForm } from '../endereco-form/endereco-form';
+import { finalize } from 'rxjs';
 
 @Component({
   imports: [MatDialogActions, MatDialogContent, CustomButton, CustomInput, EnderecoForm],
@@ -113,17 +114,19 @@ export class EventoModal {
       ? this.eventoService.atualizar(eventoId, this.form.getRawValue())
       : this.eventoService.criar(this.form.getRawValue());
 
-    method.subscribe({
-      next: () => {
-        this.notification.success(
-          eventoId ? 'Evento atualizado com sucesso.' : 'Evento cadastrado com sucesso.',
-        );
-        this.dialogRef.close(true);
-      },
-      error: (erro: ErroResponse) => {
-        this.isSaving = false;
-        this.notification.error(erro.error?.mensagem);
-      },
+    method
+      .pipe(
+        finalize(() => (this.isSaving = false))
+      )
+      .subscribe({
+        next: () => {
+          this.notification.success(eventoId ? 'Evento atualizado com sucesso.' : 'Evento cadastrado com sucesso.');
+          this.dialogRef.close(true);
+        },
+        error: (erro: ErroResponse) => {
+          this.isSaving = false;
+          this.notification.error(erro.error?.mensagem);
+        },
     });
   };
 }

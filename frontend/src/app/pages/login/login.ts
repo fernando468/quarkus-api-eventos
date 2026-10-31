@@ -6,6 +6,7 @@ import { CustomInput } from '../../components/custom-input/custom-input';
 import { AutenticacaoService } from '../../services/autenticacao-service';
 import { NotificationService } from '../../services/notification-service';
 import { ErroResponse } from '../../types/erro.type';
+import { finalize } from 'rxjs';
 
 @Component({
   imports: [ReactiveFormsModule, RouterLink, CustomButton, CustomInput],
@@ -31,15 +32,17 @@ export class Login {
     }
 
     this.isSubmitting = true;
-    this.autenticacaoService.login(this.form.getRawValue()).subscribe({
-      next: () => {
-        this.isSubmitting = false;
-        void this.router.navigateByUrl(this.autenticacaoService.admin() ? '/cliente' : '/evento');
-      },
-      error: (erro: ErroResponse) => {
-        this.isSubmitting = false;
-        this.notification.error(erro.error?.mensagem);
-      },
+    this.autenticacaoService.login(this.form.getRawValue())
+      .pipe(finalize(() => this.isSubmitting = false))
+      .subscribe({
+        next: () => {
+          this.isSubmitting = false;
+          void this.router.navigateByUrl(this.autenticacaoService.admin() ? '/cliente' : '/evento');
+        },
+        error: (erro: ErroResponse) => {
+          this.isSubmitting = false;
+          this.notification.error(erro.error?.mensagem);
+        },
     });
   };
 }

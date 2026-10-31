@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Observable } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { CustomButton } from '../../components/custom-button/custom-button';
 import { IngressoService } from '../../services/ingresso-service';
 import { NotificationService } from '../../services/notification-service';
@@ -40,6 +40,8 @@ export class IngressoListagem {
   readonly dialog = inject(MatDialog);
   readonly notification = inject(NotificationService);
 
+  isSubmitting = false;
+
   constructor(
     private ingressoService: IngressoService,
     private datePipe: DatePipe,
@@ -48,6 +50,7 @@ export class IngressoListagem {
   }
 
   openDialogConfirmacao = (ingresso: IngressoResponse, item: BotaoProps): void => {
+    this.isSubmitting = true;
     const dialogRef = this.dialog.open<
       IngressoConfirmacaoAcao,
       IngressoConfirmacaoAcaoProps,
@@ -61,12 +64,14 @@ export class IngressoListagem {
       autoFocus: 'dialog',
     });
 
-    dialogRef.afterClosed().subscribe((ingressoCriado) => {
-      console.log(ingressoCriado);
-      if (ingressoCriado) {
-        this.carregarIngressos();
-      }
-    });
+    dialogRef.afterClosed()
+      .pipe(finalize(() => this.isSubmitting = false))
+      .subscribe((ingressoCriado) => {
+        if (ingressoCriado) {
+          this.carregarIngressos();
+          this.isSubmitting = false;
+        }
+      });
   };
 
   carregarIngressos(): void {

@@ -4,10 +4,12 @@ import domain.exception.UsuarioNaoAutorizadoException;
 import domain.exception.EntidadeJaExisteException;
 import domain.model.Admin;
 import domain.model.Cliente;
+import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import io.smallrye.jwt.build.Jwt;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import resources.dto.request.LoginRequestDTO;
 import resources.dto.request.RegistroRequestDTO;
 import resources.dto.response.ClienteResponseDTO;
@@ -21,10 +23,17 @@ public class AutenticacaoService {
 
     private final ClienteService clienteService;
     private final AdminService adminService;
+    private final SecurityIdentity securityIdentity;
+    private final JsonWebToken jsonWebToken;
 
-    public AutenticacaoService(ClienteService clienteService, AdminService adminService) {
+    public AutenticacaoService(ClienteService clienteService,
+                               AdminService adminService,
+                               SecurityIdentity securityIdentity,
+                               JsonWebToken jsonWebToken) {
         this.clienteService = clienteService;
         this.adminService = adminService;
+        this.securityIdentity = securityIdentity;
+        this.jsonWebToken = jsonWebToken;
     }
 
     @Transactional
@@ -80,5 +89,13 @@ public class AutenticacaoService {
         String token = claims.expiresIn(TOKEN_DURATION_SECONDS).sign();
 
         return TokenMapper.toResponse(token, TOKEN_DURATION_SECONDS);
+    }
+
+    public Long getUsuarioAutenticadoId() {
+        return Long.valueOf(jsonWebToken.getSubject());
+    }
+
+    public boolean admin() {
+        return securityIdentity.hasRole("ADMIN");
     }
 }
