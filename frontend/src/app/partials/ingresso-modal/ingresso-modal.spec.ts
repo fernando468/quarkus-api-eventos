@@ -24,6 +24,7 @@ describe('Modal de ingresso', () => {
         { provide: MAT_DIALOG_DATA, useValue: null },
         { provide: IngressoService, useValue: ingressoService },
         { provide: ClienteService, useValue: { buscarTodos: vi.fn(() => of([])) } },
+        { provide: ClienteService, useValue: { buscarClienteAutenticado: vi.fn(() => of([])) } },
         { provide: EventoService, useValue: { buscarTodos: vi.fn(() => of([])) } },
       ],
     }).compileComponents();
